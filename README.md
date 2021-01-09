@@ -12,6 +12,6 @@ Write endpoints for harmony rpc 2.0 spec.
 
 Write modules for harmony 2.0 spec.
 
-Write CLI for harmony 2.0 spec.
+Write API for harmony 2.0 spec.
 
 Write CLI (Outer Layer) for rosetta spec.
