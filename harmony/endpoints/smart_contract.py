@@ -23,7 +23,7 @@ def call(api_url : str, params : CallParameters, session : Optional[requests.Ses
     """
     data = format_api_data("hmyv2_call", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["results"]}
+    results = {"result" : resp.json()["result"]}
     return CallResult(**results)
 
 def estimateGas(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> EstimateGasResult:
