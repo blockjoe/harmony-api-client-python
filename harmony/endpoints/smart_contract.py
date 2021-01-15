@@ -50,8 +50,7 @@ def getCode(api_url : str, params : GetCodeParameters, session : Optional[reques
 
 
 def getStorageAt(api_url : str, params : GetStorageAtParameters, session : Optional[requests.Session] = None) -> GetStorageAtResults:
-
-"""
+    """
     params: GetStorageAtParameters
     result: GetStorageAtResults
     method: hmyv2_getStorageAt
