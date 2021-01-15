@@ -57,23 +57,23 @@ class DelegationsByDelegator(BaseModel):
     delegator_address : str = Field(..., description="Delegator wallet address")
     amount : int = Field(..., description="Amount delegated in atto")
     reward : int = Field(..., description="Unclaimed rewards in atto")
-    undelegations : List[Dict[str,any]] = Field(..., description="List of pending undelegations") ## check
+    undelegations : List[Dict[str, Any]] = Field(..., description="List of pending undelegations")
 
 class GetDelegationsByDelegatorResult(BaseModel):
-    data : List[Dict[DelegationsByDelegator]] ##check
+    data : List[DelegationsByDelegator]
 
 class GetDelegationsByDelegatorByBlockNumberParameters(BaseModel):
     address : str = Field(..., description="Delegator wallet address")
     block_number : int = Field(..., description="Block number")
 
 class GetDelegationsByDelegatorByBlockNumberResults(BaseModel):
-    data : List[Dict[DelegationsByDelegator]] ##check
+    data : List[DelegationsByDelegator]
 
 class GetDelegationsByValidatorParameters(BaseModel):
     address : str = Field(..., description="Validator wallet address")
 
 class GetDelegationsByValidatorResults(BaseModel):
-    data : List[Dict[DelegationsByDelegator]] ##check
+    data : List[DelegationsByDelegator]
 
 ## Validator
 
@@ -88,7 +88,7 @@ class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
     block_number : int = Field(..., description="Block number")
 
 class GetAllValidatorInformationByBlockNumberResults(BaseModel):
-    validator : List[Validator] = Field(..., description="Array of Object") #check
+    validator : List[Validator] = Field(..., description="Array of Object") 
 
 class GetElectedValidatorAddressesParameters(BaseModel):
     #empty set
@@ -144,7 +144,7 @@ class Validator(BaseModel):
     details : str = Field(..., description="Validator details, displayed on the Staking Dashboard")
     creation_height : int = Field(..., description="Block in which the validator was created")
     address : str = Field(..., description="Validator wallet address")
-    delegations : List[Dict[DelegationsByDelegator]] #check
+    delegations : List[DelegationsByDelegator]
     metrics : Metrics = Field(..., description="BLS key earning metrics for current epoch")
     total_delegation : int = Field(..., description="Total amount delegated to validator")
     currently_in_committee : bool = Field(.., description="If key is currently elected")
@@ -360,7 +360,7 @@ class StakingTransactionByHash(BaseModel):
     nonce : int = Field(..., description="Wallet nonce of transaction")
     transactionIndex : int = Field(..., description="Staking transaction index within block")
     type : str = Field(..., description="Type of staking transaction")
-    msg : Any = Field(..., description="Staking transaction data, depending on the type of staking transaction") #HELP not sure here
+    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction") #HELP not sure here
 
 class GetStakingTransactionByHashResults(BaseModel):
     data : StakingTransactionByHash = Field(..., description="Object")
