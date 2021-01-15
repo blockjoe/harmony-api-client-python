@@ -2,6 +2,9 @@ from typing import Optional
 
 import requests
 
+from ..utils.communication import post_request
+from ..utils.call_format import format_api_data
+
 from ..models import (
     CallParameters,
     CallResult,
@@ -18,6 +21,10 @@ def call(api_url : str, params : CallParameters, session : Optional[requests.Ses
     result: CallResult
     method: hmyv2_call
     """
+    data = format_api_data("hmyv2_call", params)
+    resp = post_request(api_url, data, session)
+    results = {"result" : resp.json()["results"]}
+    return CallResult(**results)
 
 def estimateGas(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> EstimateGasResult:
     """
