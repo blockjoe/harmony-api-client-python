@@ -50,7 +50,7 @@ class DelegationsByDelegator(BaseModel):
     reward : int = Field(..., description="Unclaimed rewards in atto")
     undelegations : List[Dict[str, Any]] = Field(..., description="List of pending undelegations")
 
-class GetDelegationsByDelegatorResult(BaseModel):
+class GetDelegationsByDelegatorResults(BaseModel):
     result : List[DelegationsByDelegator]
 
 class GetDelegationsByDelegatorByBlockNumberParameters(BaseModel):
@@ -698,7 +698,7 @@ class GetBlockTransactionCountByNumberParameters(BaseModel):
     block_number : int = Field(..., description="Block number")
 
 class GetBlockTransactionCountByNumberResults(BaseModel):
-    results : int = Field(..., description="Number of transaction in block")
+    result : int = Field(..., description="Number of transaction in block")
 
 class GetBlockTransactionCountByHashParameters(BaseModel):
     hash_ : int = Field(..., description="Block hash", alias="hash")

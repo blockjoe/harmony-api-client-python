@@ -7,12 +7,12 @@ from ..utils.call_format import format_api_data
 
 from ..models import (
     CallParameters,
-    CallResult,
-    EstimateGasResult,
+    CallResults,
+    EstimateGasResults,
     GetCodeParameters,
-    GetCodeResult,
+    GetCodeResults,
     GetStorageAtParameters,
-    GetStorageAtResult
+    GetStorageAtResults
 )
 
 def call(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> CallResults:
