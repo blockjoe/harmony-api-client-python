@@ -23,27 +23,27 @@ class CallParameters(BaseModel):
     smart_contract_call : SmartContractCall
     block_number : int
 
-class CallResult(BaseModel):
-    return_value : str = Field(..., description="Return value of the executed smart contract")
+class CallResults(BaseModel):
+    result : str = Field(..., description="Return value of the executed smart contract")
 
-class EstimateGasResult(BaseModel):
-    estimated_gas_price : str = Field(..., description="Hex of estimated gas price of smart contract call")
+class EstimateGasResults(BaseModel):
+    result: str = Field(..., description="Hex of estimated gas price of smart contract call")
 
 class GetCodeParameters(BaseModel):
     address : str = Field(..., description="The address to get the code from")
     block : str = Field(..., description="Block to query for information. Usually latest, which specifies the most recent block.")
     callback : Optional[str] = Field(None, description="Optional callback, returns an error object as first parameter and the result as second.")
 
-class GetCodeResult(BaseModel):
-    data : str = Field(..., description="The data at given address address")
+class GetCodeResults(BaseModel):
+    result : str = Field(..., description="The data at given address address")
 
 class GetStorageAtParameters(BaseModel):
     address : str = Field(..., description="Smart contract address")
     storage_location : str = Field(..., description="Hex representation of storage location")
     block_number : int = Field(..., description="Block number")
 
-class GetStorageAtResult(BaseModel):
-    data : str = Field(..., description="Data stored at the smart contract location")
+class GetStorageAtResults(BaseModel):
+    result : str = Field(..., description="Data stored at the smart contract location")
 
 
 #Staking
@@ -60,20 +60,20 @@ class DelegationsByDelegator(BaseModel):
     undelegations : List[Dict[str, Any]] = Field(..., description="List of pending undelegations")
 
 class GetDelegationsByDelegatorResult(BaseModel):
-    data : List[DelegationsByDelegator]
+    result : List[DelegationsByDelegator]
 
 class GetDelegationsByDelegatorByBlockNumberParameters(BaseModel):
     address : str = Field(..., description="Delegator wallet address")
     block_number : int = Field(..., description="Block number")
 
 class GetDelegationsByDelegatorByBlockNumberResults(BaseModel):
-    data : List[DelegationsByDelegator]
+    result : List[DelegationsByDelegator]
 
 class GetDelegationsByValidatorParameters(BaseModel):
     address : str = Field(..., description="Validator wallet address")
 
 class GetDelegationsByValidatorResults(BaseModel):
-    data : List[DelegationsByDelegator]
+    result : List[DelegationsByDelegator]
 
 ## Validator
 
@@ -81,20 +81,20 @@ class GetAllValidatorInformationParameters(BaseModel):
     page_request : int = Field(..., description="Page to request (page size is 100), -1 for all validators")
 
 class GetAllValidatorInformationResults(BaseModel):
-    validator : List[Validator] = Field(..., description="Array of Object")
+    result : List[Validator] = Field(..., description="Array of Object")
 
 class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
     page_number : int = Field(..., description="Page number, -1 for all")
     block_number : int = Field(..., description="Block number")
 
 class GetAllValidatorInformationByBlockNumberResults(BaseModel):
-    validator : List[Validator] = Field(..., description="Array of Object") 
+    result : List[Validator] = Field(..., description="Array of Object") 
 
 class GetElectedValidatorAddressesParameters(BaseModel):
     #empty set
 
 class GetElectedValidatorAddressesResults(BaseModel):
-    addresses : List[str] = Field(..., description="List of wallet addresses that are currently elected")
+    result : List[str] = Field(..., description="List of wallet addresses that are currently elected")
 
 
 #start all of the classes needed for Validator class#
@@ -161,7 +161,7 @@ class GetValidatorInformationParameters(BaseModel):
     address: str = Field(..., description="Validator wallet address")
 
 class GetValidatorInformationResults(BaseModel):
-    validator : Validator = Field(..., description="Object")
+    result : Validator = Field(..., description="Object")
 
 
 #Network
@@ -169,12 +169,14 @@ class GetValidatorInformationResults(BaseModel):
 class GetCurrentUtilityMetricsParameters(BaseModel):
     #empty set
 
-class GetCurrentUtilityMetricsResults(BaseModel):
+class GetCurrentUtilityMetrics(BaseModel):
     accumulatorsnapshot : int = Field(..., description="Total block reward given out in Atto")
     currentstakedpercentage : str = Field(..., description="Percent of circulationg supply staked")
     deviation : str = Field(..., description="Change in percent of circulating supply staked")
     adjustment : str = Field(..., description="Change in circulationg supply staked")
 
+class GetCurrentUtilityMetricsResults(BaseModel):
+    result : GetCurrentUtilityMetrics = Field(..., description="Object")
 
 class GetMedianRawStakeSnapShotParameters(BaseModel):
     #empty set
@@ -192,22 +194,27 @@ class Epos_slot_candidates(BaseModel):
     stake_per_key : int = Field(..., description="Stake per BLS key in Atto")
     validator : str = Field(..., description="Wallet address of validator")
 
-class GetMedianRawStakeSnapShotResults(BaseModel):
+class GetMedianRawStakeSnapShot(BaseModel):
     epos_median_stake : str = Field(..., description="Effective median stake")
     max_eternal_slots : int = Field(..., description="Number of available committee slots")
     epos_slot_winners : List[Epos_slot_winners] = Field(..., description="Details for each slot winner")
     epos_slot_candidates : List[Epos_slot_candidates] = Field(..., description="Details for each candidates")
 
+class GetMedianRawStakeSnapShotResults(BaseModel):
+    result : GetMedianRawStakeSnapShot = Field(..., description="Object")
 
 class GetStakingNetworkInfoParameters(BaseModel):
     #empty set
 
-class GetStakingNetworkInfoResults(BaseModel):
+class GetStakingNetworkInfo(BaseModel):
     total_supply : str = Field(..., description="Total number of pre-mined tokens")
     circulating_supply : str = Field(..., description="Number of token available in the network")
     epoch_last_block : int = Field(..., description="Last block of epoch")
     total_staking : int = Field(..., description="Total amount staked in Atto")
     median_raw_stake : str = Field(..., description="Effective median stake in Atto")
+
+class GetStakingNetworkInfoResults(BaseModel):
+    result : GetStakingNetworkInfo = Field(..., description="Object")
 
 class GetSuperCommiteesParameters(BaseModel):
     #empty set
@@ -228,10 +235,12 @@ class Shard_x(BaseModel):
 class Previous(BaseModel):
     quorum_deciders : Shard_x = Field(..., description="Shard of committee")
 
-class GetSuperCommiteesResults(BaseModel):
+class GetSuperCommitees(BaseModel):
     previous : Previous = Field(..., description="Previously elected committee")
     current : Previous = Field(..., description="Currently elected committee, same schema as previous")
 
+class GetSuperCommiteesResults(BaseModel):
+    result : GetSuperCommitees = Field(..., description="Object")
 
 #Transaction
 ## Cross Shard
@@ -251,7 +260,7 @@ class Hash_object(BaseModel):
 
 
 class GetCXReceiptByHashResults(BaseModel):
-    data : Hash_object = Field(..., description="Object")
+    result : Hash_object = Field(..., description="Object")
 
 class GetPendingCXReceiptsParameters(BaseModel):
     #empty set
@@ -287,13 +296,13 @@ class GetPending_object(BaseModel):
     commitBitMap : str = Field(..., description="Hex representation of aggregated signature bitmap")
 
 class GetPendingCXReceiptsResults(BaseModel):
-    data : List[GetPending_object] = Field(..., description="List of object")
+    result : List[GetPending_object] = Field(..., description="List of object")
 
 class ResendCXParameters(BaseModel):
     receipt_hash : str = Field(..., description="Cross shard receipt hash")
 
 class ResendCXResults(BaseModel):
-    success : bool = Field(..., description="If cross shard receipt was successfully resent or not")
+    result : bool = Field(..., description="If cross shard receipt was successfully resent or not")
 
 ## Transaction Pool
 
@@ -305,19 +314,19 @@ class GetPool_object(BaseModel):
     non_executable_count : str = Field(..., description="Type of staking transaction")
 
 class GetPoolStatsResults(BaseModel):
-    data : GetPool_object = Field(..., description="Object")
+    result : GetPool_object = Field(..., description="Object")
 
 class PendingStakingTransactionsParameters(BaseModel):
     #empty set
 
 class PendingStakingTransactionsResults(BaseModel):
-    data : List[StakingTransactionByHash] = Field(..., description="List of staking transactions in the transaction pool")
+    result : List[StakingTransactionByHash] = Field(..., description="List of staking transactions in the transaction pool")
 
 class PendingTransactionsParameters(BaseModel):
     #empty set
 
 class PendingTransactionsResults(BaseModel):
-    data : List[StakingTransactionByHash] = Field(..., description="List of regular & smart contract transactions in the transaction pool")
+    result : List[StakingTransactionByHash] = Field(..., description="List of regular & smart contract transactions in the transaction pool")
 
 ## Staking
 
@@ -331,21 +340,21 @@ class CurrentStakingErrorSink(BaseModel):
     error_message : str = Field(..., description="Reason for staking transaction rejection")
 
 class GetCurrentStakingErrorSinkResults(BaseModel):
-    data : List[CurrentStakingErrorSink] = Field(..., description="Array of object")
+    result : List[CurrentStakingErrorSink] = Field(..., description="Array of object")
 
 class GetStakingTransactionByBlockNumberAndIndexParameters(BaseModel):
     block_number : int = Field(..., description="Block number")
     index : int = Field(..., description="Staking transaction index")
 
 class GetStakingTransactionByBlockNumberAndIndexResults(BaseModel):
-    data : StakingTransactionByHash = Field(..., description="Object")
+    result : StakingTransactionByHash = Field(..., description="Object")
 
 class GetStakingTransactionByBlockHashAndIndexParameters(BaseModel):
     block_hash : int = Field(..., description="Block hash")
     index : int = Field(..., description="Staking transaction index")
 
 class GetStakingTransactionByBlockHashAndIndexResults(BaseModel):
-    data : StakingTransactionByHash = Field(..., description="Object")
+    result : StakingTransactionByHash = Field(..., description="Object")
 
 class GetStakingTransactionByHashParameters(BaseModel):
     staking_hash : str = Field(..., description="Staking transaction hash")
@@ -363,13 +372,13 @@ class StakingTransactionByHash(BaseModel):
     msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction") #HELP not sure here
 
 class GetStakingTransactionByHashResults(BaseModel):
-    data : StakingTransactionByHash = Field(..., description="Object")
+    result : StakingTransactionByHash = Field(..., description="Object")
 
 class SendRawStakingTransactionParameters(BaseModel):
     hex_transaction : str = Field(..., description="Hex representation of signed staking transaction")
 
 class SendRawStakingTransactionResults(BaseModel):
-    data : str = Field(..., description="Staking transaction hash")
+    result : str = Field(..., description="Staking transaction hash")
 
 ##Transfer
 
@@ -382,7 +391,7 @@ class CurrentTransactionErrorSink(BaseModel):
     error_message : str = Field(..., description="Reason for  transaction rejection")
 
 class GetCurrentTransactionErrorSinkResults(BaseModel):
-    data : List[CurrentTransactionErrorSink] = Field(..., description="Object")
+    result : List[CurrentTransactionErrorSink] = Field(..., description="Object")
 
 class GetTransactionByBlockHashAndIndexParameters(BaseModel):
     block_hash : str = Field(..., description="Block hash")
@@ -411,7 +420,7 @@ class GetTransactionByBlockNumberAndIndexParameters(BaseModel):
     block_number : int = Field(..., description="Block number")
     index : int = Field(..., description="Transaction index")
 
-class GetTransactionByBlockNumberAndIndexResults(BaseModel):
+class GetTransactionByBlockNumberAndIndex(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
     from : str = Field(..., description="Sender wallet address")
@@ -426,11 +435,14 @@ class GetTransactionByBlockNumberAndIndexResults(BaseModel):
     value : int = Field(..., description="Amount transferred")
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
+    
+class GetTransactionByBlockNumberAndIndexResults(BaseModel):
+    result : GetTransactionByBlockNumberAndIndex = Field(..., description="Object")
 
 class GetTransactionByHashParameters(BaseModel):
     hash : str = Field(..., description="Transaction hash")
 
-class GetTransactionByHashResults(BaseModel):
+class GetTransactionByHash(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
     from : str = Field(..., description="Sender wallet address")
@@ -446,10 +458,13 @@ class GetTransactionByHashResults(BaseModel):
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
 
+class GetTransactionByHashResults(BaseModel):
+    result : GetTransactionByHash = Field(..., description="Object")
+
 class GetTransactionReceiptParameters(BaseModel):
     receipt : str = Field(..., description="Transaction receipt")
 
-class GetTransactionReceiptResults(BaseModel):
+class GetTransactionReceipt(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
     contractAddress : str = Field(..., description="Smart contract address")
@@ -464,11 +479,14 @@ class GetTransactionReceiptResults(BaseModel):
     transactionHash : str = Field(..., description="Transaction hash")
     transactionIndex : str = Field(..., description="Transaction index within block")
 
+class GetTransactionReceiptResults(BaseModel):
+    result : GetTransactionReceipt = Field(..., description="Object")
+
 class SendRawTransactionParameters(BaseModel):
     hex : str = Field(..., description="Hex representation of signed transaction")
 
 class SendRawTransactionResults(BaseModel):
-    hash : str = Field(..., description="Transaction hash")
+    result : str = Field(..., description="Transaction hash")
 
 #Blockchain
 ## Network
@@ -504,7 +522,7 @@ class LastCrossLinks(BaseModel):
     epoch_number : int = Field(..., description="Block epoch")
 
 class GetLastCrossLinksResults(BaseModel):
-    results : List[LastCrossLinks] = Field(..., description="Array of object")
+    result : List[LastCrossLinks] = Field(..., description="Array of object")
 
 class GetLeaderParameters(BaseModel):
     #empty set
