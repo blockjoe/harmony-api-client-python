@@ -22,7 +22,7 @@ from ..models import (
 )
 
 def getBalance(api_url : str, params : GetBalanceParameters, session : Optional[requests.Session] = None) -> GetBalanceResults:
-	"""
+    """
     params: GetBalanceParameters
     result: GetBalanceResults
     method: hmyv2_getBalance
@@ -33,7 +33,7 @@ def getBalance(api_url : str, params : GetBalanceParameters, session : Optional[
     return GetBalanceResults(**results)
 
 def getBalanceByBlockNumber(api_url : str, params : GetBalanceByBlockNumberParameters, session : Optional[requests.Session] = None) -> GetBalanceByBlockNumberResults:
-	"""
+    """
     params: GetBalanceByBlockNumberParameters
     result: GetBalanceByBlockNumberResults
     method: hmyv2_getBalanceByBlockNumber
@@ -44,7 +44,7 @@ def getBalanceByBlockNumber(api_url : str, params : GetBalanceByBlockNumberParam
     return GetBalanceByBlockNumberResults(**results)
 
 def getStakingTransactionsCount(api_url : str, params : GetStakingTransactionsCountParameters, session : Optional[requests.Session] = None) -> GetStakingTransactionsCountResults:
-	"""
+    """
     params: GetStakingTransactionsCountParameters
     result: GetStakingTransactionsCountResults
     method: hmyv2_getStakingTransactionsCount
@@ -55,7 +55,7 @@ def getStakingTransactionsCount(api_url : str, params : GetStakingTransactionsCo
     return GetStakingTransactionsCountResults(**results)
 
 def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetStakingTransactionsHistoryResults, GetStakingTransactionsHistoryTxTypeResults]:
-	"""
+    """
     params: GetStakingTransactionsHistoryParameters
     result: GetStakingTransactionsHistoryResults
     method: hmyv2_getStakingTransactionsHistory
@@ -68,7 +68,7 @@ def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactions
     return GetStakingTransactionsHistoryResults(**results)
 
 def getTransactionsCount(api_url : str, params : GetTransactionsCountParameters, session : Optional[requests.Session] = None) -> GetTransactionsCountResults:
-	"""
+    """
     params: GetTransactionsCountParameters
     result: GetTransactionsCountResults
     method: hmyv2_getTransactionsCount
@@ -79,7 +79,7 @@ def getTransactionsCount(api_url : str, params : GetTransactionsCountParameters,
     return GetTransactionsCountResults(**results)
 
 def getTransactionsHistory(api_url : str, params : GetTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetTransactionsHistoryResults, GetTransactionsHistoryTxTypeResults]:
-	"""
+    """
     params: GetTransactionsHistoryParameters
     result: GetTransactionsHistoryResults
     method: hmyv2_getTransactionsHistory

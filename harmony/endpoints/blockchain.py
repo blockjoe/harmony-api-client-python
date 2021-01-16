@@ -6,11 +6,10 @@ from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     BlockResult,
-    BlockNumberParameters,
+    BlockListResults,
     BlockNumberResults,
     GetCirculatingSupplyResults,
     GetEpochResults,
-    GetLastCrossLinksParameters,
     GetLastCrossLinksResults,
     GetLeaderResults,
     GasPriceResults,
@@ -20,7 +19,7 @@ from ..models import (
     GetValidatorsResults,
     GetValidatorKeysParameters,
     GetValidatorKeysResults,
-    GetValidatorKeyParameters,
+    GetValidatorKeysParameters,
     GetCurrentBadBlocksResults,
     GetNodeMetadataResults,
     ProtocolVersionResults,
@@ -43,7 +42,7 @@ from ..models import (
 #Network
 
 def blockNumber(api_url : str, session : Optional[requests.Session] = None) -> BlockNumberResults:
-	"""
+    """
     params: None
     result: BlockNumberResults
     method: hmyv2_blockNumber
@@ -54,7 +53,7 @@ def blockNumber(api_url : str, session : Optional[requests.Session] = None) -> B
     return BlockNumberResults(**results)
 
 def getCirculatingSupply(api_url : str, session : Optional[requests.Session] = None) -> GetCirculatingSupplyResults:
-	"""
+    """
     params: None
     result: GetCirculatingSupplyResults
     method: hmyv2_getCirculatingSupply
@@ -65,7 +64,7 @@ def getCirculatingSupply(api_url : str, session : Optional[requests.Session] = N
     return GetCirculatingSupplyResults(**results)
 
 def getEpoch(api_url : str, session : Optional[requests.Session] = None) -> GetEpochResults:
-	"""
+    """
     params: None
     result: GetEpochResults
     method: hmyv2_getEpoch
@@ -76,7 +75,7 @@ def getEpoch(api_url : str, session : Optional[requests.Session] = None) -> GetE
     return GetEpochResults(**results)
 
 def getLastCrossLinks(api_url : str, session : Optional[requests.Session] = None) -> GetLastCrossLinksResults:
-	"""
+    """
     params: None
     result: GetLastCrossLinksResults
     method: hmyv2_getLastCrossLinks
@@ -87,7 +86,7 @@ def getLastCrossLinks(api_url : str, session : Optional[requests.Session] = None
     return GetLastCrossLinksResults(**results)
 
 def getLeader(api_url : str, session : Optional[requests.Session] = None) -> GetLeaderResults:
-	"""
+    """
     params: None
     result: GetLeaderResults
     method: hmyv2_getLeader
@@ -98,7 +97,7 @@ def getLeader(api_url : str, session : Optional[requests.Session] = None) -> Get
     return GetLeaderResults(**results)
 
 def gasPrice(api_url : str, session : Optional[requests.Session] = None) -> GasPriceResults:
-	"""
+    """
     params: None
     result: GasPriceResults
     method: hmyv2_gasPrice
@@ -109,7 +108,7 @@ def gasPrice(api_url : str, session : Optional[requests.Session] = None) -> GasP
     return GasPriceResults(**results)
 
 def getShardingStructure(api_url : str, session : Optional[requests.Session] = None) -> GetShardingStructureResults:
-	"""
+    """
     params: GetShardingStructureParameters
     result: GetShardingStructureResults
     method: hmyv2_getShardingStructure
@@ -120,7 +119,7 @@ def getShardingStructure(api_url : str, session : Optional[requests.Session] = N
     return GetShardingStructureResults(**results)
 
 def getTotalSupply(api_url : str, session : Optional[requests.Session] = None) -> GetTotalSupplyResults:
-	"""
+    """
     params: None
     result: GetTotalSupplyResults
     method: hmyv2_getTotalSupply
@@ -131,7 +130,7 @@ def getTotalSupply(api_url : str, session : Optional[requests.Session] = None) -
     return GetTotalSupplyResults(**results)
 
 def getValidators(api_url : str, params : GetValidatorsParameters, session : Optional[requests.Session] = None) -> GetValidatorsResults:
-	"""
+    """
     params: GetValidatorsParameters
     result: GetValidatorsResults
     method: hmyv2_getValidators
@@ -142,7 +141,7 @@ def getValidators(api_url : str, params : GetValidatorsParameters, session : Opt
     return GetValidatorsResults(**results)
 
 def getValidatorKeys(api_url : str, params : GetValidatorKeysParameters, session : Optional[requests.Session] = None) -> GetValidatorKeysResults:
-	"""
+    """
     params: GetValidatorKeysParameters
     result: GetValidatorKeysResults
     method: hmyv2_getValidatorKeys
@@ -155,7 +154,7 @@ def getValidatorKeys(api_url : str, params : GetValidatorKeysParameters, session
 #Node
 
 def getCurrentBadBlocks(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentBadBlocksResults:
-	"""
+    """
     params: None
     result: GetCurrentBadBlocksResults
     method: hmyv2_getCurrentBadBlocks
@@ -168,7 +167,7 @@ def getCurrentBadBlocks(api_url : str, session : Optional[requests.Session] = No
     return GetCurrentBadBlocksResults(**results)
 
 def getNodeMetadata(api_url : str, session : Optional[requests.Session] = None) -> GetNodeMetadataResults:
-	"""
+    """
     params: None
     result: GetNodeMetadataResults
     method: hmyv2_getNodeMetadata
@@ -179,7 +178,7 @@ def getNodeMetadata(api_url : str, session : Optional[requests.Session] = None) 
     return GetNodeMetadataResults(**results)
 
 def protocolVersion(api_url : str, session : Optional[requests.Session] = None) -> ProtocolVersionResults:
-	"""
+    """
     params: None
     result: ProtocolVersionResults
     method: hmyv2_protocolVersion
@@ -189,8 +188,8 @@ def protocolVersion(api_url : str, session : Optional[requests.Session] = None) 
     results = {"result" : resp.json()["result"]}
     return ProtocolVersionResults(**results)
 
-def peerCount(api_url : str, params : PeerCountParameters, session : Optional[requests.Session] = None) -> PeerCountResults:
-	"""
+def peerCount(api_url : str, session : Optional[requests.Session] = None) -> PeerCountResults:
+    """
     params: None
     result: PeerCountResults
     method: net_peerCount
@@ -203,7 +202,7 @@ def peerCount(api_url : str, params : PeerCountParameters, session : Optional[re
 #Blocks
 
 def getBlocks(api_url : str, params : GetBlocksParameters, session : Optional[requests.Session] = None) -> BlockListResults:
-	"""
+    """
     params: GetBlocksParameters
     result: BlockListResults
     method: hmyv2_getBlocks
@@ -214,7 +213,7 @@ def getBlocks(api_url : str, params : GetBlocksParameters, session : Optional[re
     return BlockListResults(**results)
 
 def getBlockByNumber(api_url : str, params : GetBlockByNumberParameters, session : Optional[requests.Session] = None) -> BlockResult:
-	"""
+    """
     params: GetBlockByNumberParameters
     result: BlockResult
     method: hmyv2_getBlockByNumber
@@ -225,7 +224,7 @@ def getBlockByNumber(api_url : str, params : GetBlockByNumberParameters, session
     return BlockResult(**results)
 
 def getBlockByHash(api_url : str, params : GetBlockByHashParameters, session : Optional[requests.Session] = None) -> BlockResult:
-	"""
+    """
     params: GetBlockByHashParameters
     result: BlockResult
     method: hmyv2_getBlockByHash
@@ -236,7 +235,7 @@ def getBlockByHash(api_url : str, params : GetBlockByHashParameters, session : O
     return BlockResult(**results)
 
 def getBlockSigners(api_url : str, params : GetBlockSignersParameters, session : Optional[requests.Session] = None) -> GetBlockSignersResults:
-	"""
+    """
     params: GetBlockSignersParameters
     result: GetBlockSignersResults
     method: hmyv2_getBlockSigners
@@ -247,7 +246,7 @@ def getBlockSigners(api_url : str, params : GetBlockSignersParameters, session :
     return GetBlockSignersResults(**results)
 
 def getBlockSignersKeys(api_url : str, params : GetBlockSignersKeysParameters, session : Optional[requests.Session] = None) -> GetBlockSignersKeysResults:
-	"""
+    """
     params: GetBlockSignersKeysParameters
     result: GetBlockSignersKeysResults
     method: hmyv2_getBlockSignersKeys
@@ -258,7 +257,7 @@ def getBlockSignersKeys(api_url : str, params : GetBlockSignersKeysParameters, s
     return GetBlockSignersKeysResults(**results)
 
 def getBlockTransactionCountByNumber(api_url : str, params : GetBlockTransactionCountByNumberParameters, session : Optional[requests.Session] = None) -> GetBlockTransactionCountByNumberResults:
-	"""
+    """
     params: GetBlockTransactionCountByNumberParameters
     result: GetBlockTransactionCountByNumberResults
     method: hmyv2_getBlockTransactionCountByNumber
@@ -269,7 +268,7 @@ def getBlockTransactionCountByNumber(api_url : str, params : GetBlockTransaction
     return GetBlockTransactionCountByNumberResults(**results)
 
 def getHeaderByNumber(api_url : str, params : GetHeaderByNumberParameters, session : Optional[requests.Session] = None) -> GetHeaderByNumberResults:
-	"""
+    """
     params: GetHeaderByNumberParameters
     result: GetHeaderByNumberResults
     method: hmyv2_getHeaderByNumber
@@ -280,7 +279,7 @@ def getHeaderByNumber(api_url : str, params : GetHeaderByNumberParameters, sessi
     return GetHeaderByNumberResults(**results)
 
 def getLatestChainHeaders(api_url : str, session : Optional[requests.Session] = None) -> GetLatestChainHeadersResults:
-	"""
+    """
     params: None
     result: GetLatestChainHeadersResults
     method: hmyv2_getLatestChainHeaders
@@ -291,7 +290,7 @@ def getLatestChainHeaders(api_url : str, session : Optional[requests.Session] = 
     return GetLatestChainHeadersResults(**results)
 
 def latestHeader(api_url : str, session : Optional[requests.Session] = None) -> LatestHeaderResults:
-	"""
+    """
     params: LatestHeaderParameters
     result: LatestHeaderResults
     method: hmyv2_latestHeader

@@ -8,8 +8,8 @@ from ..models import (
     GetCXReceiptByHashParameters,
     GetCXReceiptByHashResults,
     GetPendingCXReceiptsResults,
-    ResendCxParameters,
-    ResendCxResults,
+    ResendCXParameters,
+    ResendCXResults,
     GetPoolStatsResults,
     GetCurrentStakingErrorSinkResults,
     GetStakingTransactionByBlockNumberAndIndexParameters,
@@ -33,7 +33,7 @@ from ..models import (
 #Cross shard
 
 def getCXReceiptByHash(api_url : str, params : GetCXReceiptByHashParameters, session : Optional[requests.Session] = None) -> GetCXReceiptByHashResults:
-	"""
+    """
     params: GetCXReceiptByHashParameters
     result: GetCXReceiptByHashResults
     method: hmyv2_getCXReceiptByHash
@@ -45,7 +45,7 @@ def getCXReceiptByHash(api_url : str, params : GetCXReceiptByHashParameters, ses
 
 
 def getPendingCXReceipts(api_url : str, session : Optional[requests.Session] = None) -> GetPendingCXReceiptsResults:
-	"""
+    """
     params: None
     result: GetPendingCXReceiptsResults
     method: hmyv2_getPendingCXReceipts
@@ -56,21 +56,21 @@ def getPendingCXReceipts(api_url : str, session : Optional[requests.Session] = N
     return GetPendingCXReceiptsResults(**results)
 
 
-def resendCx(api_url : str, params : ResendCxParameters, session : Optional[requests.Session] = None) -> ResendCxResults:
-	"""
-    params: ResendCxParameters
-    result: ResendCxResults
-    method: hmyv2_resendCx
+def resendCX(api_url : str, params : ResendCXParameters, session : Optional[requests.Session] = None) -> ResendCXResults:
     """
-    data = format_api_data("hmyv2_resendCx", params)
+    params: ResendCXParameters
+    result: ResendCXResults
+    method: hmyv2_resendCX
+    """
+    data = format_api_data("hmyv2_resendCX", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
-    return ResendCxResults(**results)
+    return ResendCXResults(**results)
 
 #Transaction Pool
 
 def getPoolStats(api_url : str, session : Optional[requests.Session] = None) -> GetPoolStatsResults:
-	"""
+    """
     params: None
     result: GetPoolStatsResults
     method: hmyv2_getPoolStats
@@ -81,7 +81,7 @@ def getPoolStats(api_url : str, session : Optional[requests.Session] = None) -> 
     return GetPoolStatsResults(**results)
 
 def pendingStakingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResults:
-	"""
+    """
     params: None
     result: StakingTransactionListResults
     method: hmyv2_pendingStakingTransactions
@@ -92,7 +92,7 @@ def pendingStakingTransactions(api_url : str, session : Optional[requests.Sessio
     return StakingTransactionListResults(**results)
 
 def pendingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResults:
-	"""
+    """
     params: None
     result: StakingTransactionListResults
     method: hmyv2_pendingTransactions
@@ -105,7 +105,7 @@ def pendingTransactions(api_url : str, session : Optional[requests.Session] = No
 #Staking
 
 def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentStakingErrorSinkResults:
-	"""
+    """
     params: None
     result: GetCurrentStakingErrorSinkResults
     method: hmyv2_getCurrentStakingErrorSink
@@ -116,7 +116,7 @@ def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Sessio
     return GetCurrentStakingErrorSinkResults(**results)
 
 def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : GetStakingTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
-	"""
+    """
     params: GetStakingTransactionByBlockNumberAndIndexParameters
     result: StakingTransactionResult
     method: hmyv2_getStakingTransactionByBlockNumberAndIndex
@@ -127,7 +127,7 @@ def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : GetStakin
     return StakingTransactionResult(**results)
 
 def getStakingTransactionByBlockHashAndIndex(api_url : str, params : GetStakingTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
-	"""
+    """
     params: GetStakingTransactionByBlockHashAndIndexParameters
     result: StakingTransactionResult
     method: hmyv2_getStakingTransactionByBlockHashAndIndex
@@ -138,7 +138,7 @@ def getStakingTransactionByBlockHashAndIndex(api_url : str, params : GetStakingT
     return StakingTransactionResult(**results)
 
 def getStakingTransactionByHash(api_url : str, params : GetStakingTransactionByHashParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
-	"""
+    """
     params: GetStakingTransactionByHashParameters
     result: StakingTransactionResult
     method: hmyv2_getStakingTransactionByHash
@@ -149,7 +149,7 @@ def getStakingTransactionByHash(api_url : str, params : GetStakingTransactionByH
     return StakingTransactionResult(**results)
 
 def sendRawStakingTransaction(api_url : str, params : SendRawStakingTransactionParameters, session : Optional[requests.Session] = None) -> SendRawStakingTransactionResults:
-	"""
+    """
     params: SendRawStakingTransactionParameters
     result: SendRawStakingTransactionResults
     method: hmyv2_sendRawStakingTransaction
@@ -162,7 +162,7 @@ def sendRawStakingTransaction(api_url : str, params : SendRawStakingTransactionP
 #Transfer
 
 def getCurrentTransactionErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentTransactionErrorSinkResults:
-	"""
+    """
     params: None
     result: GetCurrentTransactionErrorSinkResults
     method: hmyv2_getCurrentTransactionErrorSink
@@ -173,7 +173,7 @@ def getCurrentTransactionErrorSink(api_url : str, session : Optional[requests.Se
     return GetCurrentTransactionErrorSinkResults(**results)
 
 def getTransactionByBlockHashAndIndex(api_url : str, params : GetTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
-	"""
+    """
     params: GetTransactionByBlockHashAndIndexParameters
     result: TransactionResult
     method: hmyv2_getTransactionByBlockHashAndIndex
@@ -184,7 +184,7 @@ def getTransactionByBlockHashAndIndex(api_url : str, params : GetTransactionByBl
     return TransactionResult(**results)
 
 def getTransactionByBlockNumberAndIndex(api_url : str, params : GetTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
-	"""
+    """
     params: GetTransactionByBlockNumberAndIndexParameters
     result: TransactionResult
     method: hmyv2_getTransactionByBlockNumberAndIndex
@@ -195,7 +195,7 @@ def getTransactionByBlockNumberAndIndex(api_url : str, params : GetTransactionBy
     return TransactionResult(**results)
 
 def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters, session : Optional[requests.Session] = None) -> TransactionResult:
-	"""
+    """
     params: GetTransactionByHashParameters
     result: TransactionResult
     method: hmyv2_getTransactionByHash
@@ -206,7 +206,7 @@ def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters,
     return TransactionResult(**results)
 
 def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameters, session : Optional[requests.Session] = None) -> GetTransactionReceiptResults:
-	"""
+    """
     params: GetTransactionReceiptParameters
     result: G_Results
     method: hmyv2_getTransactionReceipt
@@ -217,7 +217,7 @@ def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameter
     return GetTransactionReceiptResults(**results)
 
 def sendRawTransaction(api_url : str, params : SendRawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawTransactionResults:
-	"""
+    """
     params: SendRawTransactionParameters
     result: SendRawTransactionResults
     method: hmyv2_sendRawTransaction

@@ -64,22 +64,6 @@ class GetDelegationsByValidatorParameters(BaseModel):
 
 ## Validator
 
-class GetAllValidatorInformationParameters(BaseModel):
-    page_request : int = Field(..., description="Page to request (page size is 100), -1 for all validators", alias="page-request")
-
-class ValidatorListResults(BaseModel):
-    result : List[Validator] = Field(..., description="List of Validator Objects")
-
-class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
-    page_number : int = Field(..., description="Page number, -1 for all", alias="page-number")
-    block_number : int = Field(..., description="Block number", alias="block-number")
-
-
-class GetElectedValidatorAddressesResults(BaseModel):
-    result : List[str] = Field(..., description="List of wallet addresses that are currently elected")
-
-
-#start all of the classes needed for Validator class#
 class Key(BaseModel):
     bls_public_key : str = Field(..., description="BLS public key", alias="bls-public-key")
     group_percent : str = Field(..., description="Key voting power in shard", alias="group-percent")
@@ -110,6 +94,7 @@ class Lifetime(BaseModel):
     apr : str = Field(..., description="Approximate Return Rate")
     epoch_apr : List[EpochAPR] = Field(..., description="List of APR per epoch", alias="epoch-apr")
 
+
 class Validator(BaseModel):
     bls_public_keys : List[str] = Field(..., description="List of public BLS keys associated with the validator wallet address", alias="bls-public-keys")
     last_epoch_in_committee : int = Field(..., description="Last epoch any key of the validator was elected", alias="last-epoch-in-committee")
@@ -126,16 +111,36 @@ class Validator(BaseModel):
     details : str = Field(..., description="Validator details, displayed on the Staking Dashboard")
     creation_height : int = Field(..., description="Block in which the validator was created", alias="creation-height")
     address : str = Field(..., description="Validator wallet address")
-    delegations : List[DelegationsByDelegator]
+    delegations : List[Delegation] = Field(..., description="List of Delegation Objects")
     metrics : Metrics = Field(..., description="BLS key earning metrics for current epoch")
     total_delegation : int = Field(..., description="Total amount delegated to validator", alias="total-delegation")
-    currently_in_committee : bool = Field(.., description="If key is currently elected", alias="currently-in-committee")
+    currently_in_committee : bool = Field(..., description="If key is currently elected", alias="currently-in-committee")
     epos_status : str = Field(..., description="Currently elected, eligible to be elected next epoch, or not eligible to be elected next epoch", alias="epos-status")
     epos_winning_stake : str = Field(..., description="Total effective stake of the validator", alias="epos-winning-stake")
     booted_status : str = Field(..., description="Banned status", alias="booted-status")
     active_status : str = Field(..., description="Active or inactive", alias="active-status")
     lifetime : Lifetime = Field(..., description="Lifetime Object")
 
+
+class GetAllValidatorInformationParameters(BaseModel):
+    page_request : int = Field(..., description="Page to request (page size is 100), -1 for all validators", alias="page-request")
+
+class ValidatorListResults(BaseModel):
+    result : List[Validator] = Field(..., description="List of Validator Objects")
+
+class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
+    page_number : int = Field(..., description="Page number, -1 for all", alias="page-number")
+    block_number : int = Field(..., description="Block number", alias="block-number")
+
+
+class GetAllValidatorAddressesResults(BaseModel):
+    result : List[str] = Field(..., description='List of wallet addresses that have created validators on the network')
+
+class GetElectedValidatorAddressesResults(BaseModel):
+    result : List[str] = Field(..., description="List of wallet addresses that are currently elected")
+
+
+#start all of the classes needed for Validator class#
 #end of Validator class
 
 
@@ -211,8 +216,8 @@ class SuperCommittees(BaseModel):
     previous : ElectedCommittee = Field(..., description="Previously elected committee")
     current : ElectedCommittee = Field(..., description="Currently elected committee, same schema as previous")
 
-class GetSuperCommiteesResults(BaseModel):
-    result : SuperCommitees = Field(..., description="SuperComittees Object")
+class GetSuperCommitteesResults(BaseModel):
+    result : SuperCommittees = Field(..., description="SuperCommittees Object")
 
 #Transaction
 ## Cross Shard
@@ -237,7 +242,7 @@ class GetCXReceiptByHashResults(BaseModel):
 
 class Receipt(BaseModel):
     txHash : str = Field(..., description="Transaction hash")
-    from_ : str = = Field(..., description="Sender wallet address", alias="from")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     to : str = Field(..., description="Receiver wallet address")
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
@@ -285,6 +290,20 @@ class GetPoolStatsResults(BaseModel):
     result : PoolStats = Field(..., description="PoolStats Object")
 
 
+class StakingTransaction(BaseModel):
+    blockHash : str = Field(..., description="Block hash in which transaction was finalized")
+    blockNumber : int = Field(..., description="Block number in which transaction was finalized")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
+    timestamp : int = Field(..., description="Unix time at which transaction was finalized")
+    gas : int = Field(..., description="Gas limit of transaction")
+    gasPrice : int = Field(..., description="Gas price of transaction in Atto")
+    nonce : int = Field(..., description="Wallet nonce of transaction")
+    transactionIndex : int = Field(..., description="Staking transaction index within block")
+    type_ : str = Field(..., description="Type of staking transaction", alias="type")
+    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction")
+
+
+
 class StakingTransactionListResults(BaseModel):
     result : List[StakingTransaction] = Field(..., description="List of staking transactions")
 
@@ -316,18 +335,6 @@ class GetStakingTransactionByBlockHashAndIndexParameters(BaseModel):
 
 class GetStakingTransactionByHashParameters(BaseModel):
     staking_hash : str = Field(..., description="Staking transaction hash", alias="staking-hash")
-
-class StakingTransaction(BaseModel):
-    blockHash : str = Field(..., description="Block hash in which transaction was finalized")
-    blockNumber : int = Field(..., description="Block number in which transaction was finalized")
-    from_ : str = Field(..., description="Sender wallet address", alias="from")
-    timestamp : int = Field(..., description="Unix time at which transaction was finalized")
-    gas : int = Field(..., description="Gas limit of transaction")
-    gasPrice : int = Field(..., description="Gas price of transaction in Atto")
-    nonce : int = Field(..., description="Wallet nonce of transaction")
-    transactionIndex : int = Field(..., description="Staking transaction index within block")
-    type_ : str = Field(..., description="Type of staking transaction", alias="type")
-    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction")
 
 
 class SendRawStakingTransactionParameters(BaseModel):
@@ -421,7 +428,7 @@ class CrossLink(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
     view_id : int = Field(..., description="View ID", alias="view-id")
     signature : str = Field(..., description="Hex representation of aggregated signature")
-    signature_bitmap : str = Field(... description="Hex representation of aggregated signature bitmap", alias="signature-bitmap")
+    signature_bitmap : str = Field(..., description="Hex representation of aggregated signature bitmap", alias="signature-bitmap")
     shard_id : int = Field(..., description="Shard ID", alias="shard-id")
     epoch_number : int = Field(..., description="Block epoch", alias="epoch-number")
 
@@ -528,18 +535,6 @@ class GetBlocksParameters(BaseModel):
     end_block : int = Field(..., description="End block", alias="end-block")
     additional_blocks_data : AdditionalBlocksData = Field(..., description="AdditionalBlocksData Object", alias="additional-blocks-data")
 
-class BlockListResults(BaseModel):
-    result : List[GetBlockByNumber] = Field(..., description="List of blocks")
-    
-class AdditionalBlocksNumbersData(BaseModel):
-    fullTx : bool = Field(..., description="Include full transaction data")
-    inclTx : bool = Field(..., description="Include regular transactions")
-    inclStaking : bool = Field(..., description="Include full staking transactions")
-
-class GetBlockByNumberParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
-    additional_blocks_numbers_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blocks-numbers-data")
-
 class Block(BaseModel):
     difficulty : int = Field(..., description="Unused, legacy from Eth")
     epoch : int = Field(..., description="Epoch number of block")
@@ -563,21 +558,30 @@ class Block(BaseModel):
     uncles : Dict[str, Any] = Field(..., description="Unused, legacy from Eth")
     viewID : int = Field(..., description="View ID")
 
+
+class BlockListResults(BaseModel):
+    result : List[Block] = Field(..., description="List of blocks")
+    
+class AdditionalBlocksNumbersData(BaseModel):
+    fullTx : bool = Field(..., description="Include full transaction data")
+    inclTx : bool = Field(..., description="Include regular transactions")
+    inclStaking : bool = Field(..., description="Include full staking transactions")
+
+class GetBlockByNumberParameters(BaseModel):
+    block_number : int = Field(..., description="Block number", alias="block-number")
+    additional_blocks_numbers_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blocks-numbers-data")
+
 class BlockResult(BaseModel):
     result : Block = Field(..., description="Block Object")
-    
 
 class GetBlockByHashParameters(BaseModel):
     hash_ : int = Field(..., description="Block hash", alias="hash")
-    additional_blockbynumber_data : Additional_blocks_data = Field(..., description="Object", alias="additional-blockbynumber-data")
-
-class GetBlockByHashResults(BaseModel):
-    result : GetBlockByNumber = Field(..., description="Object")
+    additional_blockbynumber_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blockbynumber-data")
 
 class GetBlockSignersParameters(BaseModel):
     start_block : int = Field(..., description="Start block", alias="start-block")
     end_block : int = Field(..., description="End block", alias="end-block")
-    additional_blocks_data : Additional_blocks_data = Field(..., description="Object", alias="additional-blocks-data")
+    additional_blocks_data : AdditionalBlocksData = Field(..., description="Object", alias="additional-blocks-data")
 
 class GetBlockSignersResults(BaseModel):
     result : List[str] = Field(..., description="List of block signer wallet addresses")
@@ -603,8 +607,21 @@ class GetBlockTransactionCountByHashResults(BaseModel):
 class GetHeaderByNumberParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
 
+class LatestHeader(BaseModel):
+    blockHash : str = Field(..., description="Block hash")
+    blockNumber : int = Field(..., description="Block number")
+    shardID : int = Field(..., description="Shard ID")
+    leader : str = Field(..., description="Wallet address of leader that proposed this block if prestaking, otherwise sha256 hash of leader's public bls key")
+    viewID : int = Field(..., description="View ID of the block")
+    epoch : int = Field(..., description="Epoch of the block")
+    timestamp : int = Field(..., description="Timestamp that the block was finalized")
+    unixtime : int = Field(..., description="Timestamp that the block was finalized in Unix time")
+    lastCommitSig : str = Field(..., description="Hex representation of aggregated signatures of the previous block")
+    lastCommitBitmap : str = Field(..., description="Hex representation of the aggregated signature bitmap of the previous block")
+
+
 class GetHeaderByNumberResults(BaseModel):
-    result : LastestHeader = Field(..., description="Object")
+    result : LatestHeader = Field(..., description="Object")
 
 
 class ChainHeader(BaseModel):
@@ -622,18 +639,6 @@ class LatestChainHeaders(BaseModel):
 class GetLatestChainHeadersResults(BaseModel):
     result : LatestChainHeaders = Field(..., description="LatestChainHeaders Object")
 
-
-class LatestHeader(BaseModel):
-    blockHash : str = Field(..., description="Block hash")
-    blockNumber : int = Field(..., description="Block number")
-    shardID : int = Field(..., description="Shard ID")
-    leader : str = Field(..., description="Wallet address of leader that proposed this block if prestaking, otherwise sha256 hash of leader's public bls key")
-    viewID : int = Field(..., description="View ID of the block")
-    epoch : int = Field(..., description="Epoch of the block")
-    timestamp : int = Field(..., description="Timestamp that the block was finalized")
-    unixtime : int = Field(..., description="Timestamp that the block was finalized in Unix time")
-    lastCommitSig : str = Field(..., description="Hex representation of aggregated signatures of the previous block")
-    lastCommitBitmap : str = Field(..., description="Hex representation of the aggregated signature bitmap of the previous block")
 
 class LatestHeaderResults(BaseModel):
     result : LatestHeader = Field(..., description="LatestHeader Object")
@@ -658,7 +663,7 @@ class GetStakingTransactionsCountParameters(BaseModel):
     transaction : str = Field(..., description="Type of staking transaction (SENT, RECEIVED, ALL)")
 
 class GetStakingTransactionsCountResults(BaseModel):
-    result : int = Field(..., "Number of staking transactions")
+    result : int = Field(...,  description="Number of staking transactions")
 
 
 class GetStakingTransactionsHistoryParameters(BaseModel):
@@ -694,6 +699,6 @@ class GetTransactionsHistoryParameters(BaseModel):
 class GetTransactionsHistoryTxTypeResults(BaseModel):
     result : List[Transaction] = Field(..., description="Array of transaction object")
         
- class GetTransactionsHistoryResults(BaseModel):
+class GetTransactionsHistoryResults(BaseModel):
     result : List[str] = Field(..., description="List of transaction hashes")
 

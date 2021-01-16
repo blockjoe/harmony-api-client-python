@@ -6,11 +6,11 @@ from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     GetDelegationsByDelegatorParameters,
-    DelegationsListResults,
+    DelegationListResults,
     GetDelegationsByDelegatorByBlockNumberParameters,
     GetDelegationsByValidatorParameters,
-    GetAllValidatorAddressesParameters,
     GetAllValidatorAddressesResults,
+    GetAllValidatorInformationParameters,
     GetAllValidatorInformationByBlockNumberParameters,
     GetElectedValidatorAddressesResults,
     GetValidatorInformationParameters,
@@ -23,48 +23,48 @@ from ..models import (
 
 #Delegation
 
-def getDelegationsByDelegator(api_url : str, params : GetDelegationsByDelegatorParameters, session : Optional[requests.Session] = None) -> DelegationsListResults:
+def getDelegationsByDelegator(api_url : str, params : GetDelegationsByDelegatorParameters, session : Optional[requests.Session] = None) -> DelegationListResults:
     """
     params: GetDelegationsByDelegatorParameters
-    result: DelegationsListResults
+    result: DelegationListResults
     method: hmyv2_getDelegationsByDelegator
     """
     data = format_api_data("hmyv2_getDelegationsByDelegator", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
-    return DelegationsListResults(**results)
+    return DelegationListResults(**results)
 
-def getDelegationsByDelegatorByBlockNumber(api_url : str, params : GetDelegationsByDelegatorByBlockNumberParameters, session : Optional[requests.Session] = None) -> DelegationsListResults:
+def getDelegationsByDelegatorByBlockNumber(api_url : str, params : GetDelegationsByDelegatorByBlockNumberParameters, session : Optional[requests.Session] = None) -> DelegationListResults:
     """
     params: GetDelegationsByDelegatorByBlockNumberParameters
-    result: DelegationsListResults
+    result: DelegationListResults
     method: hmyv2_getDelegationsByDelegatorByBlockNumber
     """
     data = format_api_data("hmyv2_getDelegationsByDelegatorByBlockNumber", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
-    return DelegationsListResults(**results)
+    return DelegationListResults(**results)
 
-def getDelegationsByValidator(api_url : str, params : GetDelegationsByValidatorParameters, session : Optional[requests.Session] = None) -> DelegationsListResults:
+def getDelegationsByValidator(api_url : str, params : GetDelegationsByValidatorParameters, session : Optional[requests.Session] = None) -> DelegationListResults:
     """
     params: GetDelegationsByValidatorParameters
-    result: DelegationsListResults
+    result: DelegationListResults
     method: hmyv2_getDelegationsByValidator
     """
     data = format_api_data("hmyv2_getDelegationsByValidator", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
-    return DelegationsListResults(**results)
+    return DelegationListResults(**results)
 
 #Validator
 
-def getAllValidatorAddresses(api_url : str, params : GetAllValidatorAddressesParameters, session : Optional[requests.Session] = None) -> GetAllValidatorAddressesResults:
+def getAllValidatorAddresses(api_url : str, session : Optional[requests.Session] = None) -> GetAllValidatorAddressesResults:
     """
-    params: GetAllValidatorAddressesParameters
+    params: None
     result: GetAllValidatorAddressesResults
     method: hmyv2_getAllValidatorAddresses
     """
-    data = format_api_data("hmyv2_getAllValidatorAddresses", params)
+    data = format_api_data("hmyv2_getAllValidatorAddresses", None)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
     return GetAllValidatorAddressesResults(**results)
@@ -117,7 +117,7 @@ def getValidatorInformation(api_url : str, params : GetValidatorInformationParam
 #Network
 
 def getCurrentUtilityMetrics(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentUtilityMetricsResults:
-	"""
+    """
     params: None
     result: GetCurrentUtilityMetricsResults
     method: hmyv2_getCurrentUtilityMetrics
@@ -128,7 +128,7 @@ def getCurrentUtilityMetrics(api_url : str, session : Optional[requests.Session]
     return GetCurrentUtilityMetricsResults(**results)
 
 def getetMedianRawStakeSnapshot(api_url : str, session : Optional[requests.Session] = None) -> GetMedianRawStakeSnapshotResults:
-	"""
+    """
     params: None
     result: GetMedianRawStakeSnapshotResults
     method: hmyv2_getMedianRawStakeSnapshot
@@ -139,7 +139,7 @@ def getetMedianRawStakeSnapshot(api_url : str, session : Optional[requests.Sessi
     return GetMedianRawStakeSnapshotResults(**results)
 
 def getStakingNetworkInfo(api_url : str, session : Optional[requests.Session] = None) -> GetStakingNetworkInfoResults:
-	"""
+    """
     params: None
     result: GetStakingNetworkInfoResults
     method: hmyv2_getStakingNetworkInfo
@@ -150,7 +150,7 @@ def getStakingNetworkInfo(api_url : str, session : Optional[requests.Session] = 
     return GetStakingNetworkInfoResults(**results)
 
 def getSuperCommittees(api_url : str, session : Optional[requests.Session] = None) -> GetSuperCommitteesResults:
-	"""
+    """
     params: None
     result: GetSuperCommitteesResults
     method: hmyv2_getSuperCommittees
