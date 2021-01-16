@@ -143,19 +143,19 @@ class GetValidatorInformationParameters(BaseModel):
     address: str = Field(..., description="Validator wallet address")
 
 class GetValidatorInformationResults(BaseModel):
-    result : Validator = Field(..., description="Object")
+    result : Validator = Field(..., description="Validator Object")
 
 
 #Network
 
-class GetCurrentUtilityMetrics(BaseModel):
+class UtilityMetrics(BaseModel):
     AccumulatorSnapshot : int = Field(..., description="Total block reward given out in Atto")
     CurrentStakedPercentage : str = Field(..., description="Percent of circulationg supply staked")
     Deviation : str = Field(..., description="Change in percent of circulating supply staked")
     Adjustment : str = Field(..., description="Change in circulationg supply staked")
 
 class GetCurrentUtilityMetricsResults(BaseModel):
-    result : GetCurrentUtilityMetrics = Field(..., description="Object")
+    result : UtilityMetrics = Field(..., description="UtilityMetrics Object")
 
 
 class EposSlotWinners(BaseModel):
@@ -368,12 +368,11 @@ class Transaction(BaseModel):
 
 class TransactionResult(BaseModel):
     result : Transaction = Field(..., description="Transaction Object")
-    
+
 
 class GetTransactionByBlockNumberAndIndexParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
     index : int = Field(..., description="Transaction index")
-
 
 class GetTransactionByHashParameters(BaseModel):
     hash_ : str = Field(..., description="Transaction hash", alias="hash")
@@ -411,14 +410,11 @@ class SendRawTransactionResults(BaseModel):
 class BlockNumberResults(BaseModel):
     result : int = Field(..., description="Current block number")
 
-
 class GetCirculatingSupplyResults(BaseModel):
     result : int = Field(..., description="Circulation supply of tokens in ONE")
 
-
 class GetEpochResults(BaseModel):
     result : int = Field(..., description="Current block number")
-
 
 class CrossLink(BaseModel):
     hash_ : str = Field(..., description="Parent block hash", alias="hash")
@@ -475,10 +471,8 @@ class GetValidatorKeysResults(BaseModel):
 
 ## Node
 
-
 class GetCurrentBadBlocksResults(BaseModel):
     result : List[str] = Field(..., description="List of bad blocks in node memory. Note: know issue with RPC not returning correctly")
-
 
 class ChainConfig(BaseModel):
     chain_id : int = Field(..., description="Chain ID for the network", alias="chain-id")
@@ -642,7 +636,7 @@ class LatestHeader(BaseModel):
     lastCommitBitmap : str = Field(..., description="Hex representation of the aggregated signature bitmap of the previous block")
 
 class LatestHeaderResults(BaseModel):
-    result : LatestHeader = Field(..., description="Object")
+    result : LatestHeader = Field(..., description="LatestHeader Object")
 
 #Account
 
