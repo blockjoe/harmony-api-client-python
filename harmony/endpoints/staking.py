@@ -6,13 +6,28 @@ from ..utils.communication import post_request
 from ..utils.call_format import format_api_data
 
 from ..models import (
-    CallParameters,
-    CallResult,
-    EstimateGasResult,
-    GetCodeParameters,
-    GetCodeResult,
-    GetStorageAtParameters,
-    GetStorageAtResult
+    GetDelegationsByDelegatorParameters,
+    GetDelegationsByDelegatorResults,
+    GetDelegationsByDelegatorByBlockNumberParameters,
+    GetDelegationsByDelegatorByBlockNumberResults,
+    GetDelegationsByValidatorParameters,
+    GetDelegationsByValidatorResults,
+    GetAllValidatorAddressesParameters,
+    GetAllValidatorAddressesResults,
+    GetAllValidatorInformationByBlockNumberParameters,
+    GetAllValidatorInformationByBlockNumberResults,
+    GetElectedValidatorAddressesParameters,
+    GetElectedValidatorAddressesResults,
+    GetValidatorInformationParameters,
+    GetValidatorInformationResults,
+    GetCurrentUtilityMetricsParameters,
+    GetCurrentUtilityMetricsResults,
+    GetMedianRawStakeSnapshotParameters,
+    GetMedianRawStakeSnapshotResults,
+    GetStakingNetworkInfoParameters,
+    GetStakingNetworkInfoResults,
+    GetSuperCommitteesParameters,
+    GetSuperCommitteesResults
 )
 
 #Delegation
