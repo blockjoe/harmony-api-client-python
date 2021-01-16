@@ -13,10 +13,12 @@ from ..models import (
     GetStakingTransactionsCountResults,
     GetStakingTransactionsHistoryParameters,
     GetStakingTransactionsHistoryResults,
+    GetStakingTransactionsHistoryTxTypeResults,
     GetTransactionsCountParameters,
     GetTransactionsCountResults,
     GetTransactionsHistoryParameters,
-    GetTransactionsHistoryResults
+    GetTransactionsHistoryResults,
+    GetTransactionsHistoryTxTypeResults
 )
 
 def getBalance(api_url : str, params : GetBalanceParameters, session : Optional[requests.Session] = None) -> GetBalanceResults:
@@ -52,7 +54,7 @@ def getStakingTransactionsCount(api_url : str, params : GetStakingTransactionsCo
     results = {"result" : resp.json()["result"]}
     return GetStakingTransactionsCountResults(**results)
 
-def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> GetStakingTransactionsHistoryResults:
+def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetStakingTransactionsHistoryResults, GetStakingTransactionsHistoryTxTypeResults]:
 	"""
     params: GetStakingTransactionsHistoryParameters
     result: GetStakingTransactionsHistoryResults
@@ -61,6 +63,8 @@ def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactions
     data = format_api_data("hmyv2_getStakingTransactionsHistory", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
+    if data["txType"]:
+        return GetStakingTransactionsHistoryTxTypeResults(**results)
     return GetStakingTransactionsHistoryResults(**results)
 
 def getTransactionsCount(api_url : str, params : GetTransactionsCountParameters, session : Optional[requests.Session] = None) -> GetTransactionsCountResults:
@@ -74,7 +78,7 @@ def getTransactionsCount(api_url : str, params : GetTransactionsCountParameters,
     results = {"result" : resp.json()["result"]}
     return GetTransactionsCountResults(**results)
 
-def getTransactionsHistory(api_url : str, params : GetTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> GetTransactionsHistoryResults:
+def getTransactionsHistory(api_url : str, params : GetTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetTransactionsHistoryResults, GetTransactionsHistoryTxTypeResults]:
 	"""
     params: GetTransactionsHistoryParameters
     result: GetTransactionsHistoryResults
@@ -83,4 +87,6 @@ def getTransactionsHistory(api_url : str, params : GetTransactionsHistoryParamet
     data = format_api_data("hmyv2_getTransactionsHistory", params)
     resp = post_request(api_url, data, session)
     results = {"result" : resp.json()["result"]}
+    if data["txType"]:
+        return GetTransactionsHistoryTxTypeResults(**results)
     return GetTransactionsHistoryResults(**results)
