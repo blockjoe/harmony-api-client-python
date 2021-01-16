@@ -1,4 +1,4 @@
-from typing import Any, Dict, List, Optional, Sequence
+from typing import Any, Dict, List, Optional, Sequence, Tuple
 
 from pydantic import BaseModel, Field
 
@@ -27,7 +27,7 @@ class CallParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
 
 class CallRequest(BaseRequest):
-    params : Tuple(SmartContractCall, int)
+    params : Tuple[SmartContractCall, int]
 
 class CallResponse(BaseResponse):
     result : str = Field(..., description="Return value of the executed smart contract")
