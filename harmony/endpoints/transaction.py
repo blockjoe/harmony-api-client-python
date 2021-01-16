@@ -6,114 +6,108 @@ from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     GetCXReceiptByHashParameters,
-    GetCXReceiptByHashResults,
-    GetPendingCXReceiptsResults,
+    GetCXReceiptByHashResponse,
+    GetPendingCXReceiptsResponse,
     ResendCXParameters,
-    ResendCXResults,
-    GetPoolStatsResults,
-    GetCurrentStakingErrorSinkResults,
+    ResendCXResponse,
+    GetPoolStatsResponse,
+    GetCurrentStakingErrorSinkResponse,
     GetStakingTransactionByBlockNumberAndIndexParameters,
     GetStakingTransactionByBlockHashAndIndexParameters,
     GetStakingTransactionByHashParameters,
     SendRawStakingTransactionParameters,
-    SendRawStakingTransactionResults,
-    GetCurrentTransactionErrorSinkResults,
+    SendRawStakingTransactionResponse,
+    GetCurrentTransactionErrorSinkResponse,
     GetTransactionByBlockHashAndIndexParameters,
     GetTransactionByBlockNumberAndIndexParameters,
     GetTransactionByHashParameters,
     GetTransactionReceiptParameters,
-    GetTransactionReceiptResults,
+    GetTransactionReceiptResponse,
     SendRawTransactionParameters,
-    SendRawTransactionResults,
+    SendRawTransactionResponse,
     StakingTransactionResult,
-    StakingTransactionListResults,
+    StakingTransactionListResponse,
     TransactionResult
 )
 
 #Cross shard
 
-def getCXReceiptByHash(api_url : str, params : GetCXReceiptByHashParameters, session : Optional[requests.Session] = None) -> GetCXReceiptByHashResults:
+def getCXReceiptByHash(api_url : str, params : GetCXReceiptByHashParameters, session : Optional[requests.Session] = None) -> GetCXReceiptByHashResponse:
     """
     params: GetCXReceiptByHashParameters
-    result: GetCXReceiptByHashResults
+    result: GetCXReceiptByHashResponse
     method: hmyv2_getCXReceiptByHash
     """
     data = format_api_data("hmyv2_getCXReceiptByHash", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetCXReceiptByHashResults(**results)
+    return GetCXReceiptByHashResponse(**resp.json())
 
 
-def getPendingCXReceipts(api_url : str, session : Optional[requests.Session] = None) -> GetPendingCXReceiptsResults:
+def getPendingCXReceipts(api_url : str, session : Optional[requests.Session] = None) -> GetPendingCXReceiptsResponse:
     """
     params: None
-    result: GetPendingCXReceiptsResults
+    result: GetPendingCXReceiptsResponse
     method: hmyv2_getPendingCXReceipts
     """
     data = format_api_data("hmyv2_getPendingCXReceipts", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetPendingCXReceiptsResults(**results)
+    return GetPendingCXReceiptsResponse(**resp.json())
 
 
-def resendCX(api_url : str, params : ResendCXParameters, session : Optional[requests.Session] = None) -> ResendCXResults:
+def resendCX(api_url : str, params : ResendCXParameters, session : Optional[requests.Session] = None) -> ResendCXResponse:
     """
     params: ResendCXParameters
-    result: ResendCXResults
+    result: ResendCXResponse
     method: hmyv2_resendCX
     """
     data = format_api_data("hmyv2_resendCX", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return ResendCXResults(**results)
+    return ResendCXResponse(**resp.json())
 
 #Transaction Pool
 
-def getPoolStats(api_url : str, session : Optional[requests.Session] = None) -> GetPoolStatsResults:
+def getPoolStats(api_url : str, session : Optional[requests.Session] = None) -> GetPoolStatsResponse:
     """
     params: None
-    result: GetPoolStatsResults
+    result: GetPoolStatsResponse
     method: hmyv2_getPoolStats
     """
     data = format_api_data("hmyv2_getPoolStats", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetPoolStatsResults(**results)
+    
+    return GetPoolStatsResponse(**resp.json())
 
-def pendingStakingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResults:
+def pendingStakingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResponse:
     """
     params: None
-    result: StakingTransactionListResults
+    result: StakingTransactionListResponse
     method: hmyv2_pendingStakingTransactions
     """
     data = format_api_data("hmyv2_pendingStakingTransactions", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return StakingTransactionListResults(**results)
+    return StakingTransactionListResponse(**resp.json())
 
-def pendingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResults:
+def pendingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResponse:
     """
     params: None
-    result: StakingTransactionListResults
+    result: StakingTransactionListResponse
     method: hmyv2_pendingTransactions
     """
     data = format_api_data("hmyv2_pendingTransactions", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return StakingTransactionListResults(**results)
+    return StakingTransactionListResponse(**resp.json())
 
 #Staking
 
-def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentStakingErrorSinkResults:
+def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentStakingErrorSinkResponse:
     """
     params: None
-    result: GetCurrentStakingErrorSinkResults
+    result: GetCurrentStakingErrorSinkResponse
     method: hmyv2_getCurrentStakingErrorSink
     """
     data = format_api_data("hmyv2_getCurrentStakingErrorSink", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetCurrentStakingErrorSinkResults(**results)
+    return GetCurrentStakingErrorSinkResponse(**resp.json())
 
 def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : GetStakingTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
     """
@@ -123,8 +117,7 @@ def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : GetStakin
     """
     data = format_api_data("hmyv2_getStakingTransactionByBlockNumberAndIndex", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return StakingTransactionResult(**results)
+    return StakingTransactionResult(**resp.json())
 
 def getStakingTransactionByBlockHashAndIndex(api_url : str, params : GetStakingTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
     """
@@ -134,8 +127,7 @@ def getStakingTransactionByBlockHashAndIndex(api_url : str, params : GetStakingT
     """
     data = format_api_data("hmyv2_getStakingTransactionByBlockHashAndIndex", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return StakingTransactionResult(**results)
+    return StakingTransactionResult(**resp.json())
 
 def getStakingTransactionByHash(api_url : str, params : GetStakingTransactionByHashParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
     """
@@ -145,32 +137,29 @@ def getStakingTransactionByHash(api_url : str, params : GetStakingTransactionByH
     """
     data = format_api_data("hmyv2_getStakingTransactionByHash", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return StakingTransactionResult(**results)
+    return StakingTransactionResult(**resp.json())
 
-def sendRawStakingTransaction(api_url : str, params : SendRawStakingTransactionParameters, session : Optional[requests.Session] = None) -> SendRawStakingTransactionResults:
+def sendRawStakingTransaction(api_url : str, params : SendRawStakingTransactionParameters, session : Optional[requests.Session] = None) -> SendRawStakingTransactionResponse:
     """
     params: SendRawStakingTransactionParameters
-    result: SendRawStakingTransactionResults
+    result: SendRawStakingTransactionResponse
     method: hmyv2_sendRawStakingTransaction
     """
     data = format_api_data("hmyv2_sendRawStakingTransaction", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return SendRawStakingTransactionResults(**results)
+    return SendRawStakingTransactionResponse(**resp.json())
 
 #Transfer
 
-def getCurrentTransactionErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentTransactionErrorSinkResults:
+def getCurrentTransactionErrorSink(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentTransactionErrorSinkResponse:
     """
     params: None
-    result: GetCurrentTransactionErrorSinkResults
+    result: GetCurrentTransactionErrorSinkResponse
     method: hmyv2_getCurrentTransactionErrorSink
     """
     data = format_api_data("hmyv2_getCurrentTransactionErrorSink", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetCurrentTransactionErrorSinkResults(**results)
+    return GetCurrentTransactionErrorSinkResponse(**resp.json())
 
 def getTransactionByBlockHashAndIndex(api_url : str, params : GetTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
     """
@@ -180,8 +169,7 @@ def getTransactionByBlockHashAndIndex(api_url : str, params : GetTransactionByBl
     """
     data = format_api_data("hmyv2_getTransactionByBlockHashAndIndex", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return TransactionResult(**results)
+    return TransactionResult(**resp.json())
 
 def getTransactionByBlockNumberAndIndex(api_url : str, params : GetTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
     """
@@ -191,8 +179,7 @@ def getTransactionByBlockNumberAndIndex(api_url : str, params : GetTransactionBy
     """
     data = format_api_data("hmyv2_getTransactionByBlockNumberAndIndex", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return TransactionResult(**results)
+    return TransactionResult(**resp.json())
 
 def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters, session : Optional[requests.Session] = None) -> TransactionResult:
     """
@@ -202,28 +189,25 @@ def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters,
     """
     data = format_api_data("hmyv2_getTransactionByHash", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return TransactionResult(**results)
+    return TransactionResult(**resp.json())
 
-def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameters, session : Optional[requests.Session] = None) -> GetTransactionReceiptResults:
+def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameters, session : Optional[requests.Session] = None) -> GetTransactionReceiptResponse:
     """
     params: GetTransactionReceiptParameters
-    result: G_Results
+    result: G_Response
     method: hmyv2_getTransactionReceipt
     """
     data = format_api_data("hmyv2_getTransactionReceipt", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetTransactionReceiptResults(**results)
+    return GetTransactionReceiptResponse(**resp.json())
 
-def sendRawTransaction(api_url : str, params : SendRawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawTransactionResults:
+def sendRawTransaction(api_url : str, params : SendRawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawTransactionResponse:
     """
     params: SendRawTransactionParameters
-    result: SendRawTransactionResults
+    result: SendRawTransactionResponse
     method: hmyv2_sendRawTransaction
     """
     data = format_api_data("hmyv2_sendRawTransaction", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return SendRawTransactionResults(**results)
+    return SendRawTransactionResponse(**resp.json())
     

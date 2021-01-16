@@ -6,55 +6,55 @@ from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     CallParameters,
-    CallResults,
-    EstimateGasResults,
+    CallResponse,
+    EstimateGasResponse,
     GetCodeParameters,
-    GetCodeResults,
+    GetCodeResponse,
     GetStorageAtParameters,
-    GetStorageAtResults
+    GetStorageAtResponse
 )
 
-def call(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> CallResults:
+def call(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> CallResponse:
     """
     params: CallParameters
-    result: CallResults
+    result: CallResponse
     method: hmyv2_call
     """
     data = format_api_data("hmyv2_call", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return CallResults(**results)
+    
+    return CallResponse(**resp.json())
 
-def estimateGas(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> EstimateGasResults:
+def estimateGas(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> EstimateGasResponse:
     """
     params: CallParameters
-    result: EstimateGasResults
+    result: EstimateGasResponse
     method: hmyv2_estimateGas
     """
     data = format_api_data("hmyv2_estimateGas", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return EstimateGasResults(**results)
+    
+    return EstimateGasResponse(**resp.json())
 
-def getCode(api_url : str, params : GetCodeParameters, session : Optional[requests.Session] = None) -> GetCodeResults:
+def getCode(api_url : str, params : GetCodeParameters, session : Optional[requests.Session] = None) -> GetCodeResponse:
     """
     params: GetCodeParameters
-    result: GetCodeResults
+    result: GetCodeResponse
     method: hmyv2_getCode
     """
     data = format_api_data("hmyv2_getCode", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return CallResults(**results)
+    
+    return CallResponse(**resp.json())
 
 
-def getStorageAt(api_url : str, params : GetStorageAtParameters, session : Optional[requests.Session] = None) -> GetStorageAtResults:
+def getStorageAt(api_url : str, params : GetStorageAtParameters, session : Optional[requests.Session] = None) -> GetStorageAtResponse:
     """
     params: GetStorageAtParameters
-    result: GetStorageAtResults
+    result: GetStorageAtResponse
     method: hmyv2_getStorageAt
     """
     data = format_api_data("hmyv2_getStorageAt", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetStorageAtResults(**results)
+    
+    return GetStorageAtResponse(**resp.json())

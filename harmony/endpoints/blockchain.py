@@ -6,211 +6,211 @@ from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     BlockResult,
-    BlockListResults,
-    BlockNumberResults,
-    GetCirculatingSupplyResults,
-    GetEpochResults,
-    GetLastCrossLinksResults,
-    GetLeaderResults,
-    GasPriceResults,
-    GetShardingStructureResults,
-    GetTotalSupplyResults,
+    BlockListResponse,
+    BlockNumberResponse,
+    GetCirculatingSupplyResponse,
+    GetEpochResponse,
+    GetLastCrossLinksResponse,
+    GetLeaderResponse,
+    GasPriceResponse,
+    GetShardingStructureResponse,
+    GetTotalSupplyResponse,
     GetValidatorsParameters,
-    GetValidatorsResults,
+    GetValidatorsResponse,
     GetValidatorKeysParameters,
-    GetValidatorKeysResults,
+    GetValidatorKeysResponse,
     GetValidatorKeysParameters,
-    GetCurrentBadBlocksResults,
-    GetNodeMetadataResults,
-    ProtocolVersionResults,
-    PeerCountResults,
+    GetCurrentBadBlocksResponse,
+    GetNodeMetadataResponse,
+    ProtocolVersionResponse,
+    PeerCountResponse,
     GetBlocksParameters,
     GetBlockByNumberParameters,
     GetBlockByHashParameters,
     GetBlockSignersParameters,
-    GetBlockSignersResults,
+    GetBlockSignersResponse,
     GetBlockSignersKeysParameters,
-    GetBlockSignersKeysResults,
+    GetBlockSignersKeysResponse,
     GetBlockTransactionCountByNumberParameters,
-    GetBlockTransactionCountByNumberResults,
+    GetBlockTransactionCountByNumberResponse,
     GetHeaderByNumberParameters,
-    GetHeaderByNumberResults,
-    GetLatestChainHeadersResults,
-    LatestHeaderResults
+    GetHeaderByNumberResponse,
+    GetLatestChainHeadersResponse,
+    LatestHeaderResponse
 )
 
 #Network
 
-def blockNumber(api_url : str, session : Optional[requests.Session] = None) -> BlockNumberResults:
+def blockNumber(api_url : str, session : Optional[requests.Session] = None) -> BlockNumberResponse:
     """
     params: None
-    result: BlockNumberResults
+    result: BlockNumberResponse
     method: hmyv2_blockNumber
     """
     data = format_api_data("hmyv2_blockNumber", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return BlockNumberResults(**results)
+    
+    return BlockNumberResponse(**resp.json())
 
-def getCirculatingSupply(api_url : str, session : Optional[requests.Session] = None) -> GetCirculatingSupplyResults:
+def getCirculatingSupply(api_url : str, session : Optional[requests.Session] = None) -> GetCirculatingSupplyResponse:
     """
     params: None
-    result: GetCirculatingSupplyResults
+    result: GetCirculatingSupplyResponse
     method: hmyv2_getCirculatingSupply
     """
     data = format_api_data("hmyv2_getCirculatingSupply", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetCirculatingSupplyResults(**results)
+    
+    return GetCirculatingSupplyResponse(**resp.json())
 
-def getEpoch(api_url : str, session : Optional[requests.Session] = None) -> GetEpochResults:
+def getEpoch(api_url : str, session : Optional[requests.Session] = None) -> GetEpochResponse:
     """
     params: None
-    result: GetEpochResults
+    result: GetEpochResponse
     method: hmyv2_getEpoch
     """
     data = format_api_data("hmyv2_getEpoch", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetEpochResults(**results)
+    
+    return GetEpochResponse(**resp.json())
 
-def getLastCrossLinks(api_url : str, session : Optional[requests.Session] = None) -> GetLastCrossLinksResults:
+def getLastCrossLinks(api_url : str, session : Optional[requests.Session] = None) -> GetLastCrossLinksResponse:
     """
     params: None
-    result: GetLastCrossLinksResults
+    result: GetLastCrossLinksResponse
     method: hmyv2_getLastCrossLinks
     """
     data = format_api_data("hmyv2_getLastCrossLinks", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetLastCrossLinksResults(**results)
+    
+    return GetLastCrossLinksResponse(**resp.json())
 
-def getLeader(api_url : str, session : Optional[requests.Session] = None) -> GetLeaderResults:
+def getLeader(api_url : str, session : Optional[requests.Session] = None) -> GetLeaderResponse:
     """
     params: None
-    result: GetLeaderResults
+    result: GetLeaderResponse
     method: hmyv2_getLeader
     """
     data = format_api_data("hmyv2_getLeader", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetLeaderResults(**results)
+    
+    return GetLeaderResponse(**resp.json())
 
-def gasPrice(api_url : str, session : Optional[requests.Session] = None) -> GasPriceResults:
+def gasPrice(api_url : str, session : Optional[requests.Session] = None) -> GasPriceResponse:
     """
     params: None
-    result: GasPriceResults
+    result: GasPriceResponse
     method: hmyv2_gasPrice
     """
     data = format_api_data("hmyv2_gasPrice", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GasPriceResults(**results)
+    
+    return GasPriceResponse(**resp.json())
 
-def getShardingStructure(api_url : str, session : Optional[requests.Session] = None) -> GetShardingStructureResults:
+def getShardingStructure(api_url : str, session : Optional[requests.Session] = None) -> GetShardingStructureResponse:
     """
     params: GetShardingStructureParameters
-    result: GetShardingStructureResults
+    result: GetShardingStructureResponse
     method: hmyv2_getShardingStructure
     """
     data = format_api_data("hmyv2_getShardingStructure", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetShardingStructureResults(**results)
+    
+    return GetShardingStructureResponse(**resp.json())
 
-def getTotalSupply(api_url : str, session : Optional[requests.Session] = None) -> GetTotalSupplyResults:
+def getTotalSupply(api_url : str, session : Optional[requests.Session] = None) -> GetTotalSupplyResponse:
     """
     params: None
-    result: GetTotalSupplyResults
+    result: GetTotalSupplyResponse
     method: hmyv2_getTotalSupply
     """
     data = format_api_data("hmyv2_getTotalSupply", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetTotalSupplyResults(**results)
+    
+    return GetTotalSupplyResponse(**resp.json())
 
-def getValidators(api_url : str, params : GetValidatorsParameters, session : Optional[requests.Session] = None) -> GetValidatorsResults:
+def getValidators(api_url : str, params : GetValidatorsParameters, session : Optional[requests.Session] = None) -> GetValidatorsResponse:
     """
     params: GetValidatorsParameters
-    result: GetValidatorsResults
+    result: GetValidatorsResponse
     method: hmyv2_getValidators
     """
     data = format_api_data("hmyv2_getValidators", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetValidatorsResults(**results)
+    
+    return GetValidatorsResponse(**resp.json())
 
-def getValidatorKeys(api_url : str, params : GetValidatorKeysParameters, session : Optional[requests.Session] = None) -> GetValidatorKeysResults:
+def getValidatorKeys(api_url : str, params : GetValidatorKeysParameters, session : Optional[requests.Session] = None) -> GetValidatorKeysResponse:
     """
     params: GetValidatorKeysParameters
-    result: GetValidatorKeysResults
+    result: GetValidatorKeysResponse
     method: hmyv2_getValidatorKeys
     """
     data = format_api_data("hmyv2_getValidatorKeys", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetValidatorKeysResults(**results)
+    
+    return GetValidatorKeysResponse(**resp.json())
 
 #Node
 
-def getCurrentBadBlocks(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentBadBlocksResults:
+def getCurrentBadBlocks(api_url : str, session : Optional[requests.Session] = None) -> GetCurrentBadBlocksResponse:
     """
     params: None
-    result: GetCurrentBadBlocksResults
+    result: GetCurrentBadBlocksResponse
     method: hmyv2_getCurrentBadBlocks
     
     NOTE: known issues with RPC not returning correctly
     """
     data = format_api_data("hmyv2_getCurrentBadBlocks", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetCurrentBadBlocksResults(**results)
+    
+    return GetCurrentBadBlocksResponse(**resp.json())
 
-def getNodeMetadata(api_url : str, session : Optional[requests.Session] = None) -> GetNodeMetadataResults:
+def getNodeMetadata(api_url : str, session : Optional[requests.Session] = None) -> GetNodeMetadataResponse:
     """
     params: None
-    result: GetNodeMetadataResults
+    result: GetNodeMetadataResponse
     method: hmyv2_getNodeMetadata
     """
     data = format_api_data("hmyv2_getNodeMetadata", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetNodeMetadataResults(**results)
+    
+    return GetNodeMetadataResponse(**resp.json())
 
-def protocolVersion(api_url : str, session : Optional[requests.Session] = None) -> ProtocolVersionResults:
+def protocolVersion(api_url : str, session : Optional[requests.Session] = None) -> ProtocolVersionResponse:
     """
     params: None
-    result: ProtocolVersionResults
+    result: ProtocolVersionResponse
     method: hmyv2_protocolVersion
     """
     data = format_api_data("hmyv2_protocolVersion", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return ProtocolVersionResults(**results)
+    
+    return ProtocolVersionResponse(**resp.json())
 
-def peerCount(api_url : str, session : Optional[requests.Session] = None) -> PeerCountResults:
+def peerCount(api_url : str, session : Optional[requests.Session] = None) -> PeerCountResponse:
     """
     params: None
-    result: PeerCountResults
+    result: PeerCountResponse
     method: net_peerCount
     """
     data = format_api_data("net_peerCount", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return PeerCountResults(**results)
+    
+    return PeerCountResponse(**resp.json())
 
 #Blocks
 
-def getBlocks(api_url : str, params : GetBlocksParameters, session : Optional[requests.Session] = None) -> BlockListResults:
+def getBlocks(api_url : str, params : GetBlocksParameters, session : Optional[requests.Session] = None) -> BlockListResponse:
     """
     params: GetBlocksParameters
-    result: BlockListResults
+    result: BlockListResponse
     method: hmyv2_getBlocks
     """
     data = format_api_data("hmyv2_getBlocks", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return BlockListResults(**results)
+    
+    return BlockListResponse(**resp.json())
 
 def getBlockByNumber(api_url : str, params : GetBlockByNumberParameters, session : Optional[requests.Session] = None) -> BlockResult:
     """
@@ -220,8 +220,8 @@ def getBlockByNumber(api_url : str, params : GetBlockByNumberParameters, session
     """
     data = format_api_data("hmyv2_getBlockByNumber", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return BlockResult(**results)
+    
+    return BlockResult(**resp.json())
 
 def getBlockByHash(api_url : str, params : GetBlockByHashParameters, session : Optional[requests.Session] = None) -> BlockResult:
     """
@@ -231,71 +231,71 @@ def getBlockByHash(api_url : str, params : GetBlockByHashParameters, session : O
     """
     data = format_api_data("hmyv2_getBlockByHash", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return BlockResult(**results)
+    
+    return BlockResult(**resp.json())
 
-def getBlockSigners(api_url : str, params : GetBlockSignersParameters, session : Optional[requests.Session] = None) -> GetBlockSignersResults:
+def getBlockSigners(api_url : str, params : GetBlockSignersParameters, session : Optional[requests.Session] = None) -> GetBlockSignersResponse:
     """
     params: GetBlockSignersParameters
-    result: GetBlockSignersResults
+    result: GetBlockSignersResponse
     method: hmyv2_getBlockSigners
     """
     data = format_api_data("hmyv2_getBlockSigners", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetBlockSignersResults(**results)
+    
+    return GetBlockSignersResponse(**resp.json())
 
-def getBlockSignersKeys(api_url : str, params : GetBlockSignersKeysParameters, session : Optional[requests.Session] = None) -> GetBlockSignersKeysResults:
+def getBlockSignersKeys(api_url : str, params : GetBlockSignersKeysParameters, session : Optional[requests.Session] = None) -> GetBlockSignersKeysResponse:
     """
     params: GetBlockSignersKeysParameters
-    result: GetBlockSignersKeysResults
+    result: GetBlockSignersKeysResponse
     method: hmyv2_getBlockSignersKeys
     """
     data = format_api_data("hmyv2_getBlockSignersKeys", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetBlockSignersKeysResults(**results)
+    
+    return GetBlockSignersKeysResponse(**resp.json())
 
-def getBlockTransactionCountByNumber(api_url : str, params : GetBlockTransactionCountByNumberParameters, session : Optional[requests.Session] = None) -> GetBlockTransactionCountByNumberResults:
+def getBlockTransactionCountByNumber(api_url : str, params : GetBlockTransactionCountByNumberParameters, session : Optional[requests.Session] = None) -> GetBlockTransactionCountByNumberResponse:
     """
     params: GetBlockTransactionCountByNumberParameters
-    result: GetBlockTransactionCountByNumberResults
+    result: GetBlockTransactionCountByNumberResponse
     method: hmyv2_getBlockTransactionCountByNumber
     """
     data = format_api_data("hmyv2_getBlockTransactionCountByNumber", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetBlockTransactionCountByNumberResults(**results)
+    
+    return GetBlockTransactionCountByNumberResponse(**resp.json())
 
-def getHeaderByNumber(api_url : str, params : GetHeaderByNumberParameters, session : Optional[requests.Session] = None) -> GetHeaderByNumberResults:
+def getHeaderByNumber(api_url : str, params : GetHeaderByNumberParameters, session : Optional[requests.Session] = None) -> GetHeaderByNumberResponse:
     """
     params: GetHeaderByNumberParameters
-    result: GetHeaderByNumberResults
+    result: GetHeaderByNumberResponse
     method: hmyv2_getHeaderByNumber
     """
     data = format_api_data("hmyv2_getHeaderByNumber", params)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetHeaderByNumberResults(**results)
+    
+    return GetHeaderByNumberResponse(**resp.json())
 
-def getLatestChainHeaders(api_url : str, session : Optional[requests.Session] = None) -> GetLatestChainHeadersResults:
+def getLatestChainHeaders(api_url : str, session : Optional[requests.Session] = None) -> GetLatestChainHeadersResponse:
     """
     params: None
-    result: GetLatestChainHeadersResults
+    result: GetLatestChainHeadersResponse
     method: hmyv2_getLatestChainHeaders
     """
     data = format_api_data("hmyv2_getLatestChainHeaders", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return GetLatestChainHeadersResults(**results)
+    
+    return GetLatestChainHeadersResponse(**resp.json())
 
-def latestHeader(api_url : str, session : Optional[requests.Session] = None) -> LatestHeaderResults:
+def latestHeader(api_url : str, session : Optional[requests.Session] = None) -> LatestHeaderResponse:
     """
     params: LatestHeaderParameters
-    result: LatestHeaderResults
+    result: LatestHeaderResponse
     method: hmyv2_latestHeader
     """
     data = format_api_data("hmyv2_latestHeader", None)
     resp = post_request(api_url, data, session)
-    results = {"result" : resp.json()["result"]}
-    return LatestHeaderResults(**results)
+    
+    return LatestHeaderResponse(**resp.json())
