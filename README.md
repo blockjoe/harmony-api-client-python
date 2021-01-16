@@ -1,17 +1,22 @@
-# harmony-api-client-python
+# Quickstart
 
-## Dependencies
+A python client for interacting with Harmony endpoints.
 
-[rosetta-api-client-python](https://github.com/blockjoe/rosetta-api-client-python)
+## Installing
 
-## TODO
+```sh
+$ git clone https://github.com/blockjoe/harmony-api-client-python
+$ cd harmony-api-client-python
+$ pip install -e .
+```
 
-Write pydantic models for harmony rpc 2.0 spec.
 
-Write endpoints for harmony rpc 2.0 spec.
+## Useful Resources
 
-Write modules for harmony 2.0 spec.
+* [rosetta-api-client-python](https://github.com/blockjoe/rosetta-api-client-python): the Python client library that faciliates the Rosetta API calls.
+* [Harmony API Documentation](https://docs.harmony.one/home/developers/api): Harmony's official API docs
+* [Rosetta Harmony API Documentation](https://api.hmny.io/): Harmony's API docs that include documentation on the Rosetta endpoints.
+* [Rosetta Harmony Community Post](https://community.rosetta-api.org/t/harmonys-rosetta-data-construction-api/293): the official page for Harmony's rosetta integration
 
-Write API for harmony 2.0 spec.
 
-Write CLI (Outer Layer) for rosetta spec.
+

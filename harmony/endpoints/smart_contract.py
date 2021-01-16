@@ -2,8 +2,7 @@ from typing import Optional
 
 import requests
 
-from ..utils.communication import post_request
-from ..utils.call_format import format_api_data
+from ..utils.communication import format_api_data, post_request
 
 from ..models import (
     CallParameters,

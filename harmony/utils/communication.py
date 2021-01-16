@@ -1,5 +1,7 @@
+import json
 from typing import Any, Dict, Optional, Union
 
+from pydantic import BaseModel
 import requests
 
 def post_request(url : str, data : Union[str, Dict[str, Any]], session : Optional[requests.Session] = None) -> requests.Response:
@@ -20,3 +22,15 @@ def post_request(url : str, data : Union[str, Dict[str, Any]], session : Optiona
     if session is not None:
         return session.post(url, data=data)
     return requests.post(url, data=data)
+
+
+def format_api_data(method : str, param_model : Optional[BaseModel], request_id : Optional[str] = "1", jsonrpc : Optional[str] = "2.0") -> str:
+    data = {}
+    data["jsonrpc"] = jsonrpc
+    data["id"] = request_id
+    data["method"] = method
+    if param_model is None:
+        data["params"] = []
+    else:
+        data["params"] = list(param_model.dict().values())
+    return json.dumps(data)
