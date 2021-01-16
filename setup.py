@@ -20,6 +20,6 @@ setuptools.setup(
         'rosetta-api-client-python @ git+https://github.com/blockjoe/rosetta-api-client-python#egg=rosetta-api-client-python'
     ],
     extras_require = {
-        'dev' : ['datamodel-code-generator', 'sphinx', 'sphinx-rtd-theme', 'm2r2', 'openapi-schema-pydantic']
+        'dev' : ['datamodel-code-generator', 'sphinx', 'sphinx-rtd-theme', 'm2r2', 'apispec']
     }
 )
