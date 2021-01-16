@@ -24,7 +24,7 @@ class SmartContractCall(BaseModel):
 
 class CallParameters(BaseModel):
     smart_contract_call : SmartContractCall
-    block_number : int
+    block_number : int = Field(..., description="Block number", alias="block-number")
 
 class CallRequest(BaseRequest):
     params : Tuple(SmartContractCall, int)
@@ -52,7 +52,7 @@ class GetStorageAtParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
 
 class GetStorageAtRequest(BaseRequest):
-    params : Tuple(str, str, str)
+    params : Tuple(str, str, int)
 
 class GetStorageAtResponse(BaseResponse):
     result : str = Field(..., description="Data stored at the smart contract location")
