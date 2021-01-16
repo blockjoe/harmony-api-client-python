@@ -2,18 +2,9 @@ from typing import Any, Dict, List, Optional
 
 from pydantic import BaseModel, Field
 
-class ExampleParameters(BaseModel):
-    a : int = Field(..., description="This is a required integer")
-    b : Optional[str] = Field(None, description="This is an optional string")
-    c : List[int] = Field(..., description="This is a required list (array) of ints")
-    d : Optional[List[Any]] = Field(None, description="This is an optional list (array) of unknown type.")
-    e : Dict[str, Any] = Field(..., description="This is a required JSON object")
-    f : List[Dict[str, Any]] = Field(..., description="This is a required array of JSON objects")
-    g : Optional[List[Dict[str, Any]]] = Field(..., description="This is an optional array of JSON objects")
-
 class SmartContractCall(BaseModel):
     to : str = Field(..., description="Smart contract address")
-    from : Optional[str] = Field(None, description="Wallet address")
+    from_ : Optional[str] = Field(None, description="Wallet address", alias="from")
     gas : Optional[int] = Field(None, description="Gas to execute the smart contract call")
     gasPrice : Optional[int] = Field(None, description="Gas price to execute smart contract call")
     value : Optional[int] = Field(None, description="Value sent with the smart contract call")
@@ -251,8 +242,8 @@ class GetCXReceiptByHashParameters(BaseModel):
 class Hash_object(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
-    hash : str = Field(..., description="Transaction hash")
-    from : str = Field(..., description="Sender wallet address")
+    hash_ : str = Field(..., description="Transaction hash", alias="hash")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     to : str = Field(..., description="Receiver wallet address")
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
@@ -267,7 +258,7 @@ class GetPendingCXReceiptsParameters(BaseModel):
 
 class Receipts(BaseModel):
     txHash : str = Field(..., description="Transaction hash")
-    from : str = = Field(..., description="Sender wallet address")
+    from_ : str = = Field(..., description="Sender wallet address", alias="from")
     to : str = Field(..., description="Receiver wallet address")
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
@@ -362,14 +353,14 @@ class GetStakingTransactionByHashParameters(BaseModel):
 class StakingTransactionByHash(BaseModel):
     blockHash : str = Field(..., description="Block hash in which transaction was finalized")
     blockNumber : int = Field(..., description="Block number in which transaction was finalized")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
     gasPrice : int = Field(..., description="Gas price of transaction in Atto")
     nonce : int = Field(..., description="Wallet nonce of transaction")
     transactionIndex : int = Field(..., description="Staking transaction index within block")
-    type : str = Field(..., description="Type of staking transaction")
-    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction") #HELP not sure here
+    type_ : str = Field(..., description="Type of staking transaction", alias="type")
+    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction")
 
 class GetStakingTransactionByHashResults(BaseModel):
     result : StakingTransactionByHash = Field(..., description="Object")
@@ -400,12 +391,12 @@ class GetTransactionByBlockHashAndIndexParameters(BaseModel):
 class TransactionByBlockHashAndIndex(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
     gasPrice : int = Field(..., description="Gas price of transaction in Atto")
-    hash : str = Field(..., description="Transaction hash")
-    input : str = Field(..., description="Transaction data, used for smart contracts")
+    hash_ : str = Field(..., description="Transaction hash", alias="hash")
+    input_ : str = Field(..., description="Transaction data, used for smart contracts", alias="input")
     nonce : int = Field(..., description="Sender wallet nonce of transaction")
     to : str = Field(..., description="Receiver wallet address")
     transactionIndex : int = Field(..., description="Staking transaction index within block")
@@ -423,12 +414,12 @@ class GetTransactionByBlockNumberAndIndexParameters(BaseModel):
 class GetTransactionByBlockNumberAndIndex(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
     gasPrice : int = Field(..., description="Gas price of transaction in Atto")
-    hash : str = Field(..., description="Transaction hash")
-    input : str = Field(..., description="Transaction data, used for smart contracts")
+    hash_ : str = Field(..., description="Transaction hash", alias="hash")
+    input_ : str = Field(..., description="Transaction data, used for smart contracts", alias="input")
     nonce : int = Field(..., description="Sender wallet nonce of transaction")
     to : str = Field(..., description="Receiver wallet address")
     transactionIndex : int = Field(..., description="Staking transaction index within block")
@@ -440,17 +431,17 @@ class GetTransactionByBlockNumberAndIndexResults(BaseModel):
     result : GetTransactionByBlockNumberAndIndex = Field(..., description="Object")
 
 class GetTransactionByHashParameters(BaseModel):
-    hash : str = Field(..., description="Transaction hash")
+    hash_ : str = Field(..., description="Transaction hash", alias="hash")
 
 class GetTransactionByHash(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
     gasPrice : int = Field(..., description="Gas price of transaction in Atto")
-    hash : str = Field(..., description="Transaction hash")
-    input : str = Field(..., description="Transaction data, used for smart contracts")
+    hash_ : str = Field(..., description="Transaction hash", alias="hash")
+    input_ : str = Field(..., description="Transaction data, used for smart contracts", alias="input")
     nonce : int = Field(..., description="Sender wallet nonce of transaction")
     to : str = Field(..., description="Receiver wallet address")
     transactionIndex : int = Field(..., description="Staking transaction index within block")
@@ -469,7 +460,7 @@ class GetTransactionReceipt(BaseModel):
     blockNumber : int = Field(..., description="Block number")
     contractAddress : str = Field(..., description="Smart contract address")
     culmulativeGasUsed : int = Field(..., description="Gas used for transaction")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     gasUsed : int = Field(..., description="Gas used for the transaction")
     logs : List[Any] = Field(..., description="Array")
     logsBloom : str = Field(..., description="Bloom logs")
@@ -513,7 +504,7 @@ class GetLastCrossLinksParameters(BaseModel):
     #empty set
 
 class LastCrossLinks(BaseModel):
-    hash : str = Field(..., description="Parent block hash")
+    hash_ : str = Field(..., description="Parent block hash", alias="hash")
     block_number : int = Field(..., description="Block number")
     view_id : int = Field(..., description="View ID")
     signature : str = Field(..., description="Hex representation of aggregated signature")
@@ -662,7 +653,7 @@ class GetBlockByNumber(BaseModel):
     extraData : str = Field(..., description="Hex representation of extra data in the block")
     gasLimit : int = Field(..., description="Maximum gas that can be used for transactions in the block")
     gasUsed : int = Field(..., description="Amount of gas used for transactions in the block")
-    hash : str = Field(..., description="Block hash")
+    hash_ : str = Field(..., description="Block hash", alias="hash")
     logsBloom : str = Field(..., description="Bloom logs")
     miner : str = Field(..., description="Wallet address of the leader that proposed this block")
     mixHash : str = Field(..., description="Unused, legacy from Eth")
@@ -683,7 +674,7 @@ class GetBlockByNumberResults(BaseModel):
     result : GetBlockByNumber = Field(..., description="Object")
 
 class GetBlockByHashParameters(BaseModel):
-    hash : int = Field(..., description="Block hash")
+    hash_ : int = Field(..., description="Block hash", alias="hash")
     additional_blockbynumber_data : Additional_blocks_data = Field(..., description="Object")
 
 class GetBlockByHashResults(BaseModel):
@@ -710,7 +701,7 @@ class GetBlockTransactionCountByNumberResults(BaseModel):
     results : int = Field(..., description="Number of transaction in block")
 
 class GetBlockTransactionCountByHashParameters(BaseModel):
-    hash : int = Field(..., description="Block hash")
+    hash_ : int = Field(..., description="Block hash", alias="hash")
 
 class GetBlockTransactionCountByHashResults(BaseModel):
     result : int = Field(..., description="Number of transactions in block")
@@ -793,21 +784,22 @@ class GetStakingTransactionsHistoryParameters(BaseModel):
 class StakingTransactionsHistory(BaseModel):
     blockHash : str = Field(..., description="Block hash in which transaction was finalized")
     blockNumber : int = Field(..., description="Block number in which transaction was finalized")
-    from : str = Field(..., description="Sender wallet address")
+    from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gasPrice : int = Field(..., description="Gas price of transaction in Atto")
     gas : int = Field(..., description="Gas limit of transaction")
-    hash : int = Field(..., description="Transaction hash")
+    hash_ : int = Field(..., description="Transaction hash", alias="hash")
     nonce : int = Field(..., description="Wallet nonce of transaction")
     transactionIndex : int = Field(..., description="Staking transaction index within block, null if pending")
-    type : str = Field(..., description="Type of staking transaction")
-    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction") #HELP not sure here
+    type_ : str = Field(..., description="Type of staking transaction", alias="type")
+    msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction")
 
-class GetStakingTransactionsHistoryResults(BaseModel): #HELP
-    if txType == True:
-        result : StakingTransactionsHistory = Field(..., description="List of staking transactions")
-    else: 
-        result : List[str] = Field(..., description="List of staking transactions")
+class GetStakingTransactionsHistoryResults(BaseModel):
+    result : List[str] = Field(..., description="List of staking transactions")
+
+class GetStakingTransactionsHistoryTxTypeResults(BaseModel):
+    result : StakingTransactionsHistory = Field(..., description="List of staking transactions")
+
 
 class GetTransactionsCountParameters(BaseModel):
     address : str = Field(..., description="Wallet address")
@@ -819,9 +811,9 @@ class GetTransactionsCountResults(BaseModel):
 class GetTransactionsHistoryParameters(BaseModel):
     transaction_history = TransactionHistory = Field(..., description="Transaction history args")
 
-class GetTransactionsHistoryResults(BaseModel):
-    if txType == True:
-        result : List[TransactionByBlockHashAndIndex] = Field(..., description="Array of object")
-    else: 
-        result : List[str] = Field(..., description="List of transaction hashes")
+class GetTransactionsHistoryTxTypeResults(BaseModel):
+    result : List[TransactionByBlockHashAndIndex] = Field(..., description="Array of object")
+        
+ class GetTransactionsHistoryResults(BaseModel):
+    result : List[str] = Field(..., description="List of transaction hashes")
 
