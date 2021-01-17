@@ -194,7 +194,7 @@ def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters,
 def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameters, session : Optional[requests.Session] = None) -> GetTransactionReceiptResponse:
     """
     params: GetTransactionReceiptParameters
-    result: G_Response
+    result: GetTransactionReceiptResponse
     method: hmyv2_getTransactionReceipt
     """
     data = format_api_data("hmyv2_getTransactionReceipt", params)
