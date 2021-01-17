@@ -28,7 +28,7 @@ class SmartContractCall(BaseModel):
 
 class CallParameters(BaseModel):
     smart_contract_call : SmartContractCall
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    block_number : int = Field(..., description="Block number")
 
 class CallRequest(BaseRequest):
     params : Tuple[SmartContractCall, int]

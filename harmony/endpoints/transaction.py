@@ -21,7 +21,8 @@ from ..models import (
     SendRawTransactionResponse,
     StakingTransactionResponse,
     StakingTransactionListResponse,
-    TransactionResponse
+    TransactionResponse,
+    TransactionListResponse
 )
 
 #Cross shard
@@ -101,7 +102,7 @@ def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Sessio
     """
     data = format_api_data("hmyv2_getCurrentStakingErrorSink", None)
     resp = post_request(api_url, data, session)
-    return GetCurrentStakingErrorSinkResponse(**resp.json())
+    return GetCurrentStakingErrorSinkResponse(**resp.text())
 
 def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : BlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResponse:
     """

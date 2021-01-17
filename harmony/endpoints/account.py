@@ -5,80 +5,88 @@ import requests
 from ..utils.communication import format_api_data, post_request
 
 from ..models import (
-    AddressParameters,
-    AddressBlockNumberParameters,
-    BalanceResponse,
-    TransactionsCountParameters,
-    TransactionCountResponse,
-    TransactionsHashListResponse,
-    TransactionsHistoryParameters,
-    TransactionListResponse,
-    StakingTransactionListResponse
-
+    GetBalanceParameters,
+    GetBalanceResponse,
+    GetBalanceByBlockNumberParameters,
+    GetBalanceByBlockNumberResponse,
+    GetStakingTransactionsCountParameters,
+    GetStakingTransactionsCountResponse,
+    GetStakingTransactionsHistoryParameters,
+    GetStakingTransactionsHistoryResponse,
+    GetStakingTransactionsHistoryTxTypeResponse, 
+    GetTransactionsCountParameters,
+    GetTransactionsCountResponse,
+    GetTransactionsHistoryParameters,
+    GetTransactionsHistoryResponse,
+    GetTransactionsHistoryTxTypeResponse 
 )
 
-def getBalance(api_url : str, params : AddressParameters, session : Optional[requests.Session] = None) -> BalanceResponse:
+def getBalance(api_url : str, params : GetBalanceParameters, session : Optional[requests.Session] = None) -> GetBalanceResponse:
     """
-    params: AddressParameters
-    result: BalanceResponse
+    params: GetBalanceParameters
+    result: GetBalanceResponse
     method: hmyv2_getBalance
     """
     data = format_api_data("hmyv2_getBalance", params)
     resp = post_request(api_url, data, session)
+    
     return GetBalanceResponse(**resp.json())
 
-def getBalanceByBlockNumber(api_url : str, params : AddressBlockNumberParameters, session : Optional[requests.Session] = None) -> BalanceResponse:
+def getBalanceByBlockNumber(api_url : str, params : GetBalanceByBlockNumberParameters, session : Optional[requests.Session] = None) -> GetBalanceByBlockNumberResponse:
     """
-    params: AddressBlockNumberParameters
-    result: BalanceResponse
+    params: GetBalanceByBlockNumberParameters
+    result: GetBalanceByBlockNumberResponse
     method: hmyv2_getBalanceByBlockNumber
     """
     data = format_api_data("hmyv2_getBalanceByBlockNumber", params)
     resp = post_request(api_url, data, session)
+    
     return GetBalanceByBlockNumberResponse(**resp.json())
 
-def getStakingTransactionsCount(api_url : str, params : TransactionsCountParameters, session : Optional[requests.Session] = None) -> TransactionCountResponse:
+def getStakingTransactionsCount(api_url : str, params : GetStakingTransactionsCountParameters, session : Optional[requests.Session] = None) -> GetStakingTransactionsCountResponse:
     """
-    params: TransactionsCountParameters
-    result: TransactionCountResponse
+    params: GetStakingTransactionsCountParameters
+    result: GetStakingTransactionsCountResponse
     method: hmyv2_getStakingTransactionsCount
     """
     data = format_api_data("hmyv2_getStakingTransactionsCount", params)
     resp = post_request(api_url, data, session)
-    return TransactionCountResponse(**resp.json())
+    
+    return GetStakingTransactionsCountResponse(**resp.json())
 
-def getStakingTransactionsHistory(api_url : str, params : TransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, StakingTransactionListResponse]:
+def getStakingTransactionsHistory(api_url : str, params : GetStakingTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetStakingTransactionsHistoryResponse, GetStakingTransactionsHistoryTxTypeResponse]:
     """
-    params: TransactionsHistoryParameters
-    result: TransactionsHashListResponse or StakingTransactionListResponse
+    params: GetStakingTransactionsHistoryParameters
+    result: GetStakingTransactionsHistoryResponse
     method: hmyv2_getStakingTransactionsHistory
     """
     data = format_api_data("hmyv2_getStakingTransactionsHistory", params)
     resp = post_request(api_url, data, session)
     
     if data["params"][0]["txType"]:
-        return StakingTransactionListResponse(**resp.json())
-    return TransactionsHashListResponse(**resp.json())
+        return GetStakingTransactionsHistoryTxTypeResponse(**resp.json())
+    return GetStakingTransactionsHistoryResponse(**resp.json())
 
-def getTransactionsCount(api_url : str, params : TransactionsCountParameters, session : Optional[requests.Session] = None) -> TransactionCountResponse:
+def getTransactionsCount(api_url : str, params : GetTransactionsCountParameters, session : Optional[requests.Session] = None) -> GetTransactionsCountResponse:
     """
-    params: TransactionsCountParameters
-    result: TransactionCountResponse
+    params: GetTransactionsCountParameters
+    result: GetTransactionsCountResponse
     method: hmyv2_getTransactionsCount
     """
     data = format_api_data("hmyv2_getTransactionsCount", params)
     resp = post_request(api_url, data, session)
-    return TransactionCountResponse(**resp.json())
+    
+    return GetTransactionsCountResponse(**resp.json())
 
-def getTransactionsHistory(api_url : str, params : TransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, TransactionListResponse]:
+def getTransactionsHistory(api_url : str, params : GetTransactionsHistoryParameters, session : Optional[requests.Session] = None) -> Union[GetTransactionsHistoryResponse, GetTransactionsHistoryTxTypeResponse]:
     """
-    params: TransactionsHistoryParameters
-    result: TransactionsHashListResponse or TransactionListResponse
+    params: GetTransactionsHistoryParameters
+    result: GetTransactionsHistoryResponse
     method: hmyv2_getTransactionsHistory
     """
     data = format_api_data("hmyv2_getTransactionsHistory", params)
     resp = post_request(api_url, data, session)
     
     if data["params"][0]["txType"]:
-        return TransactionListResponse(**resp.json())
-    return TransactionsHashListResponse(**resp.json())
+        return GetTransactionsHistoryTxTypeResponse(**resp.json())
+    return GetTransactionsHistoryResponse(**resp.json())

@@ -47,7 +47,8 @@ def call(api_url : str, to_address : str, block_number : int,  from_address : Op
     result : str
         The return value of the smart contract
     """
-    sc = SmartContractCall(to=to_address, from=from_address, gas=gas, gas_price=gas_price, value=value, data=data)
+    sc = SmartContractCall(to=to_address)
+    #, from=from_address, gas=gas, gas_price=gas_price, value=value, data=data)
     params = CallParameters(smart_contract_call=sc, block_number=block_number)
     return call_(api_url, params, session)
 
@@ -78,7 +79,7 @@ def estimate_gas(api_url : str, to_address : str, block_number : int,  from_addr
     result : str
         Hex of the esimtated gas price
     """
-    sc = SmartContractCall(to=to_address, from=from_address, gas=gas, gas_price=gas_price, value=value, data=data)
+    #sc = SmartContractCall(to=to_address, from=from_address, gas=gas, gas_price=gas_price, value=value, data=data)
     params = CallParameters(smart_contract_call=sc, block_number=block_number)
     return estimateGas(api_url, params, session)
 

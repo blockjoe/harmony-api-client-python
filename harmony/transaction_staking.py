@@ -9,10 +9,11 @@ from .models import (
     HashAndIndexParameters,
     RawTransactionParameters,
     SendRawStakingTransactionResponse,
-    StakingTransactionResponse
+    StakingTransactionResponse,
+    TransactionListResponse
 )
 
-from .endpoints.staking import (
+from .endpoints.transaction import (
     getCurrentStakingErrorSink,
     getStakingTransactionByBlockHashAndIndex,
     getStakingTransactionByBlockNumberAndIndex,
