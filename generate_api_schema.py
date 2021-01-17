@@ -53,7 +53,6 @@ def make_model_spec():
     return s
 
 
-
 if __name__ == "__main__":
     spec = make_api_spec()
     models = make_model_spec()
