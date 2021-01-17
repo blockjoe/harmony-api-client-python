@@ -1,0 +1,127 @@
+{
+  "title": "Harmony API Models",
+  "definitions": {
+    "SmartContractCall": {
+      "title": "SmartContractCall",
+      "type": "object",
+      "properties": {
+        "to": {
+          "title": "To",
+          "description": "Smart contract address",
+          "type": "string"
+        },
+        "from": {
+          "title": "From",
+          "description": "Wallet address",
+          "type": "string"
+        },
+        "gas": {
+          "title": "Gas",
+          "description": "Gas to execute the smart contract call",
+          "type": "integer"
+        },
+        "gasPrice": {
+          "title": "Gasprice",
+          "description": "Gas price to execute smart contract call",
+          "type": "integer"
+        },
+        "value": {
+          "title": "Value",
+          "description": "Value sent with the smart contract call",
+          "type": "integer"
+        },
+        "data": {
+          "title": "Data",
+          "description": "Hash of smart contract method and parameters",
+          "type": "string"
+        }
+      },
+      "required": [
+        "to"
+      ]
+    },
+    "CallParameters": {
+      "title": "CallParameters",
+      "type": "object",
+      "properties": {
+        "smart_contract_call": {
+          "$ref": "#/definitions/SmartContractCall"
+        },
+        "block-number": {
+          "title": "Block-Number",
+          "description": "Block number",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "smart_contract_call",
+        "block-number"
+      ]
+    },
+    "CallRequest": {
+      "title": "CallRequest",
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "title": "Jsonrpc",
+          "description": "The JSON-RPC version.",
+          "default": "2.0",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "description": "The request id, useful for asynchronous requests.",
+          "default": 1,
+          "type": "integer"
+        },
+        "method": {
+          "title": "Method",
+          "description": "The method to call out to.",
+          "type": "string"
+        },
+        "params": {
+          "title": "Params",
+          "type": "array",
+          "items": [
+            {
+              "$ref": "#/definitions/SmartContractCall"
+            },
+            {
+              "type": "integer"
+            }
+          ]
+        }
+      },
+      "required": [
+        "method",
+        "params"
+      ]
+    },
+    "CallResponse": {
+      "title": "CallResponse",
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "title": "Jsonrpc",
+          "description": "The JSON-RPC version.",
+          "type": "string"
+        },
+        "id": {
+          "title": "Id",
+          "description": "The id of the request the response is in response to.",
+          "type": "integer"
+        },
+        "result": {
+          "title": "Result",
+          "description": "Return value of the executed smart contract",
+          "type": "string"
+        }
+      },
+      "required": [
+        "jsonrpc",
+        "id",
+        "result"
+      ]
+    }
+  }
+}

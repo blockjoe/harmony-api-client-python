@@ -19,7 +19,6 @@ from ..models import (
     GetValidatorsResponse,
     GetValidatorKeysParameters,
     GetValidatorKeysResponse,
-    GetValidatorKeysParameters,
     GetCurrentBadBlocksResponse,
     GetNodeMetadataResponse,
     ProtocolVersionResponse,
