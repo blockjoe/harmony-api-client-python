@@ -44,7 +44,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/CallRequest"
+                "$ref": "#/components/schemas/EstimateGasRequest"
               }
             }
           }
@@ -134,7 +134,6 @@
         },
         "responses": {
           "200": {
-            "description": "JSON Array of JSON Object : validator wallet address, delegator wallet address, amount, reward, undelegations",
             "content": {
               "application/json": {
                 "schema": {
@@ -162,7 +161,6 @@
         },
         "responses": {
           "200": {
-            "description": "JSON Array of JSON Object : validator wallet address, delegator wallet address, amount, reward, undelegations",
             "content": {
               "application/json": {
                 "schema": {
@@ -190,11 +188,10 @@
         },
         "responses": {
           "200": {
-            "description": "Array of Object : validator wallet address, delegator wallet address, amount delegated in Atto, unclaimed reward in Atto, undelegations",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidatorListResponse"
+                  "$ref": "#/components/schemas/ValidatorInformationListResponse"
                 }
               }
             }
@@ -211,18 +208,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetAllValidatorAddressesRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
-            "description": "Array of String : List of wallet addresses that have created validators on the network",
+            "description": "List of wallet addresses that have created validators on the network",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetAllValidatorAddressesResponse"
+                  "$ref": "#/components/schemas/AddressListResponse"
                 }
               }
             }
@@ -249,7 +246,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidatorListResponse"
+                  "$ref": "#/components/schemas/ValidatorInformationListResponse"
                 }
               }
             }
@@ -273,10 +270,11 @@
         },
         "responses": {
           "200": {
+            "description": "NOTE: metrics field is overwritten & will always display current epoch data",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidatorListResponse"
+                  "$ref": "#/components/schemas/ValidatorInformationListResponse"
                 }
               }
             }
@@ -293,17 +291,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetElectedValidatorAddressesRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "List of wallet addresses that are currently elected",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetElectedValidatorAddressesResponse"
+                  "$ref": "#/components/schemas/AddressListResponse"
                 }
               }
             }
@@ -330,7 +329,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ValidatorListResponse"
+                  "$ref": "#/components/schemas/ValidatorInformationResponse"
                 }
               }
             }
@@ -347,7 +346,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetCurrentUtilityMetricsRequest"
               }
             }
           }
@@ -374,7 +373,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetMedianRawStakeSnapshotRequest"
               }
             }
           }
@@ -401,7 +400,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetStakingNetworkInfoRequest"
               }
             }
           }
@@ -428,7 +427,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetSuperCommitteesRequest"
               }
             }
           }
@@ -451,6 +450,7 @@
         "tags": [
           "Transaction"
         ],
+        "description": "Query the CX receipt hash on the receiving shard endpoint",
         "requestBody": {
           "content": {
             "application/json": {
@@ -482,7 +482,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetPendingCXReceiptsRequest"
               }
             }
           }
@@ -505,6 +505,7 @@
         "tags": [
           "Transaction"
         ],
+        "description": "Use this API call to resend the cross shard receipt to the receiving shard to re-process if the transaction did not pay out ",
         "requestBody": {
           "content": {
             "application/json": {
@@ -516,6 +517,7 @@
         },
         "responses": {
           "200": {
+            "description": "If cross shard receipt was successfully resent or not",
             "content": {
               "application/json": {
                 "schema": {
@@ -536,7 +538,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetPoolStatsRequest"
               }
             }
           }
@@ -563,13 +565,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/PendingStakingTransactionsRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "List of staking transactions in the transaction pool",
             "content": {
               "application/json": {
                 "schema": {
@@ -590,17 +593,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/PendingTransactionsRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "List of regular & smart contract transactions in the transaction pool",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StakingTransactionListResponse"
+                  "$ref": "#/components/schemas/TransactionListResponse"
                 }
               }
             }
@@ -617,13 +621,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetCurrentStakingErrorSinkRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "staking transaction hash - if the transaction has been added to the pool - else - error",
             "content": {
               "application/json": {
                 "schema": {
@@ -654,7 +659,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StakingTransactionResult"
+                  "$ref": "#/components/schemas/StakingTransactionResponse"
                 }
               }
             }
@@ -681,7 +686,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StakingTransactionResult"
+                  "$ref": "#/components/schemas/StakingTransactionResponse"
                 }
               }
             }
@@ -708,7 +713,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/StakingTransactionResult"
+                  "$ref": "#/components/schemas/StakingTransactionResponse"
                 }
               }
             }
@@ -752,7 +757,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetCurrentTransactionErrorSinkRequest"
               }
             }
           }
@@ -789,7 +794,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionResult"
+                  "$ref": "#/components/schemas/TransactionResponse"
                 }
               }
             }
@@ -816,7 +821,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionResult"
+                  "$ref": "#/components/schemas/TransactionResponse"
                 }
               }
             }
@@ -843,7 +848,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/TransactionResult"
+                  "$ref": "#/components/schemas/TransactionResponse"
                 }
               }
             }
@@ -894,6 +899,7 @@
         },
         "responses": {
           "200": {
+            "description": "staking transaction hash - if the transaction has been added to the pool - else - error",
             "content": {
               "application/json": {
                 "schema": {
@@ -914,13 +920,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/BlockNumberRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Current block number",
             "content": {
               "application/json": {
                 "schema": {
@@ -941,13 +948,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetCirculatingSupplyRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Circulation supply of tokens in ONE",
             "content": {
               "application/json": {
                 "schema": {
@@ -968,13 +976,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetEpochRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Current block number",
             "content": {
               "application/json": {
                 "schema": {
@@ -995,7 +1004,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetLastCrossLinksRequest"
               }
             }
           }
@@ -1022,13 +1031,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetLeaderRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Wallet address of current leader",
             "content": {
               "application/json": {
                 "schema": {
@@ -1049,13 +1059,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GasPriceRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Current average gas price of transactions",
             "content": {
               "application/json": {
                 "schema": {
@@ -1103,13 +1114,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetTotalSupplyRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Total number of pre-mined tokens",
             "content": {
               "application/json": {
                 "schema": {
@@ -1164,10 +1176,11 @@
         },
         "responses": {
           "200": {
+            "description": "List of public BLS keys in the elected committee",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetValidatorKeysResponse"
+                  "$ref": "#/components/schemas/BLSKeyListResponse"
                 }
               }
             }
@@ -1180,17 +1193,19 @@
         "tags": [
           "Blockchain"
         ],
+        "description": "Known issues with RPC not returning correctly",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetCurrentBadBlocksRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "List of bad blocks in node memory",
             "content": {
               "application/json": {
                 "schema": {
@@ -1211,7 +1226,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetNodeMetadataRequest"
               }
             }
           }
@@ -1238,13 +1253,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/ProtocolVersionRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Protocol version",
             "content": {
               "application/json": {
                 "schema": {
@@ -1256,7 +1272,7 @@
         }
       }
     },
-    "/hmyv2_peerCount": {
+    "/net_peerCount": {
       "post": {
         "tags": [
           "Blockchain"
@@ -1265,13 +1281,14 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/PeerCountRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Number of peers represented as a Hex string",
             "content": {
               "application/json": {
                 "schema": {
@@ -1299,6 +1316,7 @@
         },
         "responses": {
           "200": {
+            "description": "List of blocks",
             "content": {
               "application/json": {
                 "schema": {
@@ -1310,7 +1328,7 @@
         }
       }
     },
-    "/hmyv2_getBlockbyNumber": {
+    "/hmyv2_getBlockByNumber": {
       "post": {
         "tags": [
           "Blockchain"
@@ -1319,7 +1337,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetBlockbyNumberRequest"
+                "$ref": "#/components/schemas/GetBlockByNumberRequest"
               }
             }
           }
@@ -1329,7 +1347,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockResult"
+                  "$ref": "#/components/schemas/BlockResponse"
                 }
               }
             }
@@ -1337,7 +1355,7 @@
         }
       }
     },
-    "/hmyv2_getBlockbyHash": {
+    "/hmyv2_getBlockByHash": {
       "post": {
         "tags": [
           "Blockchain"
@@ -1346,7 +1364,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetBlockbyHashRequest"
+                "$ref": "#/components/schemas/GetBlockByHashRequest"
               }
             }
           }
@@ -1356,7 +1374,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/BlockResult"
+                  "$ref": "#/components/schemas/BlockResponse"
                 }
               }
             }
@@ -1380,10 +1398,11 @@
         },
         "responses": {
           "200": {
+            "description": "List of block signer wallet addresses",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBlockSignersResponse"
+                  "$ref": "#/components/schemas/AddressListResponse"
                 }
               }
             }
@@ -1407,10 +1426,11 @@
         },
         "responses": {
           "200": {
+            "description": "List of block signer public BLS keys",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBlockSignersKeysResponse"
+                  "$ref": "#/components/schemas/BLSKeyListResponse"
                 }
               }
             }
@@ -1418,7 +1438,7 @@
         }
       }
     },
-    "/hmyv2_getBlockTransactionCountbyNumber": {
+    "/hmyv2_getBlockTransactionCountByNumber": {
       "post": {
         "tags": [
           "Blockchain"
@@ -1427,17 +1447,18 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetBlockTransactionCountbyNumberRequest"
+                "$ref": "#/components/schemas/GetBlockTransactionCountByNumberRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Number of transactions in block",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBlockTransactionCountbyNumberResponse"
+                  "$ref": "#/components/schemas/TransactionCountResponse"
                 }
               }
             }
@@ -1445,7 +1466,7 @@
         }
       }
     },
-    "/hmyv2_getHeaderbyNumber": {
+    "/hmyv2_getBlockTransactionCountByHash": {
       "post": {
         "tags": [
           "Blockchain"
@@ -1454,17 +1475,46 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/GetHeaderbyNumberRequest"
+                "$ref": "#/components/schemas/GetBlockTransactionCountByHashRequest"
               }
             }
           }
         },
         "responses": {
           "200": {
+            "description": "Number of transactions in block",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetHeaderbyNumberResponse"
+                  "$ref": "#/components/schemas/TransactionCountResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/hmyv2_getHeaderByNumber": {
+      "post": {
+        "tags": [
+          "Blockchain"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GetHeaderByNumberRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Number of transactions in block",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HeaderResponse"
                 }
               }
             }
@@ -1481,7 +1531,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/EmptyRequest"
+                "$ref": "#/components/schemas/GetLatestChainHeadersRequest"
               }
             }
           }
@@ -1508,7 +1558,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/latestHeaderRequest"
+                "$ref": "#/components/schemas/LatestHeaderRequest"
               }
             }
           }
@@ -1518,7 +1568,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/latestHeaderResponse"
+                  "$ref": "#/components/schemas/HeaderResponse"
                 }
               }
             }
@@ -1529,7 +1579,7 @@
     "/hmyv2_getBalance": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1542,10 +1592,11 @@
         },
         "responses": {
           "200": {
+            "description": "Wallet balance at given block in Atto",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBalanceResponse"
+                  "$ref": "#/components/schemas/BalanceResponse"
                 }
               }
             }
@@ -1556,7 +1607,7 @@
     "/hmyv2_getBalanceByBlockNumber": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1569,10 +1620,11 @@
         },
         "responses": {
           "200": {
+            "description": "Wallet balance at given block in Atto",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetBalanceByBlockNumberResponse"
+                  "$ref": "#/components/schemas/BalanceResponse"
                 }
               }
             }
@@ -1583,7 +1635,7 @@
     "/hmyv2_getStakingTransactionsCount": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1596,10 +1648,11 @@
         },
         "responses": {
           "200": {
+            "description": "Number of staking transactions",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetStakingTransactionsCountResponse"
+                  "$ref": "#/components/schemas/TransactionCountResponse"
                 }
               }
             }
@@ -1610,7 +1663,7 @@
     "/hmyv2_getStakingTransactionsHistory": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1629,10 +1682,10 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/GetStakingTransactionsHistoryResponse"
+                      "$ref": "#/components/schemas/TransactionsHashListResponse"
                     },
                     {
-                      "$ref": "#/components/schemas/GetStakingTransactionsHistoryTxTypeResponse"
+                      "$ref": "#/components/schemas/StakingTransactionListResponse"
                     }
                   ]
                 }
@@ -1645,7 +1698,7 @@
     "/hmyv2_getTransactionsCount": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1658,10 +1711,11 @@
         },
         "responses": {
           "200": {
+            "description": "Number of transactions",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetTransactionsCountResponse"
+                  "$ref": "#/components/schemas/TransactionCountResponse"
                 }
               }
             }
@@ -1672,7 +1726,7 @@
     "/hmyv2_getTransactionsHistory": {
       "post": {
         "tags": [
-          "Blockchain"
+          "Account"
         ],
         "requestBody": {
           "content": {
@@ -1691,10 +1745,10 @@
                 "schema": {
                   "oneOf": [
                     {
-                      "$ref": "#/components/schemas/GetTransactionsHistoryResponse"
+                      "$ref": "#/components/schemas/TransactionsHashListResponse"
                     },
                     {
-                      "$ref": "#/components/schemas/GetTransactionsHistoryTxTypeResponse"
+                      "$ref": "#/components/schemas/TransactionListResponse"
                     }
                   ]
                 }
@@ -1708,40 +1762,6 @@
   "openapi": "3.0.3",
   "components": {
     "schemas": {
-      "EmptyRequest": {
-        "title": "EmptyRequest",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "default": "2.0",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The request id, useful for asynchronous requests.",
-            "default": 1,
-            "type": "integer"
-          },
-          "method": {
-            "title": "Method",
-            "description": "The method to call out to.",
-            "type": "string"
-          },
-          "params": {
-            "title": "Params",
-            "description": "An empty list with no parameters",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "method"
-        ]
-      },
       "CallRequest": {
         "title": "CallRequest",
         "type": "object",
@@ -1760,7 +1780,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_call",
             "type": "string"
           },
           "params": {
@@ -1777,7 +1797,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
@@ -1848,6 +1867,85 @@
           "result"
         ]
       },
+      "EstimateGasRequest": {
+        "title": "EstimateGasRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_estimateGas",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "type": "array",
+            "items": [
+              {
+                "$ref": "#/definitions/SmartContractCall"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "required": [
+          "params"
+        ],
+        "definitions": {
+          "SmartContractCall": {
+            "title": "SmartContractCall",
+            "type": "object",
+            "properties": {
+              "to": {
+                "title": "To",
+                "description": "Smart contract address",
+                "type": "string"
+              },
+              "from": {
+                "title": "From",
+                "description": "Wallet address",
+                "type": "string"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas to execute the smart contract call",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price to execute smart contract call",
+                "type": "integer"
+              },
+              "value": {
+                "title": "Value",
+                "description": "Value sent with the smart contract call",
+                "type": "integer"
+              },
+              "data": {
+                "title": "Data",
+                "description": "Hash of smart contract method and parameters",
+                "type": "string"
+              }
+            },
+            "required": [
+              "to"
+            ]
+          }
+        }
+      },
       "EstimateGasResponse": {
         "title": "EstimateGasResponse",
         "type": "object",
@@ -1892,7 +1990,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getCode",
             "type": "string"
           },
           "params": {
@@ -1927,7 +2025,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -1975,7 +2072,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStorageAt",
             "type": "string"
           },
           "params": {
@@ -1995,7 +2092,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -2043,7 +2139,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getDelegationsByDelegator",
             "type": "string"
           },
           "params": {
@@ -2055,46 +2151,6 @@
           }
         },
         "required": [
-          "method",
-          "params"
-        ]
-      },
-      "GetDelegationsByDelegatorByBlockNumberRequest": {
-        "title": "GetDelegationsByDelegatorByBlockNumberRequest",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "default": "2.0",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The request id, useful for asynchronous requests.",
-            "default": 1,
-            "type": "integer"
-          },
-          "method": {
-            "title": "Method",
-            "description": "The method to call out to.",
-            "type": "string"
-          },
-          "params": {
-            "title": "Params",
-            "type": "array",
-            "items": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "integer"
-              }
-            ]
-          }
-        },
-        "required": [
-          "method",
           "params"
         ]
       },
@@ -2170,6 +2226,44 @@
           }
         }
       },
+      "GetDelegationsByDelegatorByBlockNumberRequest": {
+        "title": "GetDelegationsByDelegatorByBlockNumberRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getDelegationsByDelegatorByBlockNumber",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "integer"
+              }
+            ]
+          }
+        },
+        "required": [
+          "params"
+        ]
+      },
       "GetDelegationsByValidatorRequest": {
         "title": "GetDelegationsByValidatorRequest",
         "type": "object",
@@ -2188,7 +2282,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getDelegationsByValidator",
             "type": "string"
           },
           "params": {
@@ -2200,12 +2294,11 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "ValidatorListResponse": {
-        "title": "ValidatorListResponse",
+      "ValidatorInformationListResponse": {
+        "title": "ValidatorInformationListResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -2220,10 +2313,10 @@
           },
           "result": {
             "title": "Result",
-            "description": "List of Validator Objects",
+            "description": "List of ValidatorInformation Objects",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Validator"
+              "$ref": "#/definitions/ValidatorInformation"
             }
           }
         },
@@ -2444,8 +2537,8 @@
               "epoch-apr"
             ]
           },
-          "Validator": {
-            "title": "Validator",
+          "ValidatorInformation": {
+            "title": "ValidatorInformation",
             "type": "object",
             "properties": {
               "bls-public-keys": {
@@ -2612,8 +2705,39 @@
           }
         }
       },
-      "GetAllValidatorAddressesResponse": {
-        "title": "GetAllValidatorAddressesResponse",
+      "GetAllValidatorAddressesRequest": {
+        "title": "GetAllValidatorAddressesRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getAllValidatorAddresses",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "AddressListResponse": {
+        "title": "AddressListResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -2628,7 +2752,7 @@
           },
           "result": {
             "title": "Result",
-            "description": "List of wallet addresses that have created validators on the network",
+            "description": "List of addresses",
             "type": "array",
             "items": {
               "type": "string"
@@ -2659,7 +2783,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getAllValidatorInformation",
             "type": "string"
           },
           "params": {
@@ -2671,7 +2795,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -2693,7 +2816,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getAllValidatorInformationByBlockNumber",
             "type": "string"
           },
           "params": {
@@ -2710,38 +2833,39 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "GetElectedValidatorAddressesResponse": {
-        "title": "GetElectedValidatorAddressesResponse",
+      "GetElectedValidatorAddressesRequest": {
+        "title": "GetElectedValidatorAddressesRequest",
         "type": "object",
         "properties": {
           "jsonrpc": {
             "title": "Jsonrpc",
             "description": "The JSON-RPC version.",
+            "default": "2.0",
             "type": "string"
           },
           "id": {
             "title": "Id",
-            "description": "The id of the request the response is in response to.",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
             "type": "integer"
           },
-          "result": {
-            "title": "Result",
-            "description": "List of wallet addresses that are currently elected",
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getElectedValidatorAddresses",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
             "type": "array",
             "items": {
               "type": "string"
             }
           }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ]
+        }
       },
       "GetValidatorInformationRequest": {
         "title": "GetValidatorInformationRequest",
@@ -2776,6 +2900,446 @@
           "method",
           "params"
         ]
+      },
+      "ValidatorInformationResponse": {
+        "title": "ValidatorInformationResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "Validator Object",
+            "allOf": [
+              {
+                "$ref": "#/definitions/ValidatorInformation"
+              }
+            ]
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Delegation": {
+            "title": "Delegation",
+            "type": "object",
+            "properties": {
+              "validator-address": {
+                "title": "Validator-Address",
+                "description": "Validator wallet address",
+                "type": "string"
+              },
+              "delegator-address": {
+                "title": "Delegator-Address",
+                "description": "Delegator wallet address",
+                "type": "string"
+              },
+              "amount": {
+                "title": "Amount",
+                "description": "Amount delegated in atto",
+                "type": "integer"
+              },
+              "reward": {
+                "title": "Reward",
+                "description": "Unclaimed rewards in atto",
+                "type": "integer"
+              },
+              "undelegations": {
+                "title": "Undelegations",
+                "description": "List of pending undelegations",
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "required": [
+              "validator-address",
+              "delegator-address",
+              "amount",
+              "reward",
+              "undelegations"
+            ]
+          },
+          "Key": {
+            "title": "Key",
+            "type": "object",
+            "properties": {
+              "bls-public-key": {
+                "title": "Bls-Public-Key",
+                "description": "BLS public key",
+                "type": "string"
+              },
+              "group-percent": {
+                "title": "Group-Percent",
+                "description": "Key voting power in shard",
+                "type": "string"
+              },
+              "effective-stake": {
+                "title": "Effective-Stake",
+                "description": "Effective stake of key",
+                "type": "string"
+              },
+              "raw-stake": {
+                "title": "Raw-Stake",
+                "description": "Actual stake of key",
+                "type": "string"
+              },
+              "earning-account": {
+                "title": "Earning-Account",
+                "description": "Validator wallet address",
+                "type": "string"
+              },
+              "overall-percent": {
+                "title": "Overall-Percent",
+                "description": "Percent of effective stake",
+                "type": "string"
+              },
+              "shard-id": {
+                "title": "Shard-Id",
+                "description": "Shard ID that key is on",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "bls-public-key",
+              "group-percent",
+              "effective-stake",
+              "raw-stake",
+              "earning-account",
+              "overall-percent",
+              "shard-id"
+            ]
+          },
+          "BlsKey": {
+            "title": "BlsKey",
+            "type": "object",
+            "properties": {
+              "key": {
+                "title": "Key",
+                "description": "Object",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Key"
+                  }
+                ]
+              },
+              "earned-reward": {
+                "title": "Earned-Reward",
+                "description": "Lifetime reward key has earned",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "key",
+              "earned-reward"
+            ]
+          },
+          "Metrics": {
+            "title": "Metrics",
+            "type": "object",
+            "properties": {
+              "by-bls-key": {
+                "title": "By-Bls-Key",
+                "description": "BLS key earning metrics for current epoch",
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/BlsKey"
+                }
+              }
+            },
+            "required": [
+              "by-bls-key"
+            ]
+          },
+          "Blocks": {
+            "title": "Blocks",
+            "type": "object",
+            "properties": {
+              "to-sign": {
+                "title": "To-Sign",
+                "description": "Number of blocks available to the validator to sign",
+                "type": "integer"
+              },
+              "signed": {
+                "title": "Signed",
+                "description": "Number of blocks the validator has signed",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "to-sign",
+              "signed"
+            ]
+          },
+          "EpochAPR": {
+            "title": "EpochAPR",
+            "type": "object",
+            "properties": {
+              "epoch": {
+                "title": "Epoch",
+                "description": "Epoch number",
+                "type": "integer"
+              },
+              "value": {
+                "title": "Value",
+                "description": "Calculated APR for that epoch",
+                "type": "string"
+              }
+            },
+            "required": [
+              "epoch",
+              "value"
+            ]
+          },
+          "Lifetime": {
+            "title": "Lifetime",
+            "type": "object",
+            "properties": {
+              "reward-accumulated": {
+                "title": "Reward-Accumulated",
+                "description": "Lifetime reward accumulated by the validator",
+                "type": "integer"
+              },
+              "blocks": {
+                "title": "Blocks",
+                "description": "Blocks Object",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Blocks"
+                  }
+                ]
+              },
+              "apr": {
+                "title": "Apr",
+                "description": "Approximate Return Rate",
+                "type": "string"
+              },
+              "epoch-apr": {
+                "title": "Epoch-Apr",
+                "description": "List of APR per epoch",
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/EpochAPR"
+                }
+              }
+            },
+            "required": [
+              "reward-accumulated",
+              "blocks",
+              "apr",
+              "epoch-apr"
+            ]
+          },
+          "ValidatorInformation": {
+            "title": "ValidatorInformation",
+            "type": "object",
+            "properties": {
+              "bls-public-keys": {
+                "title": "Bls-Public-Keys",
+                "description": "List of public BLS keys associated with the validator wallet address",
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "last-epoch-in-committee": {
+                "title": "Last-Epoch-In-Committee",
+                "description": "Last epoch any key of the validator was elected",
+                "type": "integer"
+              },
+              "min-self-delegation": {
+                "title": "Min-Self-Delegation",
+                "description": "Ammount that validator must delegate to self in Atto",
+                "type": "integer"
+              },
+              "max-total-delegation": {
+                "title": "Max-Total-Delegation",
+                "description": "Total amount that validator will accept delegation until in Atto",
+                "type": "integer"
+              },
+              "rate": {
+                "title": "Rate",
+                "description": "Current commission rate",
+                "type": "string"
+              },
+              "max-rate": {
+                "title": "Max-Rate",
+                "description": "Max commission rate a validator can charge",
+                "type": "string"
+              },
+              "max-change-rate": {
+                "title": "Max-Change-Rate",
+                "description": "Maximum amount the commission rate can increase in one epoch",
+                "type": "string"
+              },
+              "update-height": {
+                "title": "Update-Height",
+                "description": "Last block validator editted their validator information",
+                "type": "integer"
+              },
+              "name": {
+                "title": "Name",
+                "description": "Validator name, displayed on the Staking Dashboard",
+                "type": "string"
+              },
+              "identity": {
+                "title": "Identity",
+                "description": "Validator identity, must be unique",
+                "type": "string"
+              },
+              "website": {
+                "title": "Website",
+                "description": "Validator website, displayed on the Staking Dashboard",
+                "type": "string"
+              },
+              "security-contract": {
+                "title": "Security-Contract",
+                "description": "Method to contact the validator",
+                "type": "string"
+              },
+              "details": {
+                "title": "Details",
+                "description": "Validator details, displayed on the Staking Dashboard",
+                "type": "string"
+              },
+              "creation-height": {
+                "title": "Creation-Height",
+                "description": "Block in which the validator was created",
+                "type": "integer"
+              },
+              "address": {
+                "title": "Address",
+                "description": "Validator wallet address",
+                "type": "string"
+              },
+              "delegations": {
+                "title": "Delegations",
+                "description": "List of Delegation Objects",
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Delegation"
+                }
+              },
+              "metrics": {
+                "title": "Metrics",
+                "description": "BLS key earning metrics for current epoch",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Metrics"
+                  }
+                ]
+              },
+              "total-delegation": {
+                "title": "Total-Delegation",
+                "description": "Total amount delegated to validator",
+                "type": "integer"
+              },
+              "currently-in-committee": {
+                "title": "Currently-In-Committee",
+                "description": "If key is currently elected",
+                "type": "boolean"
+              },
+              "epos-status": {
+                "title": "Epos-Status",
+                "description": "Currently elected, eligible to be elected next epoch, or not eligible to be elected next epoch",
+                "type": "string"
+              },
+              "epos-winning-stake": {
+                "title": "Epos-Winning-Stake",
+                "description": "Total effective stake of the validator",
+                "type": "string"
+              },
+              "booted-status": {
+                "title": "Booted-Status",
+                "description": "Banned status",
+                "type": "string"
+              },
+              "active-status": {
+                "title": "Active-Status",
+                "description": "Active or inactive",
+                "type": "string"
+              },
+              "lifetime": {
+                "title": "Lifetime",
+                "description": "Lifetime Object",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/Lifetime"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "bls-public-keys",
+              "last-epoch-in-committee",
+              "min-self-delegation",
+              "max-total-delegation",
+              "rate",
+              "max-rate",
+              "max-change-rate",
+              "update-height",
+              "name",
+              "identity",
+              "website",
+              "security-contract",
+              "details",
+              "creation-height",
+              "address",
+              "delegations",
+              "metrics",
+              "total-delegation",
+              "currently-in-committee",
+              "epos-status",
+              "epos-winning-stake",
+              "booted-status",
+              "active-status",
+              "lifetime"
+            ]
+          }
+        }
+      },
+      "GetCurrentUtilityMetricsRequest": {
+        "title": "GetCurrentUtilityMetricsRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getCurrentUtilityMetrics",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetCurrentUtilityMetricsResponse": {
         "title": "GetCurrentUtilityMetricsResponse",
@@ -2838,6 +3402,37 @@
               "Deviation",
               "Adjustment"
             ]
+          }
+        }
+      },
+      "GetMedianRawStakeSnapshotRequest": {
+        "title": "GetMedianRawStakeSnapshotRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getMedianRawStakeSnapshot",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -2984,6 +3579,37 @@
           }
         }
       },
+      "GetStakingNetworkInfoRequest": {
+        "title": "GetStakingNetworkInfoRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getStakingNetworkInfoRequest",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetStakingNetworkInfoResponse": {
         "title": "GetStakingNetworkInfoResponse",
         "type": "object",
@@ -3051,6 +3677,37 @@
               "total-staking",
               "median-raw-stake"
             ]
+          }
+        }
+      },
+      "GetSuperCommitteesRequest": {
+        "title": "GetSuperCommitteesRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getSuperCommittess",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -3204,206 +3861,6 @@
           }
         }
       },
-      "StakingTransactionResult": {
-        "title": "StakingTransactionResult",
-        "type": "object",
-        "properties": {
-          "result": {
-            "title": "Result",
-            "description": "StakingTransaction Object",
-            "allOf": [
-              {
-                "$ref": "#/definitions/StakingTransaction"
-              }
-            ]
-          }
-        },
-        "required": [
-          "result"
-        ],
-        "definitions": {
-          "StakingTransaction": {
-            "title": "StakingTransaction",
-            "type": "object",
-            "properties": {
-              "blockHash": {
-                "title": "Blockhash",
-                "description": "Block hash in which transaction was finalized",
-                "type": "string"
-              },
-              "blockNumber": {
-                "title": "Blocknumber",
-                "description": "Block number in which transaction was finalized",
-                "type": "integer"
-              },
-              "from": {
-                "title": "From",
-                "description": "Sender wallet address",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix time at which transaction was finalized",
-                "type": "integer"
-              },
-              "gas": {
-                "title": "Gas",
-                "description": "Gas limit of transaction",
-                "type": "integer"
-              },
-              "gasPrice": {
-                "title": "Gasprice",
-                "description": "Gas price of transaction in Atto",
-                "type": "integer"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Wallet nonce of transaction",
-                "type": "integer"
-              },
-              "transactionIndex": {
-                "title": "Transactionindex",
-                "description": "Staking transaction index within block",
-                "type": "integer"
-              },
-              "type": {
-                "title": "Type",
-                "description": "Type of staking transaction",
-                "type": "string"
-              },
-              "msg": {
-                "title": "Msg",
-                "description": "Staking transaction data, depending on the type of staking transaction",
-                "type": "object"
-              }
-            },
-            "required": [
-              "blockHash",
-              "blockNumber",
-              "from",
-              "timestamp",
-              "gas",
-              "gasPrice",
-              "nonce",
-              "transactionIndex",
-              "type",
-              "msg"
-            ]
-          }
-        }
-      },
-      "TransactionResult": {
-        "title": "TransactionResult",
-        "type": "object",
-        "properties": {
-          "result": {
-            "title": "Result",
-            "description": "Transaction Object",
-            "allOf": [
-              {
-                "$ref": "#/definitions/Transaction"
-              }
-            ]
-          }
-        },
-        "required": [
-          "result"
-        ],
-        "definitions": {
-          "Transaction": {
-            "title": "Transaction",
-            "type": "object",
-            "properties": {
-              "blockHash": {
-                "title": "Blockhash",
-                "description": "Block hash",
-                "type": "string"
-              },
-              "blockNumber": {
-                "title": "Blocknumber",
-                "description": "Block number",
-                "type": "integer"
-              },
-              "from": {
-                "title": "From",
-                "description": "Sender wallet address",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix time at which transaction was finalized",
-                "type": "integer"
-              },
-              "gas": {
-                "title": "Gas",
-                "description": "Gas limit of transaction",
-                "type": "integer"
-              },
-              "gasPrice": {
-                "title": "Gasprice",
-                "description": "Gas price of transaction in Atto",
-                "type": "integer"
-              },
-              "hash": {
-                "title": "Hash",
-                "description": "Transaction hash",
-                "type": "string"
-              },
-              "input": {
-                "title": "Input",
-                "description": "Transaction data, used for smart contracts",
-                "type": "string"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Sender wallet nonce of transaction",
-                "type": "integer"
-              },
-              "to": {
-                "title": "To",
-                "description": "Receiver wallet address",
-                "type": "string"
-              },
-              "transactionIndex": {
-                "title": "Transactionindex",
-                "description": "Staking transaction index within block",
-                "type": "integer"
-              },
-              "value": {
-                "title": "Value",
-                "description": "Amount transferred",
-                "type": "integer"
-              },
-              "shardID": {
-                "title": "Shardid",
-                "description": "From shard",
-                "type": "integer"
-              },
-              "toShardID": {
-                "title": "Toshardid",
-                "description": "To shard",
-                "type": "integer"
-              }
-            },
-            "required": [
-              "blockHash",
-              "blockNumber",
-              "from",
-              "timestamp",
-              "gas",
-              "gasPrice",
-              "hash",
-              "input",
-              "nonce",
-              "to",
-              "transactionIndex",
-              "value",
-              "shardID",
-              "toShardID"
-            ]
-          }
-        }
-      },
       "GetCXReceiptByHashRequest": {
         "title": "GetCXReceiptByHashRequest",
         "type": "object",
@@ -3422,7 +3879,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getCXReceiptByHash",
             "type": "string"
           },
           "params": {
@@ -3434,7 +3891,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -3523,6 +3979,37 @@
               "toShardID",
               "value"
             ]
+          }
+        }
+      },
+      "GetPendingCXReceiptsRequest": {
+        "title": "GetPendingCXReceiptsRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getPendingCXReceipts",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -3649,8 +4136,8 @@
               "shardHashed"
             ]
           },
-          "Header": {
-            "title": "Header",
+          "BlockHeader": {
+            "title": "BlockHeader",
             "type": "object",
             "properties": {
               "shard-id": {
@@ -3702,7 +4189,7 @@
                 "$ref": "#/definitions/MerkleProof"
               },
               "header": {
-                "$ref": "#/definitions/Header"
+                "$ref": "#/definitions/BlockHeader"
               },
               "commitSig": {
                 "title": "Commitsig",
@@ -3743,7 +4230,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_resendCx",
             "type": "string"
           },
           "params": {
@@ -3755,7 +4242,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -3784,6 +4270,37 @@
           "id",
           "result"
         ]
+      },
+      "GetPoolStatsRequest": {
+        "title": "GetPoolStatsRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getPoolStats",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetPoolStatsResponse": {
         "title": "GetPoolStatsResponse",
@@ -3834,6 +4351,37 @@
               "executable-count",
               "non-executable-count"
             ]
+          }
+        }
+      },
+      "PendingStakingTransactionsRequest": {
+        "title": "PendingStakingTransactionsRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getPendingStakingTransactions",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -3936,6 +4484,191 @@
           }
         }
       },
+      "PendingTransactionsRequest": {
+        "title": "PendingTransactionsRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_pendingTransactions",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "TransactionListResponse": {
+        "title": "TransactionListResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "List of transactions",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Transaction"
+            }
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Transaction": {
+            "title": "Transaction",
+            "type": "object",
+            "properties": {
+              "blockHash": {
+                "title": "Blockhash",
+                "description": "Block hash",
+                "type": "string"
+              },
+              "blockNumber": {
+                "title": "Blocknumber",
+                "description": "Block number",
+                "type": "integer"
+              },
+              "from": {
+                "title": "From",
+                "description": "Sender wallet address",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix time at which transaction was finalized",
+                "type": "integer"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas limit of transaction",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price of transaction in Atto",
+                "type": "integer"
+              },
+              "hash": {
+                "title": "Hash",
+                "description": "Transaction hash",
+                "type": "string"
+              },
+              "input": {
+                "title": "Input",
+                "description": "Transaction data, used for smart contracts",
+                "type": "string"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Sender wallet nonce of transaction",
+                "type": "integer"
+              },
+              "to": {
+                "title": "To",
+                "description": "Receiver wallet address",
+                "type": "string"
+              },
+              "transactionIndex": {
+                "title": "Transactionindex",
+                "description": "transaction index within block",
+                "type": "integer"
+              },
+              "value": {
+                "title": "Value",
+                "description": "Amount transferred",
+                "type": "integer"
+              },
+              "shardID": {
+                "title": "Shardid",
+                "description": "From shard",
+                "type": "integer"
+              },
+              "toShardID": {
+                "title": "Toshardid",
+                "description": "To shard",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "blockHash",
+              "blockNumber",
+              "from",
+              "timestamp",
+              "gas",
+              "gasPrice",
+              "hash",
+              "input",
+              "nonce",
+              "to",
+              "transactionIndex",
+              "value",
+              "shardID",
+              "toShardID"
+            ]
+          }
+        }
+      },
+      "GetCurrentStakingErrorSinkRequest": {
+        "title": "GetCurrentStakingErrorSinkRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getCurrentStakingErrorSink",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetCurrentStakingErrorSinkResponse": {
         "title": "GetCurrentStakingErrorSinkResponse",
         "type": "object",
@@ -3952,7 +4685,7 @@
           },
           "result": {
             "title": "Result",
-            "description": "Array of object",
+            "description": "List of StakingError objects",
             "type": "array",
             "items": {
               "$ref": "#/definitions/StakingError"
@@ -4017,7 +4750,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStakingTransactionByBlockNumberAndIndex",
             "type": "string"
           },
           "params": {
@@ -4034,9 +4767,108 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
+      },
+      "StakingTransactionResponse": {
+        "title": "StakingTransactionResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "StakingTransaction Object",
+            "allOf": [
+              {
+                "$ref": "#/definitions/StakingTransaction"
+              }
+            ]
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "StakingTransaction": {
+            "title": "StakingTransaction",
+            "type": "object",
+            "properties": {
+              "blockHash": {
+                "title": "Blockhash",
+                "description": "Block hash in which transaction was finalized",
+                "type": "string"
+              },
+              "blockNumber": {
+                "title": "Blocknumber",
+                "description": "Block number in which transaction was finalized",
+                "type": "integer"
+              },
+              "from": {
+                "title": "From",
+                "description": "Sender wallet address",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix time at which transaction was finalized",
+                "type": "integer"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas limit of transaction",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price of transaction in Atto",
+                "type": "integer"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Wallet nonce of transaction",
+                "type": "integer"
+              },
+              "transactionIndex": {
+                "title": "Transactionindex",
+                "description": "Staking transaction index within block",
+                "type": "integer"
+              },
+              "type": {
+                "title": "Type",
+                "description": "Type of staking transaction",
+                "type": "string"
+              },
+              "msg": {
+                "title": "Msg",
+                "description": "Staking transaction data, depending on the type of staking transaction",
+                "type": "object"
+              }
+            },
+            "required": [
+              "blockHash",
+              "blockNumber",
+              "from",
+              "timestamp",
+              "gas",
+              "gasPrice",
+              "nonce",
+              "transactionIndex",
+              "type",
+              "msg"
+            ]
+          }
+        }
       },
       "GetStakingTransactionByBlockHashAndIndexRequest": {
         "title": "GetStakingTransactionByBlockHashAndIndexRequest",
@@ -4056,7 +4888,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStakingTransactionByBlockHashAndIndex",
             "type": "string"
           },
           "params": {
@@ -4064,7 +4896,7 @@
             "type": "array",
             "items": [
               {
-                "type": "integer"
+                "type": "string"
               },
               {
                 "type": "integer"
@@ -4073,7 +4905,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4095,7 +4926,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStakingTransactionByHash",
             "type": "string"
           },
           "params": {
@@ -4107,7 +4938,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4129,7 +4959,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_sendRawStakingTransaction",
             "type": "string"
           },
           "params": {
@@ -4141,7 +4971,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4161,7 +4990,7 @@
           },
           "result": {
             "title": "Result",
-            "description": "Staking transaction hash",
+            "description": "Staking transaction hash if it was successfully added, else an erro",
             "type": "string"
           }
         },
@@ -4170,6 +4999,37 @@
           "id",
           "result"
         ]
+      },
+      "GetCurrentTransactionErrorSinkRequest": {
+        "title": "GetCurrentTransactionErrorSinkRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getCurrentTransactionErrorSinkRequest",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetCurrentTransactionErrorSinkResponse": {
         "title": "GetCurrentTransactionErrorSinkResponse",
@@ -4246,7 +5106,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getTransactionByBlockHashAndIndex",
             "type": "string"
           },
           "params": {
@@ -4263,9 +5123,132 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
+      },
+      "TransactionResponse": {
+        "title": "TransactionResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "Transaction Object",
+            "allOf": [
+              {
+                "$ref": "#/definitions/Transaction"
+              }
+            ]
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Transaction": {
+            "title": "Transaction",
+            "type": "object",
+            "properties": {
+              "blockHash": {
+                "title": "Blockhash",
+                "description": "Block hash",
+                "type": "string"
+              },
+              "blockNumber": {
+                "title": "Blocknumber",
+                "description": "Block number",
+                "type": "integer"
+              },
+              "from": {
+                "title": "From",
+                "description": "Sender wallet address",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix time at which transaction was finalized",
+                "type": "integer"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas limit of transaction",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price of transaction in Atto",
+                "type": "integer"
+              },
+              "hash": {
+                "title": "Hash",
+                "description": "Transaction hash",
+                "type": "string"
+              },
+              "input": {
+                "title": "Input",
+                "description": "Transaction data, used for smart contracts",
+                "type": "string"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Sender wallet nonce of transaction",
+                "type": "integer"
+              },
+              "to": {
+                "title": "To",
+                "description": "Receiver wallet address",
+                "type": "string"
+              },
+              "transactionIndex": {
+                "title": "Transactionindex",
+                "description": "transaction index within block",
+                "type": "integer"
+              },
+              "value": {
+                "title": "Value",
+                "description": "Amount transferred",
+                "type": "integer"
+              },
+              "shardID": {
+                "title": "Shardid",
+                "description": "From shard",
+                "type": "integer"
+              },
+              "toShardID": {
+                "title": "Toshardid",
+                "description": "To shard",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "blockHash",
+              "blockNumber",
+              "from",
+              "timestamp",
+              "gas",
+              "gasPrice",
+              "hash",
+              "input",
+              "nonce",
+              "to",
+              "transactionIndex",
+              "value",
+              "shardID",
+              "toShardID"
+            ]
+          }
+        }
       },
       "GetTransactionByBlockNumberAndIndexRequest": {
         "title": "GetTransactionByBlockNumberAndIndexRequest",
@@ -4285,7 +5268,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getTransactionByBlockNumberAndIndex",
             "type": "string"
           },
           "params": {
@@ -4302,7 +5285,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4324,7 +5306,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getTransactionByHash",
             "type": "string"
           },
           "params": {
@@ -4336,7 +5318,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4358,7 +5339,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getTransactionReceipt",
             "type": "string"
           },
           "params": {
@@ -4370,7 +5351,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4511,7 +5491,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_sendRawTransaction",
             "type": "string"
           },
           "params": {
@@ -4523,7 +5503,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -4553,322 +5532,34 @@
           "result"
         ]
       },
-      "BlockResult": {
-        "title": "BlockResult",
-        "type": "object",
-        "properties": {
-          "result": {
-            "title": "Result",
-            "description": "Block Object",
-            "allOf": [
-              {
-                "$ref": "#/definitions/Block"
-              }
-            ]
-          }
-        },
-        "required": [
-          "result"
-        ],
-        "definitions": {
-          "Block": {
-            "title": "Block",
-            "type": "object",
-            "properties": {
-              "difficulty": {
-                "title": "Difficulty",
-                "description": "Unused, legacy from Eth",
-                "type": "integer"
-              },
-              "epoch": {
-                "title": "Epoch",
-                "description": "Epoch number of block",
-                "type": "integer"
-              },
-              "extraData": {
-                "title": "Extradata",
-                "description": "Hex representation of extra data in the block",
-                "type": "string"
-              },
-              "gasLimit": {
-                "title": "Gaslimit",
-                "description": "Maximum gas that can be used for transactions in the block",
-                "type": "integer"
-              },
-              "gasUsed": {
-                "title": "Gasused",
-                "description": "Amount of gas used for transactions in the block",
-                "type": "integer"
-              },
-              "hash": {
-                "title": "Hash",
-                "description": "Block hash",
-                "type": "string"
-              },
-              "logsBloom": {
-                "title": "Logsbloom",
-                "description": "Bloom logs",
-                "type": "string"
-              },
-              "miner": {
-                "title": "Miner",
-                "description": "Wallet address of the leader that proposed this block",
-                "type": "string"
-              },
-              "mixHash": {
-                "title": "Mixhash",
-                "description": "Unused, legacy from Eth",
-                "type": "string"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Unused, legacy from Eth",
-                "type": "integer"
-              },
-              "number": {
-                "title": "Number",
-                "description": "Block number",
-                "type": "integer"
-              },
-              "parentHash": {
-                "title": "Parenthash",
-                "description": "Hash of parent block",
-                "type": "string"
-              },
-              "receiptsRoot": {
-                "title": "Receiptsroot",
-                "description": "Hash of transaction receipt root",
-                "type": "string"
-              },
-              "size": {
-                "title": "Size",
-                "description": "Block size in bytes",
-                "type": "integer"
-              },
-              "stakingTransactions": {
-                "title": "Stakingtransactions",
-                "description": "List of staking transactions finalized in this block",
-                "type": "object"
-              },
-              "stateRoot": {
-                "title": "Stateroot",
-                "description": "Hash of state root",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix timestamp of the block",
-                "type": "integer"
-              },
-              "transactions": {
-                "title": "Transactions",
-                "description": "List of transactions finalized in this block",
-                "type": "object"
-              },
-              "transactionsRoot": {
-                "title": "Transactionsroot",
-                "description": "Hash of transactios root",
-                "type": "string"
-              },
-              "uncles": {
-                "title": "Uncles",
-                "description": "Unused, legacy from Eth",
-                "type": "object"
-              },
-              "viewID": {
-                "title": "Viewid",
-                "description": "View ID",
-                "type": "integer"
-              }
-            },
-            "required": [
-              "difficulty",
-              "epoch",
-              "extraData",
-              "gasLimit",
-              "gasUsed",
-              "hash",
-              "logsBloom",
-              "miner",
-              "mixHash",
-              "nonce",
-              "number",
-              "parentHash",
-              "receiptsRoot",
-              "size",
-              "stakingTransactions",
-              "stateRoot",
-              "timestamp",
-              "transactions",
-              "transactionsRoot",
-              "uncles",
-              "viewID"
-            ]
-          }
-        }
-      },
-      "BlockListResponse": {
-        "title": "BlockListResponse",
+      "BlockNumberRequest": {
+        "title": "BlockNumberRequest",
         "type": "object",
         "properties": {
           "jsonrpc": {
             "title": "Jsonrpc",
             "description": "The JSON-RPC version.",
+            "default": "2.0",
             "type": "string"
           },
           "id": {
             "title": "Id",
-            "description": "The id of the request the response is in response to.",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
             "type": "integer"
           },
-          "result": {
-            "title": "Result",
-            "description": "List of blocks",
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_blockNumber",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Block"
+              "type": "string"
             }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ],
-        "definitions": {
-          "Block": {
-            "title": "Block",
-            "type": "object",
-            "properties": {
-              "difficulty": {
-                "title": "Difficulty",
-                "description": "Unused, legacy from Eth",
-                "type": "integer"
-              },
-              "epoch": {
-                "title": "Epoch",
-                "description": "Epoch number of block",
-                "type": "integer"
-              },
-              "extraData": {
-                "title": "Extradata",
-                "description": "Hex representation of extra data in the block",
-                "type": "string"
-              },
-              "gasLimit": {
-                "title": "Gaslimit",
-                "description": "Maximum gas that can be used for transactions in the block",
-                "type": "integer"
-              },
-              "gasUsed": {
-                "title": "Gasused",
-                "description": "Amount of gas used for transactions in the block",
-                "type": "integer"
-              },
-              "hash": {
-                "title": "Hash",
-                "description": "Block hash",
-                "type": "string"
-              },
-              "logsBloom": {
-                "title": "Logsbloom",
-                "description": "Bloom logs",
-                "type": "string"
-              },
-              "miner": {
-                "title": "Miner",
-                "description": "Wallet address of the leader that proposed this block",
-                "type": "string"
-              },
-              "mixHash": {
-                "title": "Mixhash",
-                "description": "Unused, legacy from Eth",
-                "type": "string"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Unused, legacy from Eth",
-                "type": "integer"
-              },
-              "number": {
-                "title": "Number",
-                "description": "Block number",
-                "type": "integer"
-              },
-              "parentHash": {
-                "title": "Parenthash",
-                "description": "Hash of parent block",
-                "type": "string"
-              },
-              "receiptsRoot": {
-                "title": "Receiptsroot",
-                "description": "Hash of transaction receipt root",
-                "type": "string"
-              },
-              "size": {
-                "title": "Size",
-                "description": "Block size in bytes",
-                "type": "integer"
-              },
-              "stakingTransactions": {
-                "title": "Stakingtransactions",
-                "description": "List of staking transactions finalized in this block",
-                "type": "object"
-              },
-              "stateRoot": {
-                "title": "Stateroot",
-                "description": "Hash of state root",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix timestamp of the block",
-                "type": "integer"
-              },
-              "transactions": {
-                "title": "Transactions",
-                "description": "List of transactions finalized in this block",
-                "type": "object"
-              },
-              "transactionsRoot": {
-                "title": "Transactionsroot",
-                "description": "Hash of transactios root",
-                "type": "string"
-              },
-              "uncles": {
-                "title": "Uncles",
-                "description": "Unused, legacy from Eth",
-                "type": "object"
-              },
-              "viewID": {
-                "title": "Viewid",
-                "description": "View ID",
-                "type": "integer"
-              }
-            },
-            "required": [
-              "difficulty",
-              "epoch",
-              "extraData",
-              "gasLimit",
-              "gasUsed",
-              "hash",
-              "logsBloom",
-              "miner",
-              "mixHash",
-              "nonce",
-              "number",
-              "parentHash",
-              "receiptsRoot",
-              "size",
-              "stakingTransactions",
-              "stateRoot",
-              "timestamp",
-              "transactions",
-              "transactionsRoot",
-              "uncles",
-              "viewID"
-            ]
           }
         }
       },
@@ -4898,6 +5589,37 @@
           "result"
         ]
       },
+      "GetCirculatingSupplyRequest": {
+        "title": "GetCirculatingSupplyRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getCirculatingSupply",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetCirculatingSupplyResponse": {
         "title": "GetCirculatingSupplyResponse",
         "type": "object",
@@ -4924,6 +5646,37 @@
           "result"
         ]
       },
+      "GetEpochRequest": {
+        "title": "GetEpochRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getEpoch",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetEpochResponse": {
         "title": "GetEpochResponse",
         "type": "object",
@@ -4949,6 +5702,37 @@
           "id",
           "result"
         ]
+      },
+      "GetLastCrossLinksRequest": {
+        "title": "GetLastCrossLinksRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getLastCrossLinks",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetLastCrossLinksResponse": {
         "title": "GetLastCrossLinksResponse",
@@ -5031,6 +5815,37 @@
           }
         }
       },
+      "GetLeaderRequest": {
+        "title": "GetLeaderRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getLeader",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetLeaderResponse": {
         "title": "GetLeaderResponse",
         "type": "object",
@@ -5056,6 +5871,37 @@
           "id",
           "result"
         ]
+      },
+      "GasPriceRequest": {
+        "title": "GasPriceRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_gasPrice",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GasPriceResponse": {
         "title": "GasPriceResponse",
@@ -5084,65 +5930,33 @@
         ]
       },
       "GetShardingStructureRequest": {
-        "title": "GetShardingStructureResponse",
+        "title": "GetShardingStructureRequest",
         "type": "object",
         "properties": {
           "jsonrpc": {
             "title": "Jsonrpc",
             "description": "The JSON-RPC version.",
+            "default": "2.0",
             "type": "string"
           },
           "id": {
             "title": "Id",
-            "description": "The id of the request the response is in response to.",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
             "type": "integer"
           },
-          "result": {
-            "title": "Result",
-            "description": "List of ShardingStructure Object",
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getShardingStructure",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/ShardingStructure"
+              "type": "string"
             }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ],
-        "definitions": {
-          "ShardingStructure": {
-            "title": "ShardingStructure",
-            "type": "object",
-            "properties": {
-              "current": {
-                "title": "Current",
-                "description": "If this node is currently on this shard ID",
-                "type": "boolean"
-              },
-              "http": {
-                "title": "Http",
-                "description": "HTTPS API endpoint for this shard ID",
-                "type": "string"
-              },
-              "shardID": {
-                "title": "Shardid",
-                "description": "Shard ID",
-                "type": "integer"
-              },
-              "ws": {
-                "title": "Ws",
-                "description": "Websocket API endpoint for this shard ID",
-                "type": "string"
-              }
-            },
-            "required": [
-              "current",
-              "http",
-              "shardID",
-              "ws"
-            ]
           }
         }
       },
@@ -5209,6 +6023,37 @@
           }
         }
       },
+      "GetTotalSupplyRequest": {
+        "title": "GetTotalSupplyRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getTotalSupply",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "GetTotalSupplyResponse": {
         "title": "GetTotalSupplyResponse",
         "type": "object",
@@ -5253,7 +6098,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getValidators",
             "type": "string"
           },
           "params": {
@@ -5265,7 +6110,6 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
@@ -5285,10 +6129,10 @@
           },
           "result": {
             "title": "Result",
-            "description": "Validators Object",
+            "description": "ValidatorIDs Object",
             "allOf": [
               {
-                "$ref": "#/definitions/Validators"
+                "$ref": "#/definitions/ValidatorIDs"
               }
             ]
           }
@@ -5319,8 +6163,8 @@
               "balance"
             ]
           },
-          "Validators": {
-            "title": "Validators",
+          "ValidatorIDs": {
+            "title": "ValidatorIDs",
             "type": "object",
             "properties": {
               "shardID": {
@@ -5362,7 +6206,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getValidatorKeys",
             "type": "string"
           },
           "params": {
@@ -5374,12 +6218,11 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "GetValidatorKeysResponse": {
-        "title": "GetValidatorKeysResponse",
+      "BLSKeyListResponse": {
+        "title": "BLSKeyListResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -5394,7 +6237,7 @@
           },
           "result": {
             "title": "Result",
-            "description": "List of public BLS kets in the elected committee",
+            "description": "List of public BLS keys in the elected committee",
             "type": "array",
             "items": {
               "type": "string"
@@ -5406,6 +6249,37 @@
           "id",
           "result"
         ]
+      },
+      "GetCurrentBadBlocksRequest": {
+        "title": "GetCurrentBadBlocksRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getCurrentBadBlocks",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetCurrentBadBlocksResponse": {
         "title": "GetCurrentBadBlocksResponse",
@@ -5435,6 +6309,37 @@
           "id",
           "result"
         ]
+      },
+      "GetNodeMetadataRequest": {
+        "title": "GetNodeMetadataRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getNodeMetadata",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "GetNodeMetadataResponse": {
         "title": "GetNodeMetadataResponse",
@@ -5653,6 +6558,37 @@
           }
         }
       },
+      "ProtocolVersionRequest": {
+        "title": "ProtocolVersionRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_protocolVersion",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
       "ProtocolVersionResponse": {
         "title": "ProtocolVersionResponse",
         "type": "object",
@@ -5678,6 +6614,37 @@
           "id",
           "result"
         ]
+      },
+      "PeerCountRequest": {
+        "title": "PeerCountRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "net_peerCount",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
       },
       "PeerCountResponse": {
         "title": "PeerCountResponse",
@@ -5723,7 +6690,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlocks",
             "type": "string"
           },
           "params": {
@@ -5737,18 +6704,17 @@
                 "type": "integer"
               },
               {
-                "$ref": "#/definitions/AdditionalBlocksData"
+                "$ref": "#/definitions/BlocksListConfig"
               }
             ]
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
-          "AdditionalBlocksData": {
-            "title": "AdditionalBlocksData",
+          "BlocksListConfig": {
+            "title": "BlocksListConfig",
             "type": "object",
             "properties": {
               "withSigners": {
@@ -5775,6 +6741,171 @@
           }
         }
       },
+      "BlockListResponse": {
+        "title": "BlockListResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "List of blocks",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Block"
+            }
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Block": {
+            "title": "Block",
+            "type": "object",
+            "properties": {
+              "difficulty": {
+                "title": "Difficulty",
+                "description": "Unused, legacy from Eth",
+                "type": "integer"
+              },
+              "epoch": {
+                "title": "Epoch",
+                "description": "Epoch number of block",
+                "type": "integer"
+              },
+              "extraData": {
+                "title": "Extradata",
+                "description": "Hex representation of extra data in the block",
+                "type": "string"
+              },
+              "gasLimit": {
+                "title": "Gaslimit",
+                "description": "Maximum gas that can be used for transactions in the block",
+                "type": "integer"
+              },
+              "gasUsed": {
+                "title": "Gasused",
+                "description": "Amount of gas used for transactions in the block",
+                "type": "integer"
+              },
+              "hash": {
+                "title": "Hash",
+                "description": "Block hash",
+                "type": "string"
+              },
+              "logsBloom": {
+                "title": "Logsbloom",
+                "description": "Bloom logs",
+                "type": "string"
+              },
+              "miner": {
+                "title": "Miner",
+                "description": "Wallet address of the leader that proposed this block",
+                "type": "string"
+              },
+              "mixHash": {
+                "title": "Mixhash",
+                "description": "Unused, legacy from Eth",
+                "type": "string"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Unused, legacy from Eth",
+                "type": "integer"
+              },
+              "number": {
+                "title": "Number",
+                "description": "Block number",
+                "type": "integer"
+              },
+              "parentHash": {
+                "title": "Parenthash",
+                "description": "Hash of parent block",
+                "type": "string"
+              },
+              "receiptsRoot": {
+                "title": "Receiptsroot",
+                "description": "Hash of transaction receipt root",
+                "type": "string"
+              },
+              "size": {
+                "title": "Size",
+                "description": "Block size in bytes",
+                "type": "integer"
+              },
+              "stakingTransactions": {
+                "title": "Stakingtransactions",
+                "description": "List of staking transactions finalized in this block",
+                "type": "object"
+              },
+              "stateRoot": {
+                "title": "Stateroot",
+                "description": "Hash of state root",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix timestamp of the block",
+                "type": "integer"
+              },
+              "transactions": {
+                "title": "Transactions",
+                "description": "List of transactions finalized in this block",
+                "type": "object"
+              },
+              "transactionsRoot": {
+                "title": "Transactionsroot",
+                "description": "Hash of transactios root",
+                "type": "string"
+              },
+              "uncles": {
+                "title": "Uncles",
+                "description": "Unused, legacy from Eth",
+                "type": "object"
+              },
+              "viewID": {
+                "title": "Viewid",
+                "description": "View ID",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "difficulty",
+              "epoch",
+              "extraData",
+              "gasLimit",
+              "gasUsed",
+              "hash",
+              "logsBloom",
+              "miner",
+              "mixHash",
+              "nonce",
+              "number",
+              "parentHash",
+              "receiptsRoot",
+              "size",
+              "stakingTransactions",
+              "stateRoot",
+              "timestamp",
+              "transactions",
+              "transactionsRoot",
+              "uncles",
+              "viewID"
+            ]
+          }
+        }
+      },
       "GetBlockByNumberRequest": {
         "title": "GetBlockByNumberRequest",
         "type": "object",
@@ -5793,7 +6924,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlockByNumber",
             "type": "string"
           },
           "params": {
@@ -5804,18 +6935,17 @@
                 "type": "integer"
               },
               {
-                "$ref": "#/definitions/AdditionalBlocksNumbersData"
+                "$ref": "#/definitions/BlockConfig"
               }
             ]
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
-          "AdditionalBlocksNumbersData": {
-            "title": "AdditionalBlocksNumbersData",
+          "BlockConfig": {
+            "title": "BlockConfig",
             "type": "object",
             "properties": {
               "fullTx": {
@@ -5842,6 +6972,172 @@
           }
         }
       },
+      "BlockResponse": {
+        "title": "BlockResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "Block Object",
+            "allOf": [
+              {
+                "$ref": "#/definitions/Block"
+              }
+            ]
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Block": {
+            "title": "Block",
+            "type": "object",
+            "properties": {
+              "difficulty": {
+                "title": "Difficulty",
+                "description": "Unused, legacy from Eth",
+                "type": "integer"
+              },
+              "epoch": {
+                "title": "Epoch",
+                "description": "Epoch number of block",
+                "type": "integer"
+              },
+              "extraData": {
+                "title": "Extradata",
+                "description": "Hex representation of extra data in the block",
+                "type": "string"
+              },
+              "gasLimit": {
+                "title": "Gaslimit",
+                "description": "Maximum gas that can be used for transactions in the block",
+                "type": "integer"
+              },
+              "gasUsed": {
+                "title": "Gasused",
+                "description": "Amount of gas used for transactions in the block",
+                "type": "integer"
+              },
+              "hash": {
+                "title": "Hash",
+                "description": "Block hash",
+                "type": "string"
+              },
+              "logsBloom": {
+                "title": "Logsbloom",
+                "description": "Bloom logs",
+                "type": "string"
+              },
+              "miner": {
+                "title": "Miner",
+                "description": "Wallet address of the leader that proposed this block",
+                "type": "string"
+              },
+              "mixHash": {
+                "title": "Mixhash",
+                "description": "Unused, legacy from Eth",
+                "type": "string"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Unused, legacy from Eth",
+                "type": "integer"
+              },
+              "number": {
+                "title": "Number",
+                "description": "Block number",
+                "type": "integer"
+              },
+              "parentHash": {
+                "title": "Parenthash",
+                "description": "Hash of parent block",
+                "type": "string"
+              },
+              "receiptsRoot": {
+                "title": "Receiptsroot",
+                "description": "Hash of transaction receipt root",
+                "type": "string"
+              },
+              "size": {
+                "title": "Size",
+                "description": "Block size in bytes",
+                "type": "integer"
+              },
+              "stakingTransactions": {
+                "title": "Stakingtransactions",
+                "description": "List of staking transactions finalized in this block",
+                "type": "object"
+              },
+              "stateRoot": {
+                "title": "Stateroot",
+                "description": "Hash of state root",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix timestamp of the block",
+                "type": "integer"
+              },
+              "transactions": {
+                "title": "Transactions",
+                "description": "List of transactions finalized in this block",
+                "type": "object"
+              },
+              "transactionsRoot": {
+                "title": "Transactionsroot",
+                "description": "Hash of transactios root",
+                "type": "string"
+              },
+              "uncles": {
+                "title": "Uncles",
+                "description": "Unused, legacy from Eth",
+                "type": "object"
+              },
+              "viewID": {
+                "title": "Viewid",
+                "description": "View ID",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "difficulty",
+              "epoch",
+              "extraData",
+              "gasLimit",
+              "gasUsed",
+              "hash",
+              "logsBloom",
+              "miner",
+              "mixHash",
+              "nonce",
+              "number",
+              "parentHash",
+              "receiptsRoot",
+              "size",
+              "stakingTransactions",
+              "stateRoot",
+              "timestamp",
+              "transactions",
+              "transactionsRoot",
+              "uncles",
+              "viewID"
+            ]
+          }
+        }
+      },
       "GetBlockByHashRequest": {
         "title": "GetBlockByHashRequest",
         "type": "object",
@@ -5860,7 +7156,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlockByHash",
             "type": "string"
           },
           "params": {
@@ -5871,18 +7167,17 @@
                 "type": "string"
               },
               {
-                "$ref": "#/definitions/AdditionalBlocksNumbersData"
+                "$ref": "#/definitions/BlockConfig"
               }
             ]
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
-          "AdditionalBlocksNumbersData": {
-            "title": "AdditionalBlocksNumbersData",
+          "BlockConfig": {
+            "title": "BlockConfig",
             "type": "object",
             "properties": {
               "fullTx": {
@@ -5927,7 +7222,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlockSigners",
             "type": "string"
           },
           "params": {
@@ -5941,18 +7236,17 @@
                 "type": "integer"
               },
               {
-                "$ref": "#/definitions/AdditionalBlocksData"
+                "$ref": "#/definitions/BlocksListConfig"
               }
             ]
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
-          "AdditionalBlocksData": {
-            "title": "AdditionalBlocksData",
+          "BlocksListConfig": {
+            "title": "BlocksListConfig",
             "type": "object",
             "properties": {
               "withSigners": {
@@ -5979,35 +7273,6 @@
           }
         }
       },
-      "GetBlockSignersResponse": {
-        "title": "GetBlockSignersResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "List of block signer wallet addresses",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ]
-      },
       "GetBlockSignersKeysRequest": {
         "title": "GetBlockSignersKeysRequest",
         "type": "object",
@@ -6026,7 +7291,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlockSignersKeys",
             "type": "string"
           },
           "params": {
@@ -6038,37 +7303,7 @@
           }
         },
         "required": [
-          "method",
           "params"
-        ]
-      },
-      "GetBlockSignersKeysResponse": {
-        "title": "GetBlockSignersKeysResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "List of block signer public BLS keys",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
         ]
       },
       "GetBlockTransactionCountByNumberRequest": {
@@ -6089,7 +7324,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBlockTransactionCountByNumber",
             "type": "string"
           },
           "params": {
@@ -6101,12 +7336,11 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "GetBlockTransactionCountByNumberResponse": {
-        "title": "GetBlockTransactionCountByNumberResponse",
+      "TransactionCountResponse": {
+        "title": "TransactionCountResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -6121,7 +7355,7 @@
           },
           "result": {
             "title": "Result",
-            "description": "Number of transaction in block",
+            "description": "Number of transactions",
             "type": "integer"
           }
         },
@@ -6129,6 +7363,39 @@
           "jsonrpc",
           "id",
           "result"
+        ]
+      },
+      "GetBlockTransactionCountByHashRequest": {
+        "title": "GetBlockTransactionCountByHashRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getBlockTransactionCountByHash",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "params"
         ]
       },
       "GetHeaderByNumberRequest": {
@@ -6149,7 +7416,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getHeaderByNumber",
             "type": "string"
           },
           "params": {
@@ -6161,12 +7428,11 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "GetHeaderByNumberResponse": {
-        "title": "GetHeaderByNumberResponse",
+      "HeaderResponse": {
+        "title": "HeaderResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -6180,13 +7446,7 @@
             "type": "integer"
           },
           "result": {
-            "title": "Result",
-            "description": "Object",
-            "allOf": [
-              {
-                "$ref": "#/definitions/LatestHeader"
-              }
-            ]
+            "$ref": "#/definitions/Header"
           }
         },
         "required": [
@@ -6195,8 +7455,8 @@
           "result"
         ],
         "definitions": {
-          "LatestHeader": {
-            "title": "LatestHeader",
+          "Header": {
+            "title": "Header",
             "type": "object",
             "properties": {
               "blockHash": {
@@ -6262,6 +7522,37 @@
               "lastCommitSig",
               "lastCommitBitmap"
             ]
+          }
+        }
+      },
+      "GetLatestChainHeadersRequest": {
+        "title": "GetLatestChainHeadersRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getLatestChainHeaders",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -6363,103 +7654,34 @@
           }
         }
       },
-      "LatestHeaderResponse": {
-        "title": "LatestHeaderResponse",
+      "LatestHeaderRequest": {
+        "title": "LatestHeaderRequest",
         "type": "object",
         "properties": {
           "jsonrpc": {
             "title": "Jsonrpc",
             "description": "The JSON-RPC version.",
+            "default": "2.0",
             "type": "string"
           },
           "id": {
             "title": "Id",
-            "description": "The id of the request the response is in response to.",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
             "type": "integer"
           },
-          "result": {
-            "title": "Result",
-            "description": "LatestHeader Object",
-            "allOf": [
-              {
-                "$ref": "#/definitions/LatestHeader"
-              }
-            ]
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ],
-        "definitions": {
-          "LatestHeader": {
-            "title": "LatestHeader",
-            "type": "object",
-            "properties": {
-              "blockHash": {
-                "title": "Blockhash",
-                "description": "Block hash",
-                "type": "string"
-              },
-              "blockNumber": {
-                "title": "Blocknumber",
-                "description": "Block number",
-                "type": "integer"
-              },
-              "shardID": {
-                "title": "Shardid",
-                "description": "Shard ID",
-                "type": "integer"
-              },
-              "leader": {
-                "title": "Leader",
-                "description": "Wallet address of leader that proposed this block if prestaking, otherwise sha256 hash of leader's public bls key",
-                "type": "string"
-              },
-              "viewID": {
-                "title": "Viewid",
-                "description": "View ID of the block",
-                "type": "integer"
-              },
-              "epoch": {
-                "title": "Epoch",
-                "description": "Epoch of the block",
-                "type": "integer"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Timestamp that the block was finalized",
-                "type": "integer"
-              },
-              "unixtime": {
-                "title": "Unixtime",
-                "description": "Timestamp that the block was finalized in Unix time",
-                "type": "integer"
-              },
-              "lastCommitSig": {
-                "title": "Lastcommitsig",
-                "description": "Hex representation of aggregated signatures of the previous block",
-                "type": "string"
-              },
-              "lastCommitBitmap": {
-                "title": "Lastcommitbitmap",
-                "description": "Hex representation of the aggregated signature bitmap of the previous block",
-                "type": "string"
-              }
-            },
-            "required": [
-              "blockHash",
-              "blockNumber",
-              "shardID",
-              "leader",
-              "viewID",
-              "epoch",
-              "timestamp",
-              "unixtime",
-              "lastCommitSig",
-              "lastCommitBitmap"
-            ]
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_latestHeader",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "description": "An empty list with no parameters",
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -6481,7 +7703,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBalance",
             "type": "string"
           },
           "params": {
@@ -6493,12 +7715,11 @@
           }
         },
         "required": [
-          "method",
           "params"
         ]
       },
-      "GetBalanceResponse": {
-        "title": "GetBalanceResponse",
+      "BalanceResponse": {
+        "title": "BalanceResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -6541,7 +7762,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getBalanceByBlockNumber",
             "type": "string"
           },
           "params": {
@@ -6558,34 +7779,7 @@
           }
         },
         "required": [
-          "method",
           "params"
-        ]
-      },
-      "GetBalanceByBlockNumberResponse": {
-        "title": "GetBalanceByBlockNumberResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "Wallet balance at given block in Atto",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
         ]
       },
       "GetStakingTransactionsCountRequest": {
@@ -6606,7 +7800,7 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStakingTransactionsCount",
             "type": "string"
           },
           "params": {
@@ -6623,34 +7817,7 @@
           }
         },
         "required": [
-          "method",
           "params"
-        ]
-      },
-      "GetStakingTransactionsCountResponse": {
-        "title": "GetStakingTransactionsCountResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "Number of staking transactions",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
         ]
       },
       "GetStakingTransactionsHistoryRequest": {
@@ -6671,24 +7838,42 @@
           },
           "method": {
             "title": "Method",
-            "description": "The method to call out to.",
+            "default": "hmyv2_getStakingTransactionsHistory",
             "type": "string"
           },
           "params": {
             "title": "Params",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/GetStakingTransactionsHistoryObject"
+              "$ref": "#/definitions/TransactionsHistoryObject"
             }
           }
         },
         "required": [
-          "method",
           "params"
         ],
         "definitions": {
-          "GetStakingTransactionsHistoryObject": {
-            "title": "GetStakingTransactionsHistoryObject",
+          "TransactionType": {
+            "title": "TransactionType",
+            "description": "An enumeration.",
+            "enum": [
+              "SENT",
+              "RECEIVED",
+              "ALL"
+            ],
+            "type": "string"
+          },
+          "SortOrder": {
+            "title": "SortOrder",
+            "description": "An enumeration.",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "type": "string"
+          },
+          "TransactionsHistoryObject": {
+            "title": "TransactionsHistoryObject",
             "type": "object",
             "properties": {
               "address": {
@@ -6699,315 +7884,48 @@
               "pageIndex": {
                 "title": "Pageindex",
                 "description": "Optional, which page ofo transactions to return, default 0",
+                "default": 0,
                 "type": "integer"
               },
               "pageSize": {
                 "title": "Pagesize",
                 "description": "Optional, how many transactions to display per page, default 1000",
+                "default": 1000,
                 "type": "integer"
               },
               "fullTx": {
                 "title": "Fulltx",
                 "description": "Optional, return full transaction data or just transaction hashes, default false",
+                "default": false,
                 "type": "boolean"
               },
               "txType": {
-                "title": "Txtype",
                 "description": "Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'",
-                "type": "string"
+                "default": "ALL",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/TransactionType"
+                  }
+                ]
               },
               "order": {
-                "title": "Order",
                 "description": "Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'",
-                "type": "string"
+                "default": "ASC",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/SortOrder"
+                  }
+                ]
               }
             },
             "required": [
-              "address",
-              "pageIndex",
-              "pageSize",
-              "fullTx",
-              "txType",
-              "order"
+              "address"
             ]
           }
         }
       },
-      "GetStakingTransactionsHistoryResponse": {
-        "title": "GetStakingTransactionsHistoryResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "List of staking transactions",
-            "type": "array",
-            "items": {
-              "type": "string"
-            }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ]
-      },
-      "GetStakingTransactionsHistoryTxTypeResponse": {
-        "title": "GetStakingTransactionsHistoryTxTypeResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "List of staking transactions",
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/StakingTransaction"
-            }
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ],
-        "definitions": {
-          "StakingTransaction": {
-            "title": "StakingTransaction",
-            "type": "object",
-            "properties": {
-              "blockHash": {
-                "title": "Blockhash",
-                "description": "Block hash in which transaction was finalized",
-                "type": "string"
-              },
-              "blockNumber": {
-                "title": "Blocknumber",
-                "description": "Block number in which transaction was finalized",
-                "type": "integer"
-              },
-              "from": {
-                "title": "From",
-                "description": "Sender wallet address",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix time at which transaction was finalized",
-                "type": "integer"
-              },
-              "gas": {
-                "title": "Gas",
-                "description": "Gas limit of transaction",
-                "type": "integer"
-              },
-              "gasPrice": {
-                "title": "Gasprice",
-                "description": "Gas price of transaction in Atto",
-                "type": "integer"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Wallet nonce of transaction",
-                "type": "integer"
-              },
-              "transactionIndex": {
-                "title": "Transactionindex",
-                "description": "Staking transaction index within block",
-                "type": "integer"
-              },
-              "type": {
-                "title": "Type",
-                "description": "Type of staking transaction",
-                "type": "string"
-              },
-              "msg": {
-                "title": "Msg",
-                "description": "Staking transaction data, depending on the type of staking transaction",
-                "type": "object"
-              }
-            },
-            "required": [
-              "blockHash",
-              "blockNumber",
-              "from",
-              "timestamp",
-              "gas",
-              "gasPrice",
-              "nonce",
-              "transactionIndex",
-              "type",
-              "msg"
-            ]
-          }
-        }
-      },
-      "GetTransactionsCountRequest": {
-        "title": "GetTransactionsCountRequest",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "default": "2.0",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The request id, useful for asynchronous requests.",
-            "default": 1,
-            "type": "integer"
-          },
-          "method": {
-            "title": "Method",
-            "description": "The method to call out to.",
-            "type": "string"
-          },
-          "params": {
-            "title": "Params",
-            "type": "array",
-            "items": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "string"
-              }
-            ]
-          }
-        },
-        "required": [
-          "method",
-          "params"
-        ]
-      },
-      "GetTransactionsCountResponse": {
-        "title": "GetTransactionsCountResponse",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The id of the request the response is in response to.",
-            "type": "integer"
-          },
-          "result": {
-            "title": "Result",
-            "description": "Number of transactions",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "jsonrpc",
-          "id",
-          "result"
-        ]
-      },
-      "GetTransactionsHistoryRequest": {
-        "title": "GetTransactionsHistoryRequest",
-        "type": "object",
-        "properties": {
-          "jsonrpc": {
-            "title": "Jsonrpc",
-            "description": "The JSON-RPC version.",
-            "default": "2.0",
-            "type": "string"
-          },
-          "id": {
-            "title": "Id",
-            "description": "The request id, useful for asynchronous requests.",
-            "default": 1,
-            "type": "integer"
-          },
-          "method": {
-            "title": "Method",
-            "description": "The method to call out to.",
-            "type": "string"
-          },
-          "params": {
-            "title": "Params",
-            "type": "array",
-            "items": {
-              "$ref": "#/definitions/GetTransactionsHistoryObject"
-            }
-          }
-        },
-        "required": [
-          "method",
-          "params"
-        ],
-        "definitions": {
-          "GetTransactionsHistoryObject": {
-            "title": "GetTransactionsHistoryObject",
-            "type": "object",
-            "properties": {
-              "address": {
-                "title": "Address",
-                "description": "Wallet address",
-                "type": "string"
-              },
-              "pageIndex": {
-                "title": "Pageindex",
-                "description": "Optional, which page ofo transactions to return, default 0",
-                "type": "integer"
-              },
-              "pageSize": {
-                "title": "Pagesize",
-                "description": "Optional, how many transactions to display per page, default 1000",
-                "type": "integer"
-              },
-              "fullTx": {
-                "title": "Fulltx",
-                "description": "Optional, return full transaction data or just transaction hashes, default false",
-                "type": "boolean"
-              },
-              "txType": {
-                "title": "Txtype",
-                "description": "Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'",
-                "type": "string"
-              },
-              "order": {
-                "title": "Order",
-                "description": "Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'",
-                "type": "string"
-              }
-            },
-            "required": [
-              "address",
-              "pageIndex",
-              "pageSize",
-              "fullTx",
-              "txType",
-              "order"
-            ]
-          }
-        }
-      },
-      "GetTransactionsHistoryResponse": {
-        "title": "GetTransactionsHistoryResponse",
+      "TransactionsHashListResponse": {
+        "title": "TransactionsHashListResponse",
         "type": "object",
         "properties": {
           "jsonrpc": {
@@ -7035,125 +7953,144 @@
           "result"
         ]
       },
-      "GetTransactionsHistoryTxTypeResponse": {
-        "title": "GetTransactionsHistoryTxTypeResponse",
+      "GetTransactionsCountRequest": {
+        "title": "GetTransactionsCountRequest",
         "type": "object",
         "properties": {
           "jsonrpc": {
             "title": "Jsonrpc",
             "description": "The JSON-RPC version.",
+            "default": "2.0",
             "type": "string"
           },
           "id": {
             "title": "Id",
-            "description": "The id of the request the response is in response to.",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
             "type": "integer"
           },
-          "result": {
-            "title": "Result",
-            "description": "Array of transaction object",
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getTransactionsCount",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
+            "type": "array",
+            "items": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "required": [
+          "params"
+        ]
+      },
+      "GetTransactionsHistoryRequest": {
+        "title": "GetTransactionsHistoryRequest",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "default": "2.0",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The request id, useful for asynchronous requests.",
+            "default": 1,
+            "type": "integer"
+          },
+          "method": {
+            "title": "Method",
+            "default": "hmyv2_getTransactionsHistory",
+            "type": "string"
+          },
+          "params": {
+            "title": "Params",
             "type": "array",
             "items": {
-              "$ref": "#/definitions/Transaction"
+              "$ref": "#/definitions/TransactionsHistoryObject"
             }
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "params"
         ],
         "definitions": {
-          "Transaction": {
-            "title": "Transaction",
+          "TransactionType": {
+            "title": "TransactionType",
+            "description": "An enumeration.",
+            "enum": [
+              "SENT",
+              "RECEIVED",
+              "ALL"
+            ],
+            "type": "string"
+          },
+          "SortOrder": {
+            "title": "SortOrder",
+            "description": "An enumeration.",
+            "enum": [
+              "ASC",
+              "DESC"
+            ],
+            "type": "string"
+          },
+          "TransactionsHistoryObject": {
+            "title": "TransactionsHistoryObject",
             "type": "object",
             "properties": {
-              "blockHash": {
-                "title": "Blockhash",
-                "description": "Block hash",
+              "address": {
+                "title": "Address",
+                "description": "Wallet address",
                 "type": "string"
               },
-              "blockNumber": {
-                "title": "Blocknumber",
-                "description": "Block number",
+              "pageIndex": {
+                "title": "Pageindex",
+                "description": "Optional, which page ofo transactions to return, default 0",
+                "default": 0,
                 "type": "integer"
               },
-              "from": {
-                "title": "From",
-                "description": "Sender wallet address",
-                "type": "string"
-              },
-              "timestamp": {
-                "title": "Timestamp",
-                "description": "Unix time at which transaction was finalized",
+              "pageSize": {
+                "title": "Pagesize",
+                "description": "Optional, how many transactions to display per page, default 1000",
+                "default": 1000,
                 "type": "integer"
               },
-              "gas": {
-                "title": "Gas",
-                "description": "Gas limit of transaction",
-                "type": "integer"
+              "fullTx": {
+                "title": "Fulltx",
+                "description": "Optional, return full transaction data or just transaction hashes, default false",
+                "default": false,
+                "type": "boolean"
               },
-              "gasPrice": {
-                "title": "Gasprice",
-                "description": "Gas price of transaction in Atto",
-                "type": "integer"
+              "txType": {
+                "description": "Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'",
+                "default": "ALL",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/TransactionType"
+                  }
+                ]
               },
-              "hash": {
-                "title": "Hash",
-                "description": "Transaction hash",
-                "type": "string"
-              },
-              "input": {
-                "title": "Input",
-                "description": "Transaction data, used for smart contracts",
-                "type": "string"
-              },
-              "nonce": {
-                "title": "Nonce",
-                "description": "Sender wallet nonce of transaction",
-                "type": "integer"
-              },
-              "to": {
-                "title": "To",
-                "description": "Receiver wallet address",
-                "type": "string"
-              },
-              "transactionIndex": {
-                "title": "Transactionindex",
-                "description": "Staking transaction index within block",
-                "type": "integer"
-              },
-              "value": {
-                "title": "Value",
-                "description": "Amount transferred",
-                "type": "integer"
-              },
-              "shardID": {
-                "title": "Shardid",
-                "description": "From shard",
-                "type": "integer"
-              },
-              "toShardID": {
-                "title": "Toshardid",
-                "description": "To shard",
-                "type": "integer"
+              "order": {
+                "description": "Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'",
+                "default": "ASC",
+                "allOf": [
+                  {
+                    "$ref": "#/definitions/SortOrder"
+                  }
+                ]
               }
             },
             "required": [
-              "blockHash",
-              "blockNumber",
-              "from",
-              "timestamp",
-              "gas",
-              "gasPrice",
-              "hash",
-              "input",
-              "nonce",
-              "to",
-              "transactionIndex",
-              "value",
-              "shardID",
-              "toShardID"
+              "address"
             ]
           }
         }

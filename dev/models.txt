@@ -1,5 +1,3 @@
-from ._models import *
-
 TOP_LEVEL_MODELS = (
     AddressBlockNumberParameters,
     AddressListResponse,

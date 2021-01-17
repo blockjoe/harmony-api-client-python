@@ -5,36 +5,30 @@ import requests
 from ..utils.communication import format_api_data, post_request
 
 from ..models import (
-    GetCXReceiptByHashParameters,
+    HashParameters,
     GetCXReceiptByHashResponse,
     GetPendingCXReceiptsResponse,
-    ResendCXParameters,
     ResendCXResponse,
     GetPoolStatsResponse,
     GetCurrentStakingErrorSinkResponse,
-    GetStakingTransactionByBlockNumberAndIndexParameters,
-    GetStakingTransactionByBlockHashAndIndexParameters,
-    GetStakingTransactionByHashParameters,
-    SendRawStakingTransactionParameters,
+    BlockNumberAndIndexParameters,
+    HashAndIndexParameters,
+    RawTransactionParameters,
     SendRawStakingTransactionResponse,
     GetCurrentTransactionErrorSinkResponse,
-    GetTransactionByBlockHashAndIndexParameters,
-    GetTransactionByBlockNumberAndIndexParameters,
-    GetTransactionByHashParameters,
     GetTransactionReceiptParameters,
     GetTransactionReceiptResponse,
-    SendRawTransactionParameters,
     SendRawTransactionResponse,
-    StakingTransactionResult,
+    StakingTransactionResponse,
     StakingTransactionListResponse,
-    TransactionResult
+    TransactionResponse
 )
 
 #Cross shard
 
-def getCXReceiptByHash(api_url : str, params : GetCXReceiptByHashParameters, session : Optional[requests.Session] = None) -> GetCXReceiptByHashResponse:
+def getCXReceiptByHash(api_url : str, params : HashParameters, session : Optional[requests.Session] = None) -> GetCXReceiptByHashResponse:
     """
-    params: GetCXReceiptByHashParameters
+    params: HashParameters
     result: GetCXReceiptByHashResponse
     method: hmyv2_getCXReceiptByHash
     """
@@ -54,9 +48,9 @@ def getPendingCXReceipts(api_url : str, session : Optional[requests.Session] = N
     return GetPendingCXReceiptsResponse(**resp.json())
 
 
-def resendCX(api_url : str, params : ResendCXParameters, session : Optional[requests.Session] = None) -> ResendCXResponse:
+def resendCX(api_url : str, params : HashParameters, session : Optional[requests.Session] = None) -> ResendCXResponse:
     """
-    params: ResendCXParameters
+    params: HashParameters
     result: ResendCXResponse
     method: hmyv2_resendCX
     """
@@ -87,10 +81,10 @@ def pendingStakingTransactions(api_url : str, session : Optional[requests.Sessio
     resp = post_request(api_url, data, session)
     return StakingTransactionListResponse(**resp.json())
 
-def pendingTransactions(api_url : str, session : Optional[requests.Session] = None) -> StakingTransactionListResponse:
+def pendingTransactions(api_url : str, session : Optional[requests.Session] = None) -> TransactionListResponse:
     """
     params: None
-    result: StakingTransactionListResponse
+    result: TransactionListResponse
     method: hmyv2_pendingTransactions
     """
     data = format_api_data("hmyv2_pendingTransactions", None)
@@ -109,39 +103,39 @@ def getCurrentStakingErrorSink(api_url : str, session : Optional[requests.Sessio
     resp = post_request(api_url, data, session)
     return GetCurrentStakingErrorSinkResponse(**resp.json())
 
-def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : GetStakingTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
+def getStakingTransactionByBlockNumberAndIndex(api_url : str, params : BlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResponse:
     """
-    params: GetStakingTransactionByBlockNumberAndIndexParameters
-    result: StakingTransactionResult
+    params: BlockNumberAndIndexParameters
+    result: StakingTransactionResponse
     method: hmyv2_getStakingTransactionByBlockNumberAndIndex
     """
     data = format_api_data("hmyv2_getStakingTransactionByBlockNumberAndIndex", params)
     resp = post_request(api_url, data, session)
-    return StakingTransactionResult(**resp.json())
+    return StakingTransactionResponse(**resp.json())
 
-def getStakingTransactionByBlockHashAndIndex(api_url : str, params : GetStakingTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
+def getStakingTransactionByBlockHashAndIndex(api_url : str, params : HashAndIndexParameters, session : Optional[requests.Session] = None) -> StakingTransactionResponse:
     """
-    params: GetStakingTransactionByBlockHashAndIndexParameters
-    result: StakingTransactionResult
+    params: HashAndIndexParameters
+    result: StakingTransactionResponse
     method: hmyv2_getStakingTransactionByBlockHashAndIndex
     """
     data = format_api_data("hmyv2_getStakingTransactionByBlockHashAndIndex", params)
     resp = post_request(api_url, data, session)
-    return StakingTransactionResult(**resp.json())
+    return StakingTransactionResponse(**resp.json())
 
-def getStakingTransactionByHash(api_url : str, params : GetStakingTransactionByHashParameters, session : Optional[requests.Session] = None) -> StakingTransactionResult:
+def getStakingTransactionByHash(api_url : str, params : HashParameters, session : Optional[requests.Session] = None) -> StakingTransactionResponse:
     """
-    params: GetStakingTransactionByHashParameters
-    result: StakingTransactionResult
+    params: HashParameters
+    result: StakingTransactionResponse
     method: hmyv2_getStakingTransactionByHash
     """
     data = format_api_data("hmyv2_getStakingTransactionByHash", params)
     resp = post_request(api_url, data, session)
-    return StakingTransactionResult(**resp.json())
+    return StakingTransactionResponse(**resp.json())
 
-def sendRawStakingTransaction(api_url : str, params : SendRawStakingTransactionParameters, session : Optional[requests.Session] = None) -> SendRawStakingTransactionResponse:
+def sendRawStakingTransaction(api_url : str, params : RawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawStakingTransactionResponse:
     """
-    params: SendRawStakingTransactionParameters
+    params: RawTransactionParameters
     result: SendRawStakingTransactionResponse
     method: hmyv2_sendRawStakingTransaction
     """
@@ -161,35 +155,35 @@ def getCurrentTransactionErrorSink(api_url : str, session : Optional[requests.Se
     resp = post_request(api_url, data, session)
     return GetCurrentTransactionErrorSinkResponse(**resp.json())
 
-def getTransactionByBlockHashAndIndex(api_url : str, params : GetTransactionByBlockHashAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
+def getTransactionByBlockHashAndIndex(api_url : str, params : HashAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResponse:
     """
-    params: GetTransactionByBlockHashAndIndexParameters
-    result: TransactionResult
+    params: HashAndIndexParameters
+    result: TransactionResponse
     method: hmyv2_getTransactionByBlockHashAndIndex
     """
     data = format_api_data("hmyv2_getTransactionByBlockHashAndIndex", params)
     resp = post_request(api_url, data, session)
-    return TransactionResult(**resp.json())
+    return TransactionResponse(**resp.json())
 
-def getTransactionByBlockNumberAndIndex(api_url : str, params : GetTransactionByBlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResult:
+def getTransactionByBlockNumberAndIndex(api_url : str, params : BlockNumberAndIndexParameters, session : Optional[requests.Session] = None) -> TransactionResponse:
     """
-    params: GetTransactionByBlockNumberAndIndexParameters
-    result: TransactionResult
+    params: BlockNumberAndIndexParameters
+    result: TransactionResponse
     method: hmyv2_getTransactionByBlockNumberAndIndex
     """
     data = format_api_data("hmyv2_getTransactionByBlockNumberAndIndex", params)
     resp = post_request(api_url, data, session)
-    return TransactionResult(**resp.json())
+    return TransactionResponse(**resp.json())
 
-def getTransactionByHash(api_url : str, params : GetTransactionByHashParameters, session : Optional[requests.Session] = None) -> TransactionResult:
+def getTransactionByHash(api_url : str, params : HashParameters, session : Optional[requests.Session] = None) -> TransactionResponse:
     """
-    params: GetTransactionByHashParameters
-    result: TransactionResult
+    params: HashParameters
+    result: TransactionResponse
     method: hmyv2_getTransactionByHash
     """
     data = format_api_data("hmyv2_getTransactionByHash", params)
     resp = post_request(api_url, data, session)
-    return TransactionResult(**resp.json())
+    return TransactionResponse(**resp.json())
 
 def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameters, session : Optional[requests.Session] = None) -> GetTransactionReceiptResponse:
     """
@@ -201,9 +195,9 @@ def getTransactionReceipt(api_url : str, params : GetTransactionReceiptParameter
     resp = post_request(api_url, data, session)
     return GetTransactionReceiptResponse(**resp.json())
 
-def sendRawTransaction(api_url : str, params : SendRawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawTransactionResponse:
+def sendRawTransaction(api_url : str, params : RawTransactionParameters, session : Optional[requests.Session] = None) -> SendRawTransactionResponse:
     """
-    params: SendRawTransactionParameters
+    params: RawTransactionParameters
     result: SendRawTransactionResponse
     method: hmyv2_sendRawTransaction
     """

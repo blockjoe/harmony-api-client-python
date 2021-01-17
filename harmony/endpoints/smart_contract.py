@@ -14,7 +14,7 @@ from ..models import (
     GetStorageAtResponse
 )
 
-def call(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> CallResponse:
+def call_(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> CallResponse:
     """
     params: CallParameters
     result: CallResponse
@@ -22,7 +22,6 @@ def call(api_url : str, params : CallParameters, session : Optional[requests.Ses
     """
     data = format_api_data("hmyv2_call", params)
     resp = post_request(api_url, data, session)
-    
     return CallResponse(**resp.json())
 
 def estimateGas(api_url : str, params : CallParameters, session : Optional[requests.Session] = None) -> EstimateGasResponse:
@@ -33,7 +32,6 @@ def estimateGas(api_url : str, params : CallParameters, session : Optional[reque
     """
     data = format_api_data("hmyv2_estimateGas", params)
     resp = post_request(api_url, data, session)
-    
     return EstimateGasResponse(**resp.json())
 
 def getCode(api_url : str, params : GetCodeParameters, session : Optional[requests.Session] = None) -> GetCodeResponse:
@@ -44,7 +42,6 @@ def getCode(api_url : str, params : GetCodeParameters, session : Optional[reques
     """
     data = format_api_data("hmyv2_getCode", params)
     resp = post_request(api_url, data, session)
-    
     return CallResponse(**resp.json())
 
 
@@ -56,5 +53,4 @@ def getStorageAt(api_url : str, params : GetStorageAtParameters, session : Optio
     """
     data = format_api_data("hmyv2_getStorageAt", params)
     resp = post_request(api_url, data, session)
-    
     return GetStorageAtResponse(**resp.json())

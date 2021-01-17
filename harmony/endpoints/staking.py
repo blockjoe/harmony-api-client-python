@@ -5,114 +5,104 @@ import requests
 from ..utils.communication import format_api_data, post_request
 
 from ..models import (
-    GetDelegationsByDelegatorParameters,
+    AddressBlockNumberParameters,
+    AddressListResponse,
+    AddressParameters,
     DelegationListResponse,
-    GetDelegationsByDelegatorByBlockNumberParameters,
-    GetDelegationsByValidatorParameters,
-    GetAllValidatorAddressesResponse,
     GetAllValidatorInformationParameters,
     GetAllValidatorInformationByBlockNumberParameters,
-    GetElectedValidatorAddressesResponse,
-    GetValidatorInformationParameters,
     GetCurrentUtilityMetricsResponse,
     GetMedianRawStakeSnapshotResponse,
     GetStakingNetworkInfoResponse,
     GetSuperCommitteesResponse,
-    ValidatorListResponse
+    ValidatorInformationResponse,
+    ValidatorInformationListResponse
 )
 
 #Delegation
 
-def getDelegationsByDelegator(api_url : str, params : GetDelegationsByDelegatorParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
+def getDelegationsByDelegator(api_url : str, params : AddressParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
     """
-    params: GetDelegationsByDelegatorParameters
+    params: AddressParameters
     result: DelegationListResponse
     method: hmyv2_getDelegationsByDelegator
     """
     data = format_api_data("hmyv2_getDelegationsByDelegator", params)
     resp = post_request(api_url, data, session)
-    
     return DelegationListResponse(**resp.json())
 
-def getDelegationsByDelegatorByBlockNumber(api_url : str, params : GetDelegationsByDelegatorByBlockNumberParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
+def getDelegationsByDelegatorByBlockNumber(api_url : str, params : AddressBlockNumberParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
     """
-    params: GetDelegationsByDelegatorByBlockNumberParameters
+    params: AddressBlockNumberParameters
     result: DelegationListResponse
     method: hmyv2_getDelegationsByDelegatorByBlockNumber
     """
     data = format_api_data("hmyv2_getDelegationsByDelegatorByBlockNumber", params)
     resp = post_request(api_url, data, session)
-    
     return DelegationListResponse(**resp.json())
 
-def getDelegationsByValidator(api_url : str, params : GetDelegationsByValidatorParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
+def getDelegationsByValidator(api_url : str, params : AddressParameters, session : Optional[requests.Session] = None) -> DelegationListResponse:
     """
-    params: GetDelegationsByValidatorParameters
+    params: AddressParameters
     result: DelegationListResponse
     method: hmyv2_getDelegationsByValidator
     """
     data = format_api_data("hmyv2_getDelegationsByValidator", params)
     resp = post_request(api_url, data, session)
-    
     return DelegationListResponse(**resp.json())
 
 #Validator
 
-def getAllValidatorAddresses(api_url : str, session : Optional[requests.Session] = None) -> GetAllValidatorAddressesResponse:
+def getAllValidatorAddresses(api_url : str, session : Optional[requests.Session] = None) -> AddressListResponse:
     """
     params: None
-    result: GetAllValidatorAddressesResponse
+    result: AddressListResponse
     method: hmyv2_getAllValidatorAddresses
     """
     data = format_api_data("hmyv2_getAllValidatorAddresses", None)
     resp = post_request(api_url, data, session)
-    
-    return GetAllValidatorAddressesResponse(**resp.json())
+    return AddressListResponse(**resp.json())
 
-def getAllValidatorInformation(api_url : str, params : GetAllValidatorInformationParameters, session : Optional[requests.Session] = None) -> ValidatorListResponse:
+def getAllValidatorInformation(api_url : str, params : GetAllValidatorInformationParameters, session : Optional[requests.Session] = None) -> ValidatorInformationListResponse:
     """
     params: GetAllValidatorInformationParameters
-    result: ValidatorListResponse
+    result: ValidatorInformationListResponse
     method: hmyv2_getAllValidatorInformation
     """
     data = format_api_data("hmyv2_getAllValidatorInformation", params)
     resp = post_request(api_url, data, session)
-    
-    return ValidatorListResponse(**resp.json())
+    return ValidatorInformationListResponse(**resp.json())
 
-def getAllValidatorInformationByBlockNumber(api_url : str, params : GetAllValidatorInformationByBlockNumberParameters, session : Optional[requests.Session] = None) -> ValidatorListResponse:
+def getAllValidatorInformationByBlockNumber(api_url : str, params : GetAllValidatorInformationByBlockNumberParameters, session : Optional[requests.Session] = None) -> ValidatorInformationListResponse:
     """
     params: GetAllValidatorInformationByBlockNumberParameters
-    result: ValidatorListResponse
+    result: ValidatorInformationListResponse
     method: hmyv2_getAllValidatorInformationByBlockNumber
     """
     data = format_api_data("hmyv2_getAllValidatorInformationByBlockNumber", params)
     resp = post_request(api_url, data, session)
-    
-    return ValidatorListResponse(**resp.json())
+    return ValidatorInformationListResponse(**resp.json())
 
-def getElectedValidatorAddresses(api_url : str, session : Optional[requests.Session] = None) -> GetElectedValidatorAddressesResponse:
+def getElectedValidatorAddresses(api_url : str, session : Optional[requests.Session] = None) -> AddressListResponse:
     """
     params: None
-    result: GetElectedValidatorAddressesResponse
+    result: AddressListResponse
     method: hmyv2_getElectedValidatorAddresses
     """
     data = format_api_data("hmyv2_getElectedValidatorAddresses", None)
     resp = post_request(api_url, data, session)
-    
-    return GetElectedValidatorAddressesResponse(**resp.json())
+    return AddressListResponse(**resp.json())
 
 
-def getValidatorInformation(api_url : str, params : GetValidatorInformationParameters, session : Optional[requests.Session] = None) -> ValidatorListResponse:
+def getValidatorInformation(api_url : str, params : AddressParameters, session : Optional[requests.Session] = None) -> ValidatorInformationResponse:
     """
-    params: GetValidatorInformationParameters
-    result: ValidatorListResponse
+    params: AddressParameters
+    result: ValidatorInformationResponse
     method: hmyv2_getValidatorInformation
     """
     data = format_api_data("hmyv2_getValidatorInformation", params)
     resp = post_request(api_url, data, session)
-    
-    return ValidatorListResponse(**resp.json())
+    return ValidatorInformationResponse(**resp.json())
 
 #Network
 
@@ -124,10 +114,9 @@ def getCurrentUtilityMetrics(api_url : str, session : Optional[requests.Session]
     """
     data = format_api_data("hmyv2_getCurrentUtilityMetrics", None)
     resp = post_request(api_url, data, session)
-    
     return GetCurrentUtilityMetricsResponse(**resp.json())
 
-def getetMedianRawStakeSnapshot(api_url : str, session : Optional[requests.Session] = None) -> GetMedianRawStakeSnapshotResponse:
+def getMedianRawStakeSnapshot(api_url : str, session : Optional[requests.Session] = None) -> GetMedianRawStakeSnapshotResponse:
     """
     params: None
     result: GetMedianRawStakeSnapshotResponse
@@ -135,7 +124,6 @@ def getetMedianRawStakeSnapshot(api_url : str, session : Optional[requests.Sessi
     """
     data = format_api_data("hmyv2_getMedianRawStakeSnapshot", None)
     resp = post_request(api_url, data, session)
-    
     return GetMedianRawStakeSnapshotResponse(**resp.json())
 
 def getStakingNetworkInfo(api_url : str, session : Optional[requests.Session] = None) -> GetStakingNetworkInfoResponse:
@@ -146,7 +134,6 @@ def getStakingNetworkInfo(api_url : str, session : Optional[requests.Session] = 
     """
     data = format_api_data("hmyv2_getStakingNetworkInfo", None)
     resp = post_request(api_url, data, session)
-    
     return GetStakingNetworkInfoResponse(**resp.json())
 
 def getSuperCommittees(api_url : str, session : Optional[requests.Session] = None) -> GetSuperCommitteesResponse:
@@ -157,5 +144,4 @@ def getSuperCommittees(api_url : str, session : Optional[requests.Session] = Non
     """
     data = format_api_data("hmyv2_getSuperCommittees", None)
     resp = post_request(api_url, data, session)
-    
     return GetSuperCommitteesResponse(**resp.json())

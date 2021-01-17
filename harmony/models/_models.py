@@ -1,3 +1,5 @@
+from enum import Enum
+
 from typing import Any, Dict, List, Optional, Sequence, Tuple, Union
 
 from pydantic import BaseModel, Field
@@ -30,9 +32,14 @@ class CallParameters(BaseModel):
 
 class CallRequest(BaseRequest):
     params : Tuple[SmartContractCall, int]
+    method : str = "hmyv2_call"
 
 class CallResponse(BaseResponse):
     result : str = Field(..., description="Return value of the executed smart contract")
+
+class EstimateGasRequest(BaseRequest):
+    params : Tuple[SmartContractCall, int]
+    method : str = "hmyv2_estimateGas"
 
 class EstimateGasResponse(BaseResponse):
     result: str = Field(..., description="Hex of estimated gas price of smart contract call")
@@ -44,6 +51,7 @@ class GetCodeParameters(BaseModel):
 
 class GetCodeRequest(BaseRequest):
     params : Union[Tuple[str, str, str], Tuple[str, str]]
+    method : str = "hmyv2_getCode"
 
 class GetCodeResponse(BaseResponse):
     result : str = Field(..., description="The data at given address address")
@@ -55,6 +63,7 @@ class GetStorageAtParameters(BaseModel):
 
 class GetStorageAtRequest(BaseRequest):
     params : Tuple[str, str, int]
+    method : str = "hmyv2_getStorageAt"
 
 class GetStorageAtResponse(BaseResponse):
     result : str = Field(..., description="Data stored at the smart contract location")
@@ -63,11 +72,12 @@ class GetStorageAtResponse(BaseResponse):
 #Staking
 ## Delegation
 
-class GetDelegationsByDelegatorParameters(BaseModel):
-    address : str = Field(..., description="Delegator address")
+class AddressParameters(BaseModel):
+    address : str = Field(..., description="Address")
 
 class GetDelegationByDelegatorRequest(BaseRequest):
     params : Tuple[str, ]
+    method : str = "hmyv2_getDelegationsByDelegator"
 
 class Delegation(BaseModel):
     validator_address : str = Field(..., description="Validator wallet address", alias="validator-address")
@@ -78,23 +88,28 @@ class Delegation(BaseModel):
 
 class DelegationListResponse(BaseResponse):
     result : List[Delegation] = Field(..., description="List of Delegation Objects")
-    
 
-class GetDelegationsByDelegatorByBlockNumberParameters(BaseModel):
+class AddressBlockNumberParameters(BaseModel):
     address : str = Field(..., description="Delegator wallet address")
     block_number : int = Field(..., description="Block number", alias="block-number")
 
-
 class GetDelegationsByDelegatorByBlockNumberRequest(BaseRequest):
     params : Tuple[str, int]
+    method : str = "hmyv2_getDelegationsByDelegatorByBlockNumber"
 
-class GetDelegationsByValidatorParameters(BaseModel):
-    address : str = Field(..., description="Validator wallet address")
 
 class GetDelegationsByValidatorRequest(BaseRequest):
     params : Tuple[str,]
+    method : str = "hmyv2_getDelegationsByValidator"
 
 ## Validator
+
+class GetAllValidatorAddressesRequest(EmptyRequest):
+    method : str = "hmyv2_getAllValidatorAddresses"
+
+class AddressListResponse(BaseResponse):
+    result : List[str] = Field(..., description="List of addresses")
+
 
 class Key(BaseModel):
     bls_public_key : str = Field(..., description="BLS public key", alias="bls-public-key")
@@ -127,7 +142,7 @@ class Lifetime(BaseModel):
     epoch_apr : List[EpochAPR] = Field(..., description="List of APR per epoch", alias="epoch-apr")
 
 
-class Validator(BaseModel):
+class ValidatorInformation(BaseModel):
     bls_public_keys : List[str] = Field(..., description="List of public BLS keys associated with the validator wallet address", alias="bls-public-keys")
     last_epoch_in_committee : int = Field(..., description="Last epoch any key of the validator was elected", alias="last-epoch-in-committee")
     min_self_delegation : int = Field(..., description="Ammount that validator must delegate to self in Atto", alias="min-self-delegation")
@@ -155,42 +170,32 @@ class Validator(BaseModel):
 
 
 class GetAllValidatorInformationParameters(BaseModel):
-    page_request : int = Field(..., description="Page to request (page size is 100), -1 for all validators", alias="page-request")
+    page_number : int = Field(..., description="Page to request (page size is 100), -1 for all validators", alias="page-request")
 
 class GetAllValidatorInformationRequest(BaseRequest):
     params : Tuple[int,]
+    method : str = "hmyv2_getAllValidatorInformation"
 
-class ValidatorListResponse(BaseResponse):
-    result : List[Validator] = Field(..., description="List of Validator Objects")
+class ValidatorInformationListResponse(BaseResponse):
+    result : List[ValidatorInformation] = Field(..., description="List of ValidatorInformation Objects")
 
 class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
     page_number : int = Field(..., description="Page number, -1 for all", alias="page-number")
     block_number : int = Field(..., description="Block number", alias="block-number")
 
-
 class GetAllValidatorInformationByBlockNumberRequest(BaseRequest):
     params : Tuple[int, int]
+    method : str = "hmyv2_getAllValidatorInformationByBlockNumber"
 
-class GetAllValidatorAddressesResponse(BaseResponse):
-    result : List[str] = Field(..., description='List of wallet addresses that have created validators on the network')
+class GetElectedValidatorAddressesRequest(EmptyRequest):
+    method : str = "hmyv2_getElectedValidatorAddresses"
 
-class GetElectedValidatorAddressesResponse(BaseResponse):
-    result : List[str] = Field(..., description="List of wallet addresses that are currently elected")
-
-
-#start all of the classes needed for Validator class#
-#end of Validator class
-
-
-class GetValidatorInformationParameters(BaseModel):
-    address: str = Field(..., description="Validator wallet address")
 
 class GetValidatorInformationRequest(BaseRequest):
     params : Tuple[str,]
-
-class GetValidatorInformationResponse(BaseResponse):
-    result : Validator = Field(..., description="Validator Object")
-
+    
+class ValidatorInformationResponse(BaseResponse):
+    result : ValidatorInformation = Field(..., description="Validator Object")
 
 #Network
 
@@ -199,6 +204,12 @@ class UtilityMetrics(BaseModel):
     CurrentStakedPercentage : str = Field(..., description="Percent of circulationg supply staked")
     Deviation : str = Field(..., description="Change in percent of circulating supply staked")
     Adjustment : str = Field(..., description="Change in circulationg supply staked")
+
+class GetCurrentUtilityMetricsRequest(EmptyRequest):
+    method : str = "hmyv2_getCurrentUtilityMetrics"
+
+class GetMedianRawStakeSnapshotRequest(EmptyRequest):
+    method : str = "hmyv2_getMedianRawStakeSnapshot"
 
 class GetCurrentUtilityMetricsResponse(BaseResponse):
     result : UtilityMetrics = Field(..., description="UtilityMetrics Object")
@@ -226,6 +237,8 @@ class MedianRawStakeSnapshot(BaseModel):
 class GetMedianRawStakeSnapshotResponse(BaseResponse):
     result : MedianRawStakeSnapshot = Field(..., description="MedianRawStakeSnapshot Object")
 
+class GetStakingNetworkInfoRequest(EmptyRequest):
+    method : str = "hmyv2_getStakingNetworkInfoRequest"
 
 class StakingNetworkInfo(BaseModel):
     total_supply : str = Field(..., description="Total number of pre-mined tokens", alias="total-supply")
@@ -257,17 +270,21 @@ class SuperCommittees(BaseModel):
     previous : ElectedCommittee = Field(..., description="Previously elected committee")
     current : ElectedCommittee = Field(..., description="Currently elected committee, same schema as previous")
 
+class GetSuperCommitteesRequest(EmptyRequest):
+    method : str = "hmyv2_getSuperCommittess"
+
 class GetSuperCommitteesResponse(BaseResponse):
     result : SuperCommittees = Field(..., description="SuperCommittees Object")
 
 #Transaction
 ## Cross Shard
 
-class GetCXReceiptByHashParameters(BaseModel):
-    receipt_hash : str = Field(..., description="Cross shard receipt hash", alias="receipt-hash")
+class HashParameters(BaseModel):
+    hash_ : str = Field(..., description="hash value", alias="hash")
 
 class GetCXReceiptByHashRequest(BaseRequest):
     params : Tuple[str, ]
+    method : str = "hmyv2_getCXReceiptByHash"
 
 class CXReceipt(BaseModel):
     blockHash : str = Field(..., description="Block hash")
@@ -283,6 +300,9 @@ class CXReceipt(BaseModel):
 class GetCXReceiptByHashResponse(BaseResponse):
     result : CXReceipt = Field(..., description="CXReceipt Object")
 
+
+class GetPendingCXReceiptsRequest(EmptyRequest):
+    method : str = "hmyv2_getPendingCXReceipts"
 
 class Receipt(BaseModel):
     txHash : str = Field(..., description="Transaction hash")
@@ -300,7 +320,7 @@ class MerkleProof(BaseModel):
     shardIDs : List[int] = Field(..., description="To shard")
     shardHashed : List[str] = Field(..., description="Missing desc")
 
-class Header(BaseModel):
+class BlockHeader(BaseModel):
     shard_id : int = Field(..., description="Shard ID", alias="shard-id")
     block_header_hash : str = Field(..., description="Block header hash", alias="block-header-hash")
     block_number : int = Field(..., description="Block number", alias="block-number")
@@ -310,18 +330,16 @@ class Header(BaseModel):
 class PendingCXReceipt(BaseModel):
     receipts : List[Receipt]
     merkleProof : MerkleProof
-    header : Header
+    header : BlockHeader
     commitSig : str = Field(..., description="Hex representation of aggregated signature")
     commitBitMap : str = Field(..., description="Hex representation of aggregated signature bitmap")
 
 class GetPendingCXReceiptsResponse(BaseResponse):
     result : List[PendingCXReceipt] = Field(..., description="List of PendingCXReceipt object")
 
-class ResendCXParameters(BaseModel):
-    receipt_hash : str = Field(..., description="Cross shard receipt hash", alias="receipt-hash")
-
 class ResendCXRequest(BaseRequest):
     params : Tuple[str,]
+    method : str = "hmyv2_resendCx"
 
 class ResendCXResponse(BaseResponse):
     result : bool = Field(..., description="If cross shard receipt was successfully resent or not")
@@ -333,9 +351,14 @@ class PoolStats(BaseModel):
     executable_count : str = Field(..., description="Staking transaction hash", alias="executable-count")
     non_executable_count : str = Field(..., description="Type of staking transaction", alias="non-executable-count")
 
+class GetPoolStatsRequest(EmptyRequest):
+    method : str = "hmyv2_getPoolStats"
+
 class GetPoolStatsResponse(BaseResponse):
     result : PoolStats = Field(..., description="PoolStats Object")
 
+class PendingStakingTransactionsRequest(EmptyRequest):
+    method : str = "hmyv2_getPendingStakingTransactions"
 
 class StakingTransaction(BaseModel):
     blockHash : str = Field(..., description="Block hash in which transaction was finalized")
@@ -350,74 +373,12 @@ class StakingTransaction(BaseModel):
     msg : Dict[str, Any] = Field(..., description="Staking transaction data, depending on the type of staking transaction")
 
 
-
 class StakingTransactionListResponse(BaseResponse):
     result : List[StakingTransaction] = Field(..., description="List of staking transactions")
 
 
-## Staking
-
-
-class StakingError(BaseModel):
-    tx_hash_id : str = Field(..., description="Staking transaction hash", alias="tx-hash-id")
-    directive_kind : str = Field(..., description="Type of staking transaction", alias="directive-kind")
-    time_at_rejection : int = Field(..., description="Unix time when the staking transaction was rejected from the pool", alias="time-at-rejection")
-    error_message : str = Field(..., description="Reason for staking transaction rejection", alias="error-message")
-
-class GetCurrentStakingErrorSinkResponse(BaseResponse):
-    result : List[StakingError] = Field(..., description="Array of object")
-
-class GetStakingTransactionByBlockNumberAndIndexParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
-    index : int = Field(..., description="Staking transaction index")
-
-class GetStakingTransactionByBlockNumberAndIndexRequest(BaseRequest):
-    params : Tuple[int, int]
-
-class StakingTransactionResult(BaseModel):
-    result : StakingTransaction = Field(..., description="StakingTransaction Object")
-    
-
-class GetStakingTransactionByBlockHashAndIndexParameters(BaseModel):
-    block_hash : int = Field(..., description="Block hash", alias="block-hash")
-    index : int = Field(..., description="Staking transaction index")
-
-
-class GetStakingTransactionByBlockHashAndIndexRequest(BaseRequest):
-    params : Tuple[int, int]
-
-class GetStakingTransactionByHashParameters(BaseModel):
-    staking_hash : str = Field(..., description="Staking transaction hash", alias="staking-hash")
-
-
-class GetStakingTransactionByHashRequest(BaseRequest):
-    params : Tuple[str, ]
-
-class SendRawStakingTransactionParameters(BaseModel):
-    hex_transaction : str = Field(..., description="Hex representation of signed staking transaction", alias="hex-transaction")
-
-class SendRawStakingTransactionRequest(BaseRequest):
-    params : Tuple[str, ]
-
-class SendRawStakingTransactionResponse(BaseResponse):
-    result : str = Field(..., description="Staking transaction hash")
-
-##Transfer
-
-class TransactionError(BaseModel):
-    tx_hash_id : str = Field(..., description="Transaction hash", alias="tx-hash-id")
-    time_at_rejection : int = Field(..., description="Unix time when the transaction was rejected from the pool", alias="time-at-rejection")
-    error_message : str = Field(..., description="Reason for  transaction rejection", alias="error-message")
-
-class GetCurrentTransactionErrorSinkResponse(BaseResponse):
-    result : List[TransactionError] = Field(..., description="Object")
-
-class GetTransactionByBlockHashAndIndexParameters(BaseModel):
-    block_hash : str = Field(..., description="Block hash", alias="block-hash")
-    index : int = Field(..., description="Transaction index")
-
-class GetTransactionByBlockHashAndIndexRequest(BaseRequest):
-    params : Tuple[str, int]
+class PendingTransactionsRequest(EmptyRequest):
+    method : str = "hmyv2_pendingTransactions"
 
 class Transaction(BaseModel):
     blockHash : str = Field(..., description="Block hash")
@@ -430,33 +391,98 @@ class Transaction(BaseModel):
     input_ : str = Field(..., description="Transaction data, used for smart contracts", alias="input")
     nonce : int = Field(..., description="Sender wallet nonce of transaction")
     to : str = Field(..., description="Receiver wallet address")
-    transactionIndex : int = Field(..., description="Staking transaction index within block")
+    transactionIndex : int = Field(..., description="transaction index within block")
     value : int = Field(..., description="Amount transferred")
     shardID : int = Field(..., description="From shard")
     toShardID : int = Field(..., description="To shard")
 
-class TransactionResult(BaseModel):
+class TransactionListResponse(BaseResponse):
+    result : List[Transaction] = Field(..., description="List of transactions")
+
+## Staking
+
+class GetCurrentStakingErrorSinkRequest(EmptyRequest):
+    method : str = "hmyv2_getCurrentStakingErrorSink"
+
+class StakingError(BaseModel):
+    tx_hash_id : str = Field(..., description="Staking transaction hash", alias="tx-hash-id")
+    directive_kind : str = Field(..., description="Type of staking transaction", alias="directive-kind")
+    time_at_rejection : int = Field(..., description="Unix time when the staking transaction was rejected from the pool", alias="time-at-rejection")
+    error_message : str = Field(..., description="Reason for staking transaction rejection", alias="error-message")
+
+class GetCurrentStakingErrorSinkResponse(BaseResponse):
+    result : List[StakingError] = Field(..., description="List of StakingError objects")
+
+class BlockNumberAndIndexParameters(BaseModel):
+    block_number : int = Field(..., description="Block number", alias="block-number")
+    index : int = Field(..., description="index value")
+    
+class GetStakingTransactionByBlockNumberAndIndexRequest(BaseRequest):
+    params : Tuple[int, int]
+    method : str = "hmyv2_getStakingTransactionByBlockNumberAndIndex"
+
+class StakingTransactionResponse(BaseResponse):
+    result : StakingTransaction = Field(..., description="StakingTransaction Object")
+    
+class HashAndIndexParameters(BaseModel):
+    hash_ : str = Field(..., description="hash value", alias="hash")
+    index : int = Field(..., description="index value")
+
+class GetStakingTransactionByBlockHashAndIndexRequest(BaseRequest):
+    params : Tuple[str, int]
+    method : str = "hmyv2_getStakingTransactionByBlockHashAndIndex"
+
+class GetStakingTransactionByHashRequest(BaseRequest):
+    params : Tuple[str, ]
+    method : str = "hmyv2_getStakingTransactionByHash"
+
+class RawTransactionParameters(BaseModel):
+    transaction_hex : str = Field(..., description="Hex representation of signed transaction", alias="transaction_hex")
+    
+class SendRawStakingTransactionRequest(BaseRequest):
+    params : Tuple[str, ]
+    method : str = "hmyv2_sendRawStakingTransaction"
+
+class SendRawStakingTransactionResponse(BaseResponse):
+    result : str = Field(..., description="Staking transaction hash if it was successfully added, else an erro")
+
+##Transfer
+
+class GetCurrentTransactionErrorSinkRequest(EmptyRequest):
+    method : str = "hmyv2_getCurrentTransactionErrorSinkRequest"
+
+class TransactionError(BaseModel):
+    tx_hash_id : str = Field(..., description="Transaction hash", alias="tx-hash-id")
+    time_at_rejection : int = Field(..., description="Unix time when the transaction was rejected from the pool", alias="time-at-rejection")
+    error_message : str = Field(..., description="Reason for  transaction rejection", alias="error-message")
+
+class GetCurrentTransactionErrorSinkResponse(BaseResponse):
+    result : List[TransactionError] = Field(..., description="Object")
+
+
+class GetTransactionByBlockHashAndIndexRequest(BaseRequest):
+    params : Tuple[str, int]
+    method : str = "hmyv2_getTransactionByBlockHashAndIndex"
+
+
+class TransactionResponse(BaseResponse):
     result : Transaction = Field(..., description="Transaction Object")
 
 
-class GetTransactionByBlockNumberAndIndexParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
-    index : int = Field(..., description="Transaction index")
-
 class GetTransactionByBlockNumberAndIndexRequest(BaseRequest):
     params : Tuple[int, int]
-
-class GetTransactionByHashParameters(BaseModel):
-    hash_ : str = Field(..., description="Transaction hash", alias="hash")
+    method : str = "hmyv2_getTransactionByBlockNumberAndIndex"
 
 class GetTransactionByHashRequest(BaseRequest):
     params : Tuple[str, ]
+    method : str = "hmyv2_getTransactionByHash"
 
 class GetTransactionReceiptParameters(BaseModel):
     receipt : str = Field(..., description="Transaction receipt")
 
 class GetTransactionReceiptRequest(BaseRequest):
     params : Tuple[str, ]
+    method : str = "hmyv2_getTransactionReceipt"
 
 class TransactionReceipt(BaseModel):
     blockHash : str = Field(..., description="Block hash")
@@ -476,11 +502,9 @@ class TransactionReceipt(BaseModel):
 class GetTransactionReceiptResponse(BaseResponse):
     result : TransactionReceipt = Field(..., description="Object")
 
-class SendRawTransactionParameters(BaseModel):
-    hex_ : str = Field(..., description="Hex representation of signed transaction", alias="hex")
-
 class SendRawTransactionRequest(BaseRequest):
     params : Tuple[str, ]
+    method : str = "hmyv2_sendRawTransaction"
 
 class SendRawTransactionResponse(BaseResponse):
     result : str = Field(..., description="Transaction hash")
@@ -488,11 +512,20 @@ class SendRawTransactionResponse(BaseResponse):
 #Blockchain
 ## Network
 
+class BlockNumberRequest(EmptyRequest):
+    method : str = "hmyv2_blockNumber"
+
 class BlockNumberResponse(BaseResponse):
     result : int = Field(..., description="Current block number")
 
+class GetCirculatingSupplyRequest(EmptyRequest):
+    method : str = "hmyv2_getCirculatingSupply"
+
 class GetCirculatingSupplyResponse(BaseResponse):
     result : int = Field(..., description="Circulation supply of tokens in ONE")
+
+class GetEpochRequest(EmptyRequest):
+    method : str = "hmyv2_getEpoch"
 
 class GetEpochResponse(BaseResponse):
     result : int = Field(..., description="Current block number")
@@ -506,13 +539,20 @@ class CrossLink(BaseModel):
     shard_id : int = Field(..., description="Shard ID", alias="shard-id")
     epoch_number : int = Field(..., description="Block epoch", alias="epoch-number")
 
+class GetLastCrossLinksRequest(EmptyRequest):
+    method : str = "hmyv2_getLastCrossLinks"
+
 class GetLastCrossLinksResponse(BaseResponse):
     result : List[CrossLink] = Field(..., description="List of CrossLink objects")
 
+class GetLeaderRequest(EmptyRequest):
+    method : str = "hmyv2_getLeader"
 
 class GetLeaderResponse(BaseResponse):
     result : str = Field(..., description="Wallet address of current leader")
 
+class GasPriceRequest(EmptyRequest):
+    method : str = "hmyv2_gasPrice"
 
 class GasPriceResponse(BaseResponse):
     result : int = Field(..., description="Current average gas price of transactions")
@@ -524,39 +564,49 @@ class ShardingStructure(BaseModel):
     shardID : int = Field(..., description="Shard ID")
     ws : str = Field(..., description="Websocket API endpoint for this shard ID")
 
+class GetShardingStructureRequest(EmptyRequest):
+    method : str = "hmyv2_getShardingStructure"
+
 class GetShardingStructureResponse(BaseResponse):
     result : List[ShardingStructure] = Field(..., description="List of ShardingStructure Object")
+
+class GetTotalSupplyRequest(EmptyRequest):
+    method : str = "hmyv2_getTotalSupply"
 
 class GetTotalSupplyResponse(BaseResponse):
     result : int = Field(..., description="Total number of pre-mined tokens")
 
-class GetValidatorsParameters(BaseModel):
+class EphochNumberParameters(BaseModel):
     epoch_number : int = Field(..., description="Epoch number", alias="epoch-number")
+    
 
 class GetValidatorsRequest(BaseRequest):
     params : Tuple[int, ]
+    method : str = "hmyv2_getValidators"
 
 class ValidatorAddress(BaseModel):
     address : str = Field(..., description="Wallet address")
     balance : int = Field(..., description="Balance of wallet")
 
-class Validators(BaseModel):
+class ValidatorIDs(BaseModel):
     shardID : int = Field(..., description="Shard ID")
     validators : List[ValidatorAddress] = Field(..., description="Array of Validator Address objects")
 
 class GetValidatorsResponse(BaseResponse):
-    result : Validators = Field(..., description="Validators Object")
-
-class GetValidatorKeysParameters(BaseModel):
-    epoch_number : int = Field(..., description="Epoch number", alias="epoch-number")
+    result : ValidatorIDs = Field(..., description="ValidatorIDs Object")
 
 class GetValidatorKeysRequest(BaseRequest):
     params : Tuple[int,]
+    method : str = "hmyv2_getValidatorKeys"
 
-class GetValidatorKeysResponse(BaseResponse):
-    result : List[str] = Field(..., description="List of public BLS kets in the elected committee")
+class BLSKeyListResponse(BaseResponse):
+    result : List[str] = Field(..., description="List of public BLS keys in the elected committee")
+    
 
 ## Node
+
+class GetCurrentBadBlocksRequest(EmptyRequest):
+    method : str = "hmyv2_getCurrentBadBlocks"
 
 class GetCurrentBadBlocksResponse(BaseResponse):
     result : List[str] = Field(..., description="List of bad blocks in node memory. Note: know issue with RPC not returning correctly")
@@ -592,31 +642,40 @@ class NodeMetadata(BaseModel):
     node_unix_start_time : int = Field(..., description="Start time of node in Unix time", alias="node-unix-start-time")
     p2p_connectivity : P2PConnectivity = Field(..., description="P2PConnectivity Object", alias="p2p-connectivity")
 
+class GetNodeMetadataRequest(EmptyRequest):
+    method : str = "hmyv2_getNodeMetadata"
+
 class GetNodeMetadataResponse(BaseResponse):
     result : NodeMetadata = Field(..., description="Node Metadata Object")
 
+class ProtocolVersionRequest(EmptyRequest):
+    method : str = "hmyv2_protocolVersion"
 
 class ProtocolVersionResponse(BaseResponse):
     result : int = Field(..., description="Protocol version")
 
+
+class PeerCountRequest(EmptyRequest):
+    method : str = "net_peerCount"
 
 class PeerCountResponse(BaseResponse):
     result : str = Field(..., description="Number of peers respresented as a Hex string")
 
 ## Blocks
 
-class AdditionalBlocksData(BaseModel):
+class BlocksListConfig(BaseModel):
     withSigners : bool = Field(..., description="Include block signer wallet addresses")
     fullTx : bool = Field(..., description="Include full transaction data")
     inclStaking : bool = Field(..., description="Include full staking transactions")
 
-class GetBlocksParameters(BaseModel):
+class BlockListParams(BaseModel):
     start_block : int = Field(..., description="Start block", alias="start-block")
     end_block : int = Field(..., description="End block", alias="end-block")
-    additional_blocks_data : AdditionalBlocksData = Field(..., description="AdditionalBlocksData Object", alias="additional-blocks-data")
+    blocks_config : BlocksListConfig = Field(..., description="BlocksListConfig Object", alias="blocks-config")
 
 class GetBlocksRequest(BaseRequest):
-    params : Tuple[int, int, AdditionalBlocksData]
+    params : Tuple[int, int, BlocksListConfig]
+    method : str = "hmyv2_getBlocks"
 
 class Block(BaseModel):
     difficulty : int = Field(..., description="Unused, legacy from Eth")
@@ -645,73 +704,62 @@ class Block(BaseModel):
 class BlockListResponse(BaseResponse):
     result : List[Block] = Field(..., description="List of blocks")
     
-class AdditionalBlocksNumbersData(BaseModel):
+class BlockConfig(BaseModel):
     fullTx : bool = Field(..., description="Include full transaction data")
     inclTx : bool = Field(..., description="Include regular transactions")
     inclStaking : bool = Field(..., description="Include full staking transactions")
 
 class GetBlockByNumberParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
-    additional_blocks_numbers_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blocks-numbers-data")
+    block_config : BlockConfig = Field(..., description="BlockConfig Object", alias="block-config")
 
 class GetBlockByNumberRequest(BaseRequest):
-    params : Tuple[int, AdditionalBlocksNumbersData]
+    params : Tuple[int, BlockConfig]
+    method : str = "hmyv2_getBlockByNumber"
 
-class BlockResult(BaseModel):
+class BlockResponse(BaseResponse):
     result : Block = Field(..., description="Block Object")
 
 class GetBlockByHashParameters(BaseModel):
     hash_ : str = Field(..., description="Block hash", alias="hash")
-    additional_blocks_numbers_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blocks-numbers-data")
+    block_config : BlockConfig = Field(..., description="BlockConfig Object", alias="block-config")
 
 class GetBlockByHashRequest(BaseRequest):
-    params : Tuple[str, AdditionalBlocksNumbersData]
-
-class GetBlockSignersParameters(BaseModel):
-    start_block : int = Field(..., description="Start block", alias="start-block")
-    end_block : int = Field(..., description="End block", alias="end-block")
-    additional_blocks_data : AdditionalBlocksData = Field(..., description="Object", alias="additional-blocks-data")
+    params : Tuple[str, BlockConfig]
+    method : str = "hmyv2_getBlockByHash"
 
 class GetBlockSignersRequest(BaseRequest):
-    params : Tuple[int, int, AdditionalBlocksData]
+    params : Tuple[int, int, BlocksListConfig]
+    method : str = "hmyv2_getBlockSigners"
 
-class GetBlockSignersResponse(BaseResponse):
-    result : List[str] = Field(..., description="List of block signer wallet addresses")
-
-class GetBlockSignersKeysParameters(BaseModel):
+class BlockNumberParameters(BaseModel):
     block_number : int = Field(..., description="Block number", alias="block-number")
 
 class GetBlockSignersKeysRequest(BaseRequest):
     params : Tuple[int,]
+    method : str = "hmyv2_getBlockSignersKeys"
 
 class GetBlockSignersKeysResponse(BaseResponse):
     result : List[str] = Field(..., description="List of block signer public BLS keys")
 
-class GetBlockTransactionCountByNumberParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
-
 class GetBlockTransactionCountByNumberRequest(BaseRequest):
     params : Tuple[int,]
+    method : str = "hmyv2_getBlockTransactionCountByNumber"
 
-class GetBlockTransactionCountByNumberResponse(BaseResponse):
-    result : int = Field(..., description="Number of transaction in block")
+class TransactionCountResponse(BaseResponse):
+    result : int = Field(..., description="Number of transactions")
 
-class GetBlockTransactionCountByHashParameters(BaseModel):
-    hash_ : str = Field(..., description="Block hash", alias="hash")
 
 class GetBlockTransactionCountByHashRequest(BaseRequest):
     params : Tuple[str,]
+    method : str = "hmyv2_getBlockTransactionCountByHash"
 
-class GetBlockTransactionCountByHashResponse(BaseResponse):
-    result : int = Field(..., description="Number of transactions in block")
-
-class GetHeaderByNumberParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
 
 class GetHeaderByNumberRequest(BaseRequest):
     params : Tuple[int,]
+    method : str = "hmyv2_getHeaderByNumber"
 
-class LatestHeader(BaseModel):
+class Header(BaseModel):
     blockHash : str = Field(..., description="Block hash")
     blockNumber : int = Field(..., description="Block number")
     shardID : int = Field(..., description="Shard ID")
@@ -723,10 +771,8 @@ class LatestHeader(BaseModel):
     lastCommitSig : str = Field(..., description="Hex representation of aggregated signatures of the previous block")
     lastCommitBitmap : str = Field(..., description="Hex representation of the aggregated signature bitmap of the previous block")
 
-
-class GetHeaderByNumberResponse(BaseResponse):
-    result : LatestHeader = Field(..., description="Object")
-
+class HeaderResponse(BaseResponse):
+    result : Header
 
 class ChainHeader(BaseModel):
     shard_id : int = Field(..., description="Shard ID", alias="shard-id")
@@ -735,6 +781,8 @@ class ChainHeader(BaseModel):
     view_id : int = Field(..., description="View ID", alias="view-id")
     epoch : int = Field(..., description="Epoch number")
 
+class GetLatestChainHeadersRequest(EmptyRequest):
+    method : str = "hmyv2_getLatestChainHeaders"
 
 class LatestChainHeaders(BaseModel):
     beacon_chain_header : ChainHeader = Field(..., description="ChainHeader Object", alias="beacon-chain-header")
@@ -743,87 +791,64 @@ class LatestChainHeaders(BaseModel):
 class GetLatestChainHeadersResponse(BaseResponse):
     result : LatestChainHeaders = Field(..., description="LatestChainHeaders Object")
 
-
-class LatestHeaderResponse(BaseResponse):
-    result : LatestHeader = Field(..., description="LatestHeader Object")
+class LatestHeaderRequest(EmptyRequest):
+    method : str = "hmyv2_latestHeader"
 
 #Account
 
-class GetBalanceParameters(BaseModel):
-    address : str = Field(..., description="Wallet address")
-
 class GetBalanceRequest(BaseRequest):
     params : Tuple[str,]
+    method : str = "hmyv2_getBalance"
 
-class GetBalanceResponse(BaseResponse):
+class BalanceResponse(BaseResponse):
     result : int = Field(..., description="Wallet balance at given block in Atto")
-
-class GetBalanceByBlockNumberParameters(BaseModel):
-    address : str = Field(..., description="Wallet address")
-    block : int = Field(..., description="Block to get balance at")
 
 class GetBalanceByBlockNumberRequest(BaseRequest):
     params : Tuple[str, int]
+    method : str = "hmyv2_getBalanceByBlockNumber"
 
-class GetBalanceByBlockNumberResponse(BaseResponse):
-    result : int = Field(..., description="Wallet balance at given block in Atto")
+class TransactionType(str, Enum):
+    sent = "SENT"
+    received = "RECEIVED"
+    all_ = "ALL"
 
-class GetStakingTransactionsCountParameters(BaseModel):
+class TransactionsCountParameters(BaseModel):
     address : str = Field(..., description="Wallet address")
-    transaction : str = Field(..., description="Type of staking transaction (SENT, RECEIVED, ALL)")
+    transaction_type : TransactionType = Field(..., description="Type of staking transaction (SENT, RECEIVED, ALL)")
 
 class GetStakingTransactionsCountRequest(BaseRequest):
     params : Tuple[str, str]
+    method : str = "hmyv2_getStakingTransactionsCount"
 
-class GetStakingTransactionsCountResponse(BaseResponse):
-    result : int = Field(...,  description="Number of staking transactions")
 
-class GetStakingTransactionsHistoryObject(BaseModel):
+class SortOrder(str, Enum):
+    asc = "ASC"
+    desc = "DESC"
+
+class TransactionsHistoryObject(BaseModel):
     address : str = Field(..., description="Wallet address")
-    pageIndex : Optional[int] = Field(..., description="Optional, which page ofo transactions to return, default 0")
-    pageSize : Optional[int] = Field(..., description="Optional, how many transactions to display per page, default 1000")
-    fullTx : Optional[bool] = Field(..., description="Optional, return full transaction data or just transaction hashes, default false")
-    txType : Optional[str] = Field(..., description="Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'")
-    order : Optional[str] = Field(..., description="Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'")
+    pageIndex : Optional[int] = Field(0, description="Optional, which page ofo transactions to return, default 0")
+    pageSize : Optional[int] = Field(1000, description="Optional, how many transactions to display per page, default 1000")
+    fullTx : Optional[bool] = Field(False, description="Optional, return full transaction data or just transaction hashes, default false")
+    txType : Optional[TransactionType] = Field("ALL", description="Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'")
+    order : Optional[SortOrder] = Field("ASC", description="Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'")
 
-class GetStakingTransactionsHistoryParameters(BaseModel):
-    obj : GetStakingTransactionsHistoryObject
+class TransactionsHistoryParameters(BaseModel):
+    obj : TransactionsHistoryObject
+
+class TransactionsHashListResponse(BaseResponse):
+    result : List[str] = Field(..., description="List of transaction hashes")
 
 class GetStakingTransactionsHistoryRequest(BaseRequest):
-    params : Tuple[GetStakingTransactionsHistoryObject, ]
-
-class GetStakingTransactionsHistoryResponse(BaseResponse):
-    result : List[str] = Field(..., description="List of staking transactions")
-
-class GetStakingTransactionsHistoryTxTypeResponse(BaseResponse):
-    result : List[StakingTransaction] = Field(..., description="List of staking transactions")
-
-class GetTransactionsCountParameters(BaseModel):
-    address : str = Field(..., description="Wallet address")
-    transaction : str = Field(..., description="Type of staking transaction (SENT, RECEIVED, ALL)")
-
+    params : Tuple[TransactionsHistoryObject, ]
+    method : str = "hmyv2_getStakingTransactionsHistory"
+    
+    
 class GetTransactionsCountRequest(BaseRequest):
     params : Tuple[str, str]
-
-class GetTransactionsCountResponse(BaseResponse):
-    result : int = Field(..., description="Number of transactions")
-
-class GetTransactionsHistoryObject(BaseModel):
-    address : str = Field(..., description="Wallet address")
-    pageIndex : Optional[int] = Field(..., description="Optional, which page ofo transactions to return, default 0")
-    pageSize : Optional[int] = Field(..., description="Optional, how many transactions to display per page, default 1000")
-    fullTx : Optional[bool] = Field(..., description="Optional, return full transaction data or just transaction hashes, default false")
-    txType : Optional[str] = Field(..., description="Optional, which type of transactions to display ('ALL','RECEIVED', or 'SENT'), default 'ALL'")
-    order : Optional[str] = Field(..., description="Optional, sort transactions in ascending or descending order based on timestamp ('ASC' or 'DESC'), default 'ASC'")
-
-class GetTransactionsHistoryParameters(BaseModel):
-    obj : GetTransactionsHistoryObject
+    method : str = "hmyv2_getTransactionsCount"
 
 class GetTransactionsHistoryRequest(BaseRequest):
-    params : Tuple[GetTransactionsHistoryObject,]
+    params : Tuple[TransactionsHistoryObject,]
+    method : str = "hmyv2_getTransactionsHistory"
 
-class GetTransactionsHistoryTxTypeResponse(BaseResponse):
-    result : List[Transaction] = Field(..., description="Array of transaction object")
-        
-class GetTransactionsHistoryResponse(BaseResponse):
-    result : List[str] = Field(..., description="List of transaction hashes")
