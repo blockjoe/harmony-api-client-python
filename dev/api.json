@@ -1623,10 +1623,18 @@
         },
         "responses": {
           "200": {
+            "description": "If txType was False, only the hashes will be provided as opposed to the whole transaction.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetStakingTransactionsHistoryResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GetStakingTransactionsHistoryResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetStakingTransactionsHistoryTxTypeResponse"
+                    }
+                  ]
                 }
               }
             }
@@ -1677,10 +1685,18 @@
         },
         "responses": {
           "200": {
+            "description": "If txType was False, only the hashes will be provided as opposed to the whole transaction.",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/GetTransactionsHistoryResponse"
+                  "oneOf": [
+                    {
+                      "$ref": "#/components/schemas/GetTransactionsHistoryResponse"
+                    },
+                    {
+                      "$ref": "#/components/schemas/GetTransactionsHistoryTxTypeResponse"
+                    }
+                  ]
                 }
               }
             }
@@ -6746,6 +6762,105 @@
           "result"
         ]
       },
+      "GetStakingTransactionsHistoryTxTypeResponse": {
+        "title": "GetStakingTransactionsHistoryTxTypeResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "List of staking transactions",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/StakingTransaction"
+            }
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "StakingTransaction": {
+            "title": "StakingTransaction",
+            "type": "object",
+            "properties": {
+              "blockHash": {
+                "title": "Blockhash",
+                "description": "Block hash in which transaction was finalized",
+                "type": "string"
+              },
+              "blockNumber": {
+                "title": "Blocknumber",
+                "description": "Block number in which transaction was finalized",
+                "type": "integer"
+              },
+              "from": {
+                "title": "From",
+                "description": "Sender wallet address",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix time at which transaction was finalized",
+                "type": "integer"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas limit of transaction",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price of transaction in Atto",
+                "type": "integer"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Wallet nonce of transaction",
+                "type": "integer"
+              },
+              "transactionIndex": {
+                "title": "Transactionindex",
+                "description": "Staking transaction index within block",
+                "type": "integer"
+              },
+              "type": {
+                "title": "Type",
+                "description": "Type of staking transaction",
+                "type": "string"
+              },
+              "msg": {
+                "title": "Msg",
+                "description": "Staking transaction data, depending on the type of staking transaction",
+                "type": "object"
+              }
+            },
+            "required": [
+              "blockHash",
+              "blockNumber",
+              "from",
+              "timestamp",
+              "gas",
+              "gasPrice",
+              "nonce",
+              "transactionIndex",
+              "type",
+              "msg"
+            ]
+          }
+        }
+      },
       "GetTransactionsCountRequest": {
         "title": "GetTransactionsCountRequest",
         "type": "object",
@@ -6919,6 +7034,129 @@
           "id",
           "result"
         ]
+      },
+      "GetTransactionsHistoryTxTypeResponse": {
+        "title": "GetTransactionsHistoryTxTypeResponse",
+        "type": "object",
+        "properties": {
+          "jsonrpc": {
+            "title": "Jsonrpc",
+            "description": "The JSON-RPC version.",
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "description": "The id of the request the response is in response to.",
+            "type": "integer"
+          },
+          "result": {
+            "title": "Result",
+            "description": "Array of transaction object",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Transaction"
+            }
+          }
+        },
+        "required": [
+          "jsonrpc",
+          "id",
+          "result"
+        ],
+        "definitions": {
+          "Transaction": {
+            "title": "Transaction",
+            "type": "object",
+            "properties": {
+              "blockHash": {
+                "title": "Blockhash",
+                "description": "Block hash",
+                "type": "string"
+              },
+              "blockNumber": {
+                "title": "Blocknumber",
+                "description": "Block number",
+                "type": "integer"
+              },
+              "from": {
+                "title": "From",
+                "description": "Sender wallet address",
+                "type": "string"
+              },
+              "timestamp": {
+                "title": "Timestamp",
+                "description": "Unix time at which transaction was finalized",
+                "type": "integer"
+              },
+              "gas": {
+                "title": "Gas",
+                "description": "Gas limit of transaction",
+                "type": "integer"
+              },
+              "gasPrice": {
+                "title": "Gasprice",
+                "description": "Gas price of transaction in Atto",
+                "type": "integer"
+              },
+              "hash": {
+                "title": "Hash",
+                "description": "Transaction hash",
+                "type": "string"
+              },
+              "input": {
+                "title": "Input",
+                "description": "Transaction data, used for smart contracts",
+                "type": "string"
+              },
+              "nonce": {
+                "title": "Nonce",
+                "description": "Sender wallet nonce of transaction",
+                "type": "integer"
+              },
+              "to": {
+                "title": "To",
+                "description": "Receiver wallet address",
+                "type": "string"
+              },
+              "transactionIndex": {
+                "title": "Transactionindex",
+                "description": "Staking transaction index within block",
+                "type": "integer"
+              },
+              "value": {
+                "title": "Value",
+                "description": "Amount transferred",
+                "type": "integer"
+              },
+              "shardID": {
+                "title": "Shardid",
+                "description": "From shard",
+                "type": "integer"
+              },
+              "toShardID": {
+                "title": "Toshardid",
+                "description": "To shard",
+                "type": "integer"
+              }
+            },
+            "required": [
+              "blockHash",
+              "blockNumber",
+              "from",
+              "timestamp",
+              "gas",
+              "gasPrice",
+              "hash",
+              "input",
+              "nonce",
+              "to",
+              "transactionIndex",
+              "value",
+              "shardID",
+              "toShardID"
+            ]
+          }
+        }
       }
     }
   }

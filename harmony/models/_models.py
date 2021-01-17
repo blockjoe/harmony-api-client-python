@@ -662,7 +662,7 @@ class BlockResult(BaseModel):
 
 class GetBlockByHashParameters(BaseModel):
     hash_ : str = Field(..., description="Block hash", alias="hash")
-    additional_blockbynumber_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blockbynumber-data")
+    additional_blocks_numbers_data : AdditionalBlocksNumbersData = Field(..., description="Object", alias="additional-blocks-numbers-data")
 
 class GetBlockByHashRequest(BaseRequest):
     params : Tuple[str, AdditionalBlocksNumbersData]
