@@ -2,7 +2,7 @@ from typing import List, Optional, Union
 
 import requests
 
-from pyrosetta.api import RosettaAPI
+from pyrosetta.api import RosettaAPIExt
 
 from .models import (
     Block,
@@ -64,9 +64,9 @@ class HarmonyAPI(object):
             session = requests.Session()
         self._session = session
         if local_rosetta_url:
-            self._rosetta_api = RosettaAPI(local_rosetta_url)
+            self._rosetta_api = RosettaAPIExt(local_rosetta_url)
         else:
-            self._rosetta_api = RosettaAPI(api_url)
+            self._rosetta_api = RosettaAPIExt(api_url)
 
 
     @property

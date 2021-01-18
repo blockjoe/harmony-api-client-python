@@ -1,6 +1,6 @@
 from harmony.api import HarmonyAPI
 
-api = HarmonyAPI('https://rpc.s0.t.hmny.io/')
+api = HarmonyAPI('https://rpc.s0.t.hmny.io/', local_rosetta_url="http://localhost:9700/")
 
 #print(api.peer_count())
 
@@ -12,5 +12,4 @@ api = HarmonyAPI('https://rpc.s0.t.hmny.io/')
 
 #print(api.get_information_about_validator("one1r55rwumsrm6w3d20uhaa3hm4rxr442k0qx9gj8"))
 
-
-print(api.pending_transactions())
+print(api.rosetta.list_supported_networks())

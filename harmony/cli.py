@@ -4,7 +4,7 @@ import typer
 
 from .api import HarmonyAPI
 
-api = HarmonyAPI('https://rpc.s0.t.hmny.io/') 
+api = HarmonyAPI('https://rpc.s0.t.hmny.io/', "http://localhost:9700/") 
 
 app = typer.Typer()
 
@@ -35,14 +35,22 @@ class CurrentObject(str, Enum):
     staking_tx_errors = "staking_tx_errors"
     elected = "elected"
 
-class FindObject(str, Enum):
-    block = "block"
-    tx = "tx"
-    staking_tx = "staking_tx"
+class RosettaAction(str, Enum):
+    get_networks = "get-networks"
+    discover_networks = "discover-networks"
 
 @app.command()
-def find(item : FindObject):
-    typer.echo("Find command")
+def rosetta(rosetta_action : RosettaAction):
+    if rosetta_action == "get-networks":
+        res = api.rosetta.list_supported_networks()
+        start = typer.style("Supported Networks:\n", fg=typer.colors.GREEN, bold=True)
+        out = '\n'.join([str(r) for r in res])
+        typer.echo(start + out)
+    elif rosetta_action == "discover-networks":
+        res = api.rosetta.discover_networks()
+        start = typer.style("Networks:\n", fg=typer.colors.GREEN, bold=True)
+        out = '\n'.join([str(r) for r in res])
+        typer.echo(start + out)
 
 @app.command()
 def current(item : CurrentObject):
@@ -63,8 +71,14 @@ def current(item : CurrentObject):
         res = api.current_gas_price()
     elif item == "circulating_supply":
         res = api.circulating_supply()
+        start = typer.style("Circulating Supply: ", fg=typer.colors.GREEN, bold=True)
+        end = typer.style(" ONE", fg=typer.colors.BRIGHT_BLUE, bold=True)
+        typer.echo(start + str(res) + end)
     elif item == "total_supply":
         res = api.total_supply()
+        start = typer.style("Circulating Supply: ", fg=typer.colors.GREEN, bold=True)
+        end = typer.style(" ONE", fg=typer.colors.BRIGHT_BLUE, bold=True)
+        typer.echo(start + str(res) + end)
     elif item == "block_number":
         res = api.current_block_number()
     elif item == "block_header":
@@ -96,6 +110,10 @@ def current(item : CurrentObject):
         res = api.latest_chain_headers()
     elif item == "validators":
         res = api.get_all_validators()
+        start = typer.style("Current Validators:\n")
+        typer.echo(start)
+        for val in res:
+            typer.echo("  - {}".format(val))
     elif item == "tx_errors":
         res = api.current_transaction_error_sink()
     elif item == "staking_tx_errors":
