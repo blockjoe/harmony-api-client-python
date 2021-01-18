@@ -12,7 +12,7 @@ from .models import (
     StakingTransactionResponse
 )
 
-from .endpoints.staking import (
+from .endpoints.transaction import (
     getCurrentStakingErrorSink,
     getStakingTransactionByBlockHashAndIndex,
     getStakingTransactionByBlockNumberAndIndex,

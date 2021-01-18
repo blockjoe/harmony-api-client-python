@@ -28,7 +28,7 @@ class SmartContractCall(BaseModel):
 
 class CallParameters(BaseModel):
     smart_contract_call : SmartContractCall
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    block_number : int = Field(..., description="Block number")
 
 class CallRequest(BaseRequest):
     params : Tuple[SmartContractCall, int]
@@ -58,8 +58,8 @@ class GetCodeResponse(BaseResponse):
 
 class GetStorageAtParameters(BaseModel):
     address : str = Field(..., description="Smart contract address")
-    storage_location : str = Field(..., description="Hex representation of storage location", alias="storage-location")
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    storage_location : str = Field(..., description="Hex representation of storage location")
+    block_number : int = Field(..., description="Block number")
 
 class GetStorageAtRequest(BaseRequest):
     params : Tuple[str, str, int]
@@ -91,7 +91,7 @@ class DelegationListResponse(BaseResponse):
 
 class AddressBlockNumberParameters(BaseModel):
     address : str = Field(..., description="Delegator wallet address")
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    block_number : int = Field(..., description="Block number")
 
 class GetDelegationsByDelegatorByBlockNumberRequest(BaseRequest):
     params : Tuple[str, int]
@@ -170,7 +170,7 @@ class ValidatorInformation(BaseModel):
 
 
 class GetAllValidatorInformationParameters(BaseModel):
-    page_number : int = Field(..., description="Page to request (page size is 100), -1 for all validators", alias="page-request")
+    page_number : int = Field(..., description="Page to request (page size is 100), -1 for all validators")
 
 class GetAllValidatorInformationRequest(BaseRequest):
     params : Tuple[int,]
@@ -180,8 +180,8 @@ class ValidatorInformationListResponse(BaseResponse):
     result : List[ValidatorInformation] = Field(..., description="List of ValidatorInformation Objects")
 
 class GetAllValidatorInformationByBlockNumberParameters(BaseModel):
-    page_number : int = Field(..., description="Page number, -1 for all", alias="page-number")
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    page_number : int = Field(..., description="Page number, -1 for all")
+    block_number : int = Field(..., description="Block number")
 
 class GetAllValidatorInformationByBlockNumberRequest(BaseRequest):
     params : Tuple[int, int]
@@ -414,7 +414,7 @@ class GetCurrentStakingErrorSinkResponse(BaseResponse):
     result : List[StakingError] = Field(..., description="List of StakingError objects")
 
 class BlockNumberAndIndexParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    block_number : int = Field(..., description="Block number")
     index : int = Field(..., description="index value")
     
 class GetStakingTransactionByBlockNumberAndIndexRequest(BaseRequest):
@@ -577,7 +577,7 @@ class GetTotalSupplyResponse(BaseResponse):
     result : int = Field(..., description="Total number of pre-mined tokens")
 
 class EphochNumberParameters(BaseModel):
-    epoch_number : int = Field(..., description="Epoch number", alias="epoch-number")
+    epoch_number : int = Field(..., description="Epoch number")
     
 
 class GetValidatorsRequest(BaseRequest):
@@ -669,9 +669,9 @@ class BlocksListConfig(BaseModel):
     inclStaking : bool = Field(..., description="Include full staking transactions")
 
 class BlockListParams(BaseModel):
-    start_block : int = Field(..., description="Start block", alias="start-block")
-    end_block : int = Field(..., description="End block", alias="end-block")
-    blocks_config : BlocksListConfig = Field(..., description="BlocksListConfig Object", alias="blocks-config")
+    start_block : int = Field(..., description="Start block")
+    end_block : int = Field(..., description="End block")
+    blocks_config : BlocksListConfig = Field(..., description="BlocksListConfig Object")
 
 class GetBlocksRequest(BaseRequest):
     params : Tuple[int, int, BlocksListConfig]
@@ -710,8 +710,8 @@ class BlockConfig(BaseModel):
     inclStaking : bool = Field(..., description="Include full staking transactions")
 
 class GetBlockByNumberParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
-    block_config : BlockConfig = Field(..., description="BlockConfig Object", alias="block-config")
+    block_number : int = Field(..., description="Block number")
+    block_config : BlockConfig = Field(..., description="BlockConfig Object")
 
 class GetBlockByNumberRequest(BaseRequest):
     params : Tuple[int, BlockConfig]
@@ -722,7 +722,7 @@ class BlockResponse(BaseResponse):
 
 class GetBlockByHashParameters(BaseModel):
     hash_ : str = Field(..., description="Block hash", alias="hash")
-    block_config : BlockConfig = Field(..., description="BlockConfig Object", alias="block-config")
+    block_config : BlockConfig = Field(..., description="BlockConfig Object")
 
 class GetBlockByHashRequest(BaseRequest):
     params : Tuple[str, BlockConfig]
@@ -733,7 +733,7 @@ class GetBlockSignersRequest(BaseRequest):
     method : str = "hmyv2_getBlockSigners"
 
 class BlockNumberParameters(BaseModel):
-    block_number : int = Field(..., description="Block number", alias="block-number")
+    block_number : int = Field(..., description="Block number")
 
 class GetBlockSignersKeysRequest(BaseRequest):
     params : Tuple[int,]
