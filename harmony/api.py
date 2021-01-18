@@ -833,7 +833,9 @@ class HarmonyAPI(object):
         list[str]
         """
         resp = val.get_all_elected_validator_addresses(self.url, self.session)
-        return resp.session
+        if resp.error is not None:
+            raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
+        return resp.result
 
     def get_information_about_validator(self, validator_address : str) -> ValidatorInformation:
         """
@@ -844,6 +846,9 @@ class HarmonyAPI(object):
         ValidatorInformation
         """
         resp = val.get_all_validator_information(self.url, validator_address, self.session)
+        if resp.error is not None:
+            raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
+        return resp.result
     
     def get_all_validator_information(self, page_number : Optional[int] = -1, block_number : Optional[int] = None) -> List[ValidatorInformation]:
         """

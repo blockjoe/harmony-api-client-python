@@ -1859,12 +1859,14 @@
             "title": "Result",
             "description": "Return value of the executed smart contract",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "EstimateGasRequest": {
@@ -1964,12 +1966,14 @@
             "title": "Result",
             "description": "Hex of estimated gas price of smart contract call",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetCodeRequest": {
@@ -2046,12 +2050,14 @@
             "title": "Result",
             "description": "The data at given address address",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetStorageAtRequest": {
@@ -2113,12 +2119,14 @@
             "title": "Result",
             "description": "Data stored at the smart contract location",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetDelegationByDelegatorRequest": {
@@ -2175,12 +2183,14 @@
             "items": {
               "$ref": "#/definitions/Delegation"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Delegation": {
@@ -2318,12 +2328,14 @@
             "items": {
               "$ref": "#/definitions/ValidatorInformation"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Delegation": {
@@ -2757,12 +2769,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetAllValidatorInformationRequest": {
@@ -2923,12 +2937,14 @@
                 "$ref": "#/definitions/ValidatorInformation"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Delegation": {
@@ -3363,12 +3379,14 @@
                 "$ref": "#/definitions/UtilityMetrics"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "UtilityMetrics": {
@@ -3458,12 +3476,14 @@
                 "$ref": "#/definitions/MedianRawStakeSnapshot"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "EposSlotWinners": {
@@ -3632,12 +3652,14 @@
                 "$ref": "#/definitions/StakingNetworkInfo"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "StakingNetworkInfo": {
@@ -3733,12 +3755,14 @@
                 "$ref": "#/definitions/SuperCommittees"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "CommitteeMember": {
@@ -3916,12 +3940,14 @@
                 "$ref": "#/definitions/CXReceipt"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "CXReceipt": {
@@ -4034,12 +4060,14 @@
             "items": {
               "$ref": "#/definitions/PendingCXReceipt"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Receipt": {
@@ -4263,12 +4291,14 @@
             "title": "Result",
             "description": "If cross shard receipt was successfully resent or not",
             "type": "boolean"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetPoolStatsRequest": {
@@ -4324,12 +4354,14 @@
                 "$ref": "#/definitions/PoolStats"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "PoolStats": {
@@ -4406,12 +4438,14 @@
             "items": {
               "$ref": "#/definitions/StakingTransaction"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "StakingTransaction": {
@@ -4536,12 +4570,14 @@
             "items": {
               "$ref": "#/definitions/Transaction"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Transaction": {
@@ -4690,12 +4726,14 @@
             "items": {
               "$ref": "#/definitions/StakingError"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "StakingError": {
@@ -4792,12 +4830,14 @@
                 "$ref": "#/definitions/StakingTransaction"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "StakingTransaction": {
@@ -4992,12 +5032,14 @@
             "title": "Result",
             "description": "Staking transaction hash if it was successfully added, else an erro",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetCurrentTransactionErrorSinkRequest": {
@@ -5052,12 +5094,14 @@
             "items": {
               "$ref": "#/definitions/TransactionError"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "TransactionError": {
@@ -5148,12 +5192,14 @@
                 "$ref": "#/definitions/Transaction"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Transaction": {
@@ -5376,12 +5422,14 @@
                 "$ref": "#/definitions/TransactionReceipt"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "TransactionReceipt": {
@@ -5524,12 +5572,14 @@
             "title": "Result",
             "description": "Transaction hash",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "BlockNumberRequest": {
@@ -5581,12 +5631,14 @@
             "title": "Result",
             "description": "Current block number",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetCirculatingSupplyRequest": {
@@ -5638,12 +5690,14 @@
             "title": "Result",
             "description": "Circulation supply of tokens in ONE",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetEpochRequest": {
@@ -5695,12 +5749,14 @@
             "title": "Result",
             "description": "Current block number",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetLastCrossLinksRequest": {
@@ -5755,12 +5811,14 @@
             "items": {
               "$ref": "#/definitions/CrossLink"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "CrossLink": {
@@ -5864,12 +5922,14 @@
             "title": "Result",
             "description": "Wallet address of current leader",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GasPriceRequest": {
@@ -5921,12 +5981,14 @@
             "title": "Result",
             "description": "Current average gas price of transactions",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetShardingStructureRequest": {
@@ -5981,12 +6043,14 @@
             "items": {
               "$ref": "#/definitions/ShardingStructure"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "ShardingStructure": {
@@ -6072,12 +6136,14 @@
             "title": "Result",
             "description": "Total number of pre-mined tokens",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetValidatorsRequest": {
@@ -6135,12 +6201,14 @@
                 "$ref": "#/definitions/ValidatorIDs"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "ValidatorAddress": {
@@ -6242,12 +6310,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetCurrentBadBlocksRequest": {
@@ -6302,12 +6372,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetNodeMetadataRequest": {
@@ -6363,12 +6435,14 @@
                 "$ref": "#/definitions/NodeMetadata"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "ChainConfig": {
@@ -6607,12 +6681,14 @@
             "title": "Result",
             "description": "Protocol version",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "PeerCountRequest": {
@@ -6664,12 +6740,14 @@
             "title": "Result",
             "description": "Number of peers respresented as a Hex string",
             "type": "string"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetBlocksRequest": {
@@ -6762,12 +6840,14 @@
             "items": {
               "$ref": "#/definitions/Block"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Block": {
@@ -6847,7 +6927,10 @@
               "stakingTransactions": {
                 "title": "Stakingtransactions",
                 "description": "List of staking transactions finalized in this block",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "stateRoot": {
                 "title": "Stateroot",
@@ -6862,7 +6945,10 @@
               "transactions": {
                 "title": "Transactions",
                 "description": "List of transactions finalized in this block",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "transactionsRoot": {
                 "title": "Transactionsroot",
@@ -6872,7 +6958,10 @@
               "uncles": {
                 "title": "Uncles",
                 "description": "Unused, legacy from Eth",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "viewID": {
                 "title": "Viewid",
@@ -6994,12 +7083,14 @@
                 "$ref": "#/definitions/Block"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Block": {
@@ -7079,7 +7170,10 @@
               "stakingTransactions": {
                 "title": "Stakingtransactions",
                 "description": "List of staking transactions finalized in this block",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "stateRoot": {
                 "title": "Stateroot",
@@ -7094,7 +7188,10 @@
               "transactions": {
                 "title": "Transactions",
                 "description": "List of transactions finalized in this block",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "transactionsRoot": {
                 "title": "Transactionsroot",
@@ -7104,7 +7201,10 @@
               "uncles": {
                 "title": "Uncles",
                 "description": "Unused, legacy from Eth",
-                "type": "object"
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
               },
               "viewID": {
                 "title": "Viewid",
@@ -7357,12 +7457,14 @@
             "title": "Result",
             "description": "Number of transactions",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetBlockTransactionCountByHashRequest": {
@@ -7446,13 +7548,21 @@
             "type": "integer"
           },
           "result": {
-            "$ref": "#/definitions/Header"
+            "title": "Result",
+            "description": "header response",
+            "allOf": [
+              {
+                "$ref": "#/definitions/Header"
+              }
+            ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "Header": {
@@ -7578,12 +7688,14 @@
                 "$ref": "#/definitions/LatestChainHeaders"
               }
             ]
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ],
         "definitions": {
           "ChainHeader": {
@@ -7736,12 +7848,14 @@
             "title": "Result",
             "description": "Wallet balance at given block in Atto",
             "type": "integer"
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetBalanceByBlockNumberRequest": {
@@ -7945,12 +8059,14 @@
             "items": {
               "type": "string"
             }
+          },
+          "error": {
+            "title": "Error",
+            "description": "The error of the RPC call."
           }
         },
         "required": [
-          "jsonrpc",
-          "id",
-          "result"
+          "jsonrpc"
         ]
       },
       "GetTransactionsCountRequest": {
