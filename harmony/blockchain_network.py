@@ -10,7 +10,7 @@ from .models import (
     GetEpochResponse,
     GetLastCrossLinksResponse,
     GetLeaderResponse,
-    GetShardingStructureResponse
+    GetShardingStructureResponse,
     GasPriceResponse,
     GetTotalSupplyResponse,
     GetValidatorsResponse

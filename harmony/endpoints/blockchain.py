@@ -171,7 +171,6 @@ def getNodeMetadata(api_url : str, session : Optional[requests.Session] = None) 
     """
     data = format_api_data("hmyv2_getNodeMetadata", None)
     resp = post_request(api_url, data, session)
-    
     return GetNodeMetadataResponse(**resp.json())
 
 def protocolVersion(api_url : str, session : Optional[requests.Session] = None) -> ProtocolVersionResponse:

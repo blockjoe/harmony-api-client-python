@@ -104,7 +104,7 @@ def get_block_by_hash(api_url : str, block_hash : str, include_full_transaction_
     result : Block
     """
     block_opts = BlockConfig(fullTx=include_full_transaction_data, inclTx=include_regular_transactions, inclStaking=include_staking_transactions)
-    params = GetBlockByHashParameters(block_hash=block_number, block_hash=block_opts)
+    params = GetBlockByHashParameters(block_hash=block_hash, block_config=block_opts)
     return getBlockByNumber(api_url, params, session)
 
 def _get_block_signers(api_url : str, starting_block_number : int, ending_block_number : int, include_signer_addresses : Optional[bool] = False, include_transactions : Optional[bool] = False, include_staking_transactions : Optional[bool] = False, session : Optional[requests.Session] = None) -> AddressListResponse:

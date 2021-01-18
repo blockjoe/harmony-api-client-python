@@ -12,7 +12,7 @@ from .models import (
     TransactionResponse
 )
 
-from .endpoints.staking import (
+from .endpoints.transaction import (
     getCurrentTransactionErrorSink,
     getTransactionByBlockHashAndIndex,
     getTransactionByBlockNumberAndIndex,
@@ -64,7 +64,7 @@ def get_transaction_by_block_hash_and_index(api_url : str, block_hash : str, ind
     block_hash : str
     index : int
         transaction index
-    session : requests.Session, optional
+    session : requests.Session, optieronal
 
     Returns
     -------
