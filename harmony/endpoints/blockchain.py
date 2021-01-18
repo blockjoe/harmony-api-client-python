@@ -295,7 +295,7 @@ def getLatestChainHeaders(api_url : str, session : Optional[requests.Session] = 
 
 def latestHeader(api_url : str, session : Optional[requests.Session] = None) -> HeaderResponse:
     """
-    params: LatestHeaderParameters
+    params: None
     result: HeaderResponse
     method: hmyv2_latestHeader
     """

@@ -41,6 +41,7 @@ def get_delegations_by_delegator_by_block_number(api_url : str, address : str, b
     api_url : str
     address : str
         The delegator address
+    block_number : int
     session : requests.Session, optional
 
     Returns

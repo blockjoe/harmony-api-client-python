@@ -49,12 +49,12 @@ def get_all_validator_information(api_url : str, page_number : Optional[int] = -
     Returns
     --------
     result : list[ValidatorInformation]
-        List of ValidatorInformatoin objects
+        List of ValidatorInformation objects
     """
     params = GetAllValidatorInformationParameters(page_number=page_number)
     return getAllValidatorInformation(api_url, params, session)
 
-def get_all_validator_information(api_url : str, block_number : int, page_number : Optional[int] = -1, session : Optional[requests.Session] = None) -> ValidatorInformationListResponse:
+def get_all_validator_information_by_block_number(api_url : str, block_number : int, page_number : Optional[int] = -1, session : Optional[requests.Session] = None) -> ValidatorInformationListResponse:
     """
     Get the information about all the validators by block number.
 
@@ -70,10 +70,10 @@ def get_all_validator_information(api_url : str, block_number : int, page_number
     Returns
     --------
     result : list[ValidatorInformation]
-        List of ValidatorInformatoin objects
+        List of ValidatorInformation objects
     """
     params = GetAllValidatorInformationByBlockNumberParameters(page_number=page_number, block_number=block_number)
-    return getAllValidatorInformation(api_url, params, session)
+    return getAllValidatorInformationByBlockNumber(api_url, params, session)
 
 def get_all_elected_validator_addresses(api_url : str, session : Optional[requests.Session] = None) -> AddressListResponse:
     """

@@ -38,7 +38,7 @@ def get_balance(api_url : str, address : str, session : Optional[requests.Sessio
     
     Returns
     -------
-    BalanceResponse
+    result : int
     """
     params = AddressParameters(address=address)
     return getBalance(api_url, params, session)
@@ -56,10 +56,9 @@ def get_balance_by_block_number(api_url : str, address : str, block_number : int
         The block number
     session : requests.session, optional
 
-    Returns    GetTransactionsHistoryTxTypeResponse,
-
+    Returns
     -------
-    BalanceResponse
+    result : int
     """
     params = AddressBlockNumberParameters(address=address, block_number=block_number)
     return getBalanceByBlockNumber(api_url, params, session)
@@ -79,12 +78,12 @@ def get_staking_transactions_count(api_url : str, address : str, transaction_typ
 
     Returns
     -------
-    TransactionCountResponse
+    result : int
     """
     params = TransactionsCountParameters(address=address, transaction_type=transaction_type)
     return getStakingTransactionsCount(api_url, params, session)
 
-def get_staking_transactions_history(api_url : str, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, full_tx : Optional[bool] = False, txType : Optional[TransactionType] = "ALL", order : Optional[SortOrder] = "ASC", session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, StakingTransactionListResponse]:
+def get_staking_transactions_history(api_url : str, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, include_full_transaction_data : Optional[bool] = False, transaction_type : Optional[TransactionType] = "ALL", sort_order : Optional[SortOrder] = "ASC", session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, StakingTransactionListResponse]:
     """
     Get the history of staking transactions on the wallet.
     
@@ -97,8 +96,8 @@ def get_staking_transactions_history(api_url : str, address : str, page_index : 
         Which page of transactions to return, defaults to 0
     page_size: int, optional
         The number of transactions per page, defaults to 1000
-    full_tx: bool, optional
-        If true display the whole transaction object instead of the hash, defaults to Fasle
+    include_full_transaction_data: bool, optional
+        If true return the whole transaction object instead of the hash, defaults to Fasle
     transaction_type: str, optional
         Either 'SENT', 'RECEIVED', 'ALL', defaults to 'ALL'
     sort_order: str, optional
@@ -107,9 +106,9 @@ def get_staking_transactions_history(api_url : str, address : str, page_index : 
 
     Returns
     -------
-    TransactionsHashListResponse if full_tx was True else StakingTransactionListResponse
+    result : list[str] or list[StakingTransaction]
     """
-    obj = TransactionsHistoryObject(address=address, pageIndex=page_index, pageSize=page_size, fullTx=full_tx, txType=transaction_type, order=sort_order)
+    obj = TransactionsHistoryObject(address=address, pageIndex=page_index, pageSize=page_size, fullTx=include_full_transaction_data, txType=transaction_type, order=sort_order)
     params = TransactionsHistoryParameters(obj=obj)
     return getStakingTransactionsHistory(api_url, params, session)
 
@@ -128,12 +127,12 @@ def get_transactions_count(api_url : str, address : str, transaction_type : Opti
 
     Returns
     -------
-    TransactionCountResponse
+    result : int
     """
     params = TransactionsCountParameters(address=address, transaction_type=transaction_type)
     return getTransactionsCount(api_url, params, session)
 
-def get_transactions_history(api_url : str, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, full_tx : Optional[bool] = False, txType : Optional[TransactionType] = "ALL", order : Optional[SortOrder] = "ASC", session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, TransactionListResponse]:
+def get_transactions_history(api_url : str, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, include_full_transaction_data : Optional[bool] = False, transaction_type : Optional[TransactionType] = "ALL", sort_order : Optional[SortOrder] = "ASC", session : Optional[requests.Session] = None) -> Union[TransactionsHashListResponse, TransactionListResponse]:
     """
     Get the history of transactions on the wallet.
     
@@ -146,8 +145,8 @@ def get_transactions_history(api_url : str, address : str, page_index : Optional
         Which page of transactions to return, defaults to 0
     page_size: int, optional
         The number of transactions per page, defaults to 1000
-    full_tx: bool, optional
-        If true display the whole transaction object instead of the hash, defaults to Fasle
+    include_full_transaction_data: bool, optional
+        If true return the whole transaction object instead of the hash, defaults to Fasle
     transaction_type: str, optional
         Either 'SENT', 'RECEIVED', 'ALL', defaults to 'ALL'
     sort_order: str, optional
@@ -156,8 +155,8 @@ def get_transactions_history(api_url : str, address : str, page_index : Optional
 
     Returns
     -------
-    TransactionsHashListResponse if full_tx was True else TransactionListResponse
+    result : list[str] or list[Transaction]
     """
     obj = TransactionsHistoryObject(address=address, pageIndex=page_index, pageSize=page_size, fullTx=full_tx, txType=transaction_type, order=sort_order)
-    params = TransactionsHistoryParameters(obj=obj)
+    params = TransactionsHistoryParameters(obj=obj)sort_order
     return getTransactionsHistory(api_url, params, session)

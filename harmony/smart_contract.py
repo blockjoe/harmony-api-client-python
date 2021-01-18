@@ -122,6 +122,8 @@ def get_storage_at(api_url : str, address : str, storage_location : str, block_n
 
     Returns
     -------
-    results : str
+    result : str
         The value stored at the smart contract location
     """
+    params = GetStorageAtParameters(address=address, storage_location=storage_location, block_number=block_number)
+    return getStorageAt(api_url, params, session)

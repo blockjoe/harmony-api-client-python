@@ -692,12 +692,12 @@ class Block(BaseModel):
     parentHash : str = Field(..., description="Hash of parent block")
     receiptsRoot : str = Field(..., description="Hash of transaction receipt root")
     size : int = Field(..., description="Block size in bytes")
-    stakingTransactions : Dict[str,Any] = Field(..., description="List of staking transactions finalized in this block")
+    stakingTransactions : List[Dict[str, Any]] = Field(..., description="List of staking transactions finalized in this block")
     stateRoot : str = Field(..., description="Hash of state root")
     timestamp : int = Field(..., description="Unix timestamp of the block")
-    transactions : Dict[str, Any] = Field(..., description="List of transactions finalized in this block")
+    transactions : List[Dict[str, Any]] = Field(..., description="List of transactions finalized in this block")
     transactionsRoot : str = Field(..., description="Hash of transactios root")
-    uncles : Dict[str, Any] = Field(..., description="Unused, legacy from Eth")
+    uncles : List[Dict[str, Any]] = Field(..., description="Unused, legacy from Eth")
     viewID : int = Field(..., description="View ID")
 
 
@@ -851,4 +851,3 @@ class GetTransactionsCountRequest(BaseRequest):
 class GetTransactionsHistoryRequest(BaseRequest):
     params : Tuple[TransactionsHistoryObject,]
     method : str = "hmyv2_getTransactionsHistory"
-
