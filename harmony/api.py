@@ -196,6 +196,9 @@ class HarmonyAPI(object):
         str
         """
         resp = bc_net.get_current_leader(self.url, self.session)
+        if resp.error is not None:
+            raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
+        return resp.result
 
     def sharding_structure(self) -> List[ShardingStructure]:
         """

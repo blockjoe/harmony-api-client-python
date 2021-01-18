@@ -611,13 +611,13 @@
       "title": "Delegation",
       "type": "object",
       "properties": {
-        "validator-address": {
-          "title": "Validator-Address",
+        "validator_address": {
+          "title": "Validator Address",
           "description": "Validator wallet address",
           "type": "string"
         },
-        "delegator-address": {
-          "title": "Delegator-Address",
+        "delegator_address": {
+          "title": "Delegator Address",
           "description": "Delegator wallet address",
           "type": "string"
         },
@@ -631,21 +631,28 @@
           "description": "Unclaimed rewards in atto",
           "type": "integer"
         },
-        "undelegations": {
+        "Undelegations": {
           "title": "Undelegations",
           "description": "List of pending undelegations",
           "type": "array",
           "items": {
-            "type": "object"
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
           }
         }
       },
       "required": [
-        "validator-address",
-        "delegator-address",
+        "validator_address",
+        "delegator_address",
         "amount",
         "reward",
-        "undelegations"
+        "Undelegations"
       ]
     },
     "DelegationListResponse": {
@@ -1613,7 +1620,7 @@
         "result": {
           "title": "Result",
           "description": "Circulation supply of tokens in ONE",
-          "type": "integer"
+          "type": "number"
         },
         "error": {
           "title": "Error",
@@ -2712,8 +2719,8 @@
           "description": "Effective median stake",
           "type": "string"
         },
-        "max-eternal-slots": {
-          "title": "Max-Eternal-Slots",
+        "max-external-slots": {
+          "title": "Max-External-Slots",
           "description": "Number of available committee slots",
           "type": "integer"
         },
@@ -2736,7 +2743,7 @@
       },
       "required": [
         "epos-median-stake",
-        "max-eternal-slots",
+        "max-external-slots",
         "epos-slot-winners",
         "epos-slot-candidates"
       ]
@@ -3928,8 +3935,8 @@
           "description": "Voting power of key",
           "type": "string"
         },
-        "voting-power-\\%": {
-          "title": "Voting-Power-\\%",
+        "voting-power-%": {
+          "title": "Voting-Power-%",
           "description": "Normalized voting power of key",
           "type": "string"
         }
@@ -3939,7 +3946,7 @@
         "earning-account",
         "bls-public-key",
         "voting-power-unnormalized",
-        "voting-power-\\%"
+        "voting-power-%"
       ]
     },
     "CommitteeShard": {
@@ -4102,7 +4109,7 @@
         "result": {
           "title": "Result",
           "description": "Total number of pre-mined tokens",
-          "type": "integer"
+          "type": "number"
         },
         "error": {
           "title": "Error",
@@ -4705,7 +4712,7 @@
         "timestamp": {
           "title": "Timestamp",
           "description": "Timestamp that the block was finalized",
-          "type": "integer"
+          "type": "string"
         },
         "unixtime": {
           "title": "Unixtime",
@@ -5233,7 +5240,6 @@
       },
       "required": [
         "blockHash",
-        "blockNumber",
         "from",
         "timestamp",
         "gas",
@@ -5412,7 +5418,6 @@
       },
       "required": [
         "blockHash",
-        "blockNumber",
         "from",
         "timestamp",
         "gas",
@@ -5444,9 +5449,12 @@
         "result": {
           "title": "Result",
           "description": "List of transactions",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Transaction"
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Transaction"
+            }
           }
         },
         "error": {
@@ -5530,9 +5538,12 @@
         "result": {
           "title": "Result",
           "description": "List of transaction hashes",
-          "type": "array",
-          "items": {
-            "type": "string"
+          "type": "object",
+          "additionalProperties": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         },
         "error": {
@@ -5554,6 +5565,158 @@
       },
       "required": [
         "obj"
+      ]
+    },
+    "ValidatorDelegation": {
+      "title": "ValidatorDelegation",
+      "type": "object",
+      "properties": {
+        "delegator-address": {
+          "title": "Delegator-Address",
+          "description": "Delegator wallet address",
+          "type": "string"
+        },
+        "amount": {
+          "title": "Amount",
+          "description": "Amount delegated in atto",
+          "type": "integer"
+        },
+        "reward": {
+          "title": "Reward",
+          "description": "Unclaimed rewards in atto",
+          "type": "integer"
+        },
+        "undelegations": {
+          "title": "Undelegations",
+          "description": "List of pending undelegations",
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object"
+              }
+            ]
+          }
+        }
+      },
+      "required": [
+        "delegator-address",
+        "amount",
+        "reward",
+        "undelegations"
+      ]
+    },
+    "Validator": {
+      "title": "Validator",
+      "type": "object",
+      "properties": {
+        "bls-public-keys": {
+          "title": "Bls-Public-Keys",
+          "description": "List of public BLS keys associated with the validator wallet address",
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "creation-height": {
+          "title": "Creation-Height",
+          "description": "Block in which the validator was created",
+          "type": "integer"
+        },
+        "address": {
+          "title": "Address",
+          "description": "Validator wallet address",
+          "type": "string"
+        },
+        "delegations": {
+          "title": "Delegations",
+          "description": "List of Delegation Objects",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ValidatorDelegation"
+          }
+        },
+        "details": {
+          "title": "Details",
+          "description": "Validator details, displayed on the Staking Dashboard",
+          "type": "string"
+        },
+        "identity": {
+          "title": "Identity",
+          "description": "Validator identity, must be unique",
+          "type": "string"
+        },
+        "last-epoch-in-committee": {
+          "title": "Last-Epoch-In-Committee",
+          "description": "Last epoch any key of the validator was elected",
+          "type": "integer"
+        },
+        "max-change-rate": {
+          "title": "Max-Change-Rate",
+          "description": "Maximum amount the commission rate can increase in one epoch",
+          "type": "string"
+        },
+        "max-rate": {
+          "title": "Max-Rate",
+          "description": "Max commission rate a validator can charge",
+          "type": "string"
+        },
+        "min-self-delegation": {
+          "title": "Min-Self-Delegation",
+          "description": "Ammount that validator must delegate to self in Atto",
+          "type": "integer"
+        },
+        "max-total-delegation": {
+          "title": "Max-Total-Delegation",
+          "description": "Total amount that validator will accept delegation until in Atto",
+          "type": "integer"
+        },
+        "name": {
+          "title": "Name",
+          "description": "Validator name, displayed on the Staking Dashboard",
+          "type": "string"
+        },
+        "rate": {
+          "title": "Rate",
+          "description": "Current commission rate",
+          "type": "string"
+        },
+        "security-contact": {
+          "title": "Security-Contact",
+          "description": "Method to contact the validator",
+          "type": "string"
+        },
+        "update-height": {
+          "title": "Update-Height",
+          "description": "Last block validator editted their validator information",
+          "type": "integer"
+        },
+        "website": {
+          "title": "Website",
+          "description": "Validator website, displayed on the Staking Dashboard",
+          "type": "string"
+        }
+      },
+      "required": [
+        "bls-public-keys",
+        "creation-height",
+        "address",
+        "delegations",
+        "details",
+        "identity",
+        "last-epoch-in-committee",
+        "max-change-rate",
+        "max-rate",
+        "min-self-delegation",
+        "max-total-delegation",
+        "name",
+        "rate",
+        "security-contact",
+        "update-height",
+        "website"
       ]
     },
     "Key": {
@@ -5676,15 +5839,32 @@
           "description": "Epoch number",
           "type": "integer"
         },
-        "value": {
-          "title": "Value",
+        "apr": {
+          "title": "Apr",
           "description": "Calculated APR for that epoch",
-          "type": "string"
+          "type": "number"
         }
       },
       "required": [
         "epoch",
-        "value"
+        "apr"
+      ]
+    },
+    "EpochBlock": {
+      "title": "EpochBlock",
+      "type": "object",
+      "properties": {
+        "blocks": {
+          "$ref": "#/definitions/Blocks"
+        },
+        "epoch": {
+          "title": "Epoch",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "blocks",
+        "epoch"
       ]
     },
     "Lifetime": {
@@ -5708,7 +5888,7 @@
         "apr": {
           "title": "Apr",
           "description": "Approximate Return Rate",
-          "type": "string"
+          "type": "number"
         },
         "epoch-apr": {
           "title": "Epoch-Apr",
@@ -5717,104 +5897,33 @@
           "items": {
             "$ref": "#/definitions/EpochAPR"
           }
+        },
+        "epoch-blocks": {
+          "title": "Epoch-Blocks",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/EpochBlock"
+          }
         }
       },
       "required": [
         "reward-accumulated",
         "blocks",
-        "apr",
-        "epoch-apr"
+        "apr"
       ]
     },
     "ValidatorInformation": {
       "title": "ValidatorInformation",
       "type": "object",
       "properties": {
-        "bls-public-keys": {
-          "title": "Bls-Public-Keys",
-          "description": "List of public BLS keys associated with the validator wallet address",
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        },
-        "last-epoch-in-committee": {
-          "title": "Last-Epoch-In-Committee",
-          "description": "Last epoch any key of the validator was elected",
-          "type": "integer"
-        },
-        "min-self-delegation": {
-          "title": "Min-Self-Delegation",
-          "description": "Ammount that validator must delegate to self in Atto",
-          "type": "integer"
-        },
-        "max-total-delegation": {
-          "title": "Max-Total-Delegation",
-          "description": "Total amount that validator will accept delegation until in Atto",
-          "type": "integer"
-        },
-        "rate": {
-          "title": "Rate",
-          "description": "Current commission rate",
-          "type": "string"
-        },
-        "max-rate": {
-          "title": "Max-Rate",
-          "description": "Max commission rate a validator can charge",
-          "type": "string"
-        },
-        "max-change-rate": {
-          "title": "Max-Change-Rate",
-          "description": "Maximum amount the commission rate can increase in one epoch",
-          "type": "string"
-        },
-        "update-height": {
-          "title": "Update-Height",
-          "description": "Last block validator editted their validator information",
-          "type": "integer"
-        },
-        "name": {
-          "title": "Name",
-          "description": "Validator name, displayed on the Staking Dashboard",
-          "type": "string"
-        },
-        "identity": {
-          "title": "Identity",
-          "description": "Validator identity, must be unique",
-          "type": "string"
-        },
-        "website": {
-          "title": "Website",
-          "description": "Validator website, displayed on the Staking Dashboard",
-          "type": "string"
-        },
-        "security-contract": {
-          "title": "Security-Contract",
-          "description": "Method to contact the validator",
-          "type": "string"
-        },
-        "details": {
-          "title": "Details",
-          "description": "Validator details, displayed on the Staking Dashboard",
-          "type": "string"
-        },
-        "creation-height": {
-          "title": "Creation-Height",
-          "description": "Block in which the validator was created",
-          "type": "integer"
-        },
-        "address": {
-          "title": "Address",
-          "description": "Validator wallet address",
-          "type": "string"
-        },
-        "delegations": {
-          "title": "Delegations",
-          "description": "List of Delegation Objects",
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/Delegation"
-          }
+        "validator": {
+          "title": "Validator",
+          "description": "Validator Object",
+          "allOf": [
+            {
+              "$ref": "#/definitions/Validator"
+            }
+          ]
         },
         "metrics": {
           "title": "Metrics",
@@ -5843,7 +5952,7 @@
         "epos-winning-stake": {
           "title": "Epos-Winning-Stake",
           "description": "Total effective stake of the validator",
-          "type": "string"
+          "type": "number"
         },
         "booted-status": {
           "title": "Booted-Status",
@@ -5866,28 +5975,10 @@
         }
       },
       "required": [
-        "bls-public-keys",
-        "last-epoch-in-committee",
-        "min-self-delegation",
-        "max-total-delegation",
-        "rate",
-        "max-rate",
-        "max-change-rate",
-        "update-height",
-        "name",
-        "identity",
-        "website",
-        "security-contract",
-        "details",
-        "creation-height",
-        "address",
-        "delegations",
-        "metrics",
+        "validator",
         "total-delegation",
         "currently-in-committee",
         "epos-status",
-        "epos-winning-stake",
-        "booted-status",
         "active-status",
         "lifetime"
       ]
