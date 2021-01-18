@@ -2,5 +2,7 @@ from harmony.api import HarmonyAPI
 
 api = HarmonyAPI('https://rpc.s0.t.hmny.io/')
 
-print(api.peer_count())
+#print(api.peer_count())
+
+print(api.get_all_elected_validators())
 print(api.node_metadata())
