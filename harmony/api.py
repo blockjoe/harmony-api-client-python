@@ -491,7 +491,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_account_balance(self, wallet_address : str, block_number : Optional[int] = None) -> int:
+    def get_account_balance(self, address : str, block_number : Optional[int] = None) -> int:
         """
         Get the balance of an account.
 
@@ -508,7 +508,7 @@ class HarmonyAPI(object):
         if block_number is not None:
             resp = act.get_balance_by_block_number(self.url, address, block_number, self.session)
         else:
-            resp = act.get_account_balance(self.url, address, self.session)
+            resp = act.get_balance(self.url, address, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
@@ -1028,6 +1028,4 @@ class HarmonyAPI(object):
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
-    
-
     

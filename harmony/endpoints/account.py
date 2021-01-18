@@ -25,7 +25,7 @@ def getBalance(api_url : str, params : AddressParameters, session : Optional[req
     """
     data = format_api_data("hmyv2_getBalance", params)
     resp = post_request(api_url, data, session)
-    return GetBalanceResponse(**resp.json())
+    return BalanceResponse(**resp.json())
 
 def getBalanceByBlockNumber(api_url : str, params : AddressBlockNumberParameters, session : Optional[requests.Session] = None) -> BalanceResponse:
     """
@@ -35,7 +35,7 @@ def getBalanceByBlockNumber(api_url : str, params : AddressBlockNumberParameters
     """
     data = format_api_data("hmyv2_getBalanceByBlockNumber", params)
     resp = post_request(api_url, data, session)
-    return GetBalanceByBlockNumberResponse(**resp.json())
+    return BalanceResponse(**resp.json())
 
 def getStakingTransactionsCount(api_url : str, params : TransactionsCountParameters, session : Optional[requests.Session] = None) -> TransactionCountResponse:
     """
