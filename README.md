@@ -11,7 +11,7 @@ Python Requirements:
   - requests
   - pydantic
   - Typer
-  - (rosetta-api-client-python)[https://github.com/blockjoe/rosetta-api-client-python]
+  - [rosetta-api-client-python](https://github.com/blockjoe/rosetta-api-client-python)
 
 ```sh
 $ git clone https://github.com/blockjoe/harmony-api-client-python
@@ -73,7 +73,7 @@ was able to auto generate the requests and responses into objects that handled i
 
 I had more intentions of flushing out the interface design for the CLI, especially since I was excited at the concept of Rosetta being a universal layer, but I found myself spending a good chunk of time fighting to get the Harmony RPC API into a form that would be better suitable for codegen.
 
-In the `/dev` directory I've left a script `generate_api_schema.py` that's done a chunk of the initial lifting at getting the RPC v2 parameters/methods/responses into that generalizable format. Unfortunately, out of the box, OpenAPI 3.0 (formerly swagger), is not designed to support RPC. I've hacked aroudn that a little bit by making the unique paths just the method name, with the idea that it might be worth a little time to dig into a tool like [swagger-codegen](https://swagger.io/tools/swagger-codegen/) or [openapi-generator](https://github.com/OpenAPITools/openapi-generator) to override/template the client side behavior to just use the same domain for every request. The `make_api_spec` function tries to force the current RPC sepc into the OpenAPI format, and that gets dumped to the `/dev/api.json` file. If that seems like too much of a pie in the sky idea, I also decided to dump the parameters, requests, and response models into JSON schema in the `/dev/models.json` file. I chose to use the parameters models when building the Python interface just because it gave me a place where I could easily reference, validate, and even document the expected parameters. I then simply ignore the keys and just dump the values into a list when passing it through the request body. On the python end of things, I use (https://koxudaxi.github.io/datamodel-code-generator/)[https://koxudaxi.github.io/datamodel-code-generator/]. 
+In the `/dev` directory I've left a script `generate_api_schema.py` that's done a chunk of the initial lifting at getting the RPC v2 parameters/methods/responses into that generalizable format. Unfortunately, out of the box, OpenAPI 3.0 (formerly swagger), is not designed to support RPC. I've hacked aroudn that a little bit by making the unique paths just the method name, with the idea that it might be worth a little time to dig into a tool like [swagger-codegen](https://swagger.io/tools/swagger-codegen/) or [openapi-generator](https://github.com/OpenAPITools/openapi-generator) to override/template the client side behavior to just use the same domain for every request. The `make_api_spec` function tries to force the current RPC sepc into the OpenAPI format, and that gets dumped to the `/dev/api.json` file. If that seems like too much of a pie in the sky idea, I also decided to dump the parameters, requests, and response models into JSON schema in the `/dev/models.json` file. I chose to use the parameters models when building the Python interface just because it gave me a place where I could easily reference, validate, and even document the expected parameters. I then simply ignore the keys and just dump the values into a list when passing it through the request body. On the python end of things, I use (datamodel-code-generator)[https://koxudaxi.github.io/datamodel-code-generator/]. 
 
 
 Any development dependencies I've left listed as optional, and could be installed directly with `pip install -e ".[dev]"`. This includes the tools I used to go from spec to code when playing with Rosetta, as well as now from code to spec in the case of the RPC endpoints. 
@@ -131,6 +131,17 @@ Block(difficulty=0, epoch=0, extraData='0x', gasLimit=500000000000000000, gasUse
 ['one1gh043zc95e6mtutwy5a2zhvsxv7lnlklkj42ux', 'one1jyvcqu4k0rszgf3r2a02tm89dzd68arw5lz9vl', 'one1nn2c86kwaq4nk8lda50fnepepqr9y73kd9w2z3', 'one1u7jzpkd3sr40kzw62vjval85dkzeyn3g2shz83', 'one1tfrpfvrgj5tnxj029xsdkl33hmrsry056nrpvt', 'one1fg0nrc7djkm2p47tjsuhd8n9435mz9ed57dj8v', ... ]
 ```
 
+
+Rosetta Endpoints:
+
+Rosetta endpoints are exposed under the `.rosetta` property on the api object. See `rosetta-api-client-python` for those supported endpoints.
+
+(Currently untested and being cleaned up)
+
+```python
+>>> api.rosetta.list_supported_networks()
+[NetworkIdentifier(blockchain='Harmony', network='Mainnet', sub_network_identifier=SubNetworkIdentifier(network='shard 0', metadata={'is_beacon': True}))]
+```
 
 ## Useful Resources
 
