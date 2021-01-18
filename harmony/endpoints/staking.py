@@ -102,6 +102,8 @@ def getValidatorInformation(api_url : str, params : AddressParameters, session :
     """
     data = format_api_data("hmyv2_getValidatorInformation", params)
     resp = post_request(api_url, data, session)
+    import json
+    print(json.dumps(resp.json()['result'], indent=2))
     return ValidatorInformationResponse(**resp.json())
 
 #Network

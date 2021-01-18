@@ -82,11 +82,11 @@ class GetDelegationByDelegatorRequest(BaseRequest):
     method : str = "hmyv2_getDelegationsByDelegator"
 
 class Delegation(BaseModel):
-    validator_address : str = Field(..., description="Validator wallet address", alias="validator-address")
-    delegator_address : str = Field(..., description="Delegator wallet address", alias="delegator-address")
+    validator_address : str = Field(..., description="Validator wallet address")
+    delegator_address : str = Field(..., description="Delegator wallet address")
     amount : int = Field(..., description="Amount delegated in atto")
     reward : int = Field(..., description="Unclaimed rewards in atto")
-    undelegations : List[Dict[str, Any]] = Field(..., description="List of pending undelegations")
+    undelegations : List[Union[str, Dict[str, Any]]] = Field(..., description="List of pending undelegations", alias="Undelegations")
 
 class DelegationListResponse(BaseResponse):
     result : Optional[List[Delegation]] = Field(None, description="List of Delegation Objects")
@@ -135,38 +135,59 @@ class Blocks(BaseModel):
 
 class EpochAPR(BaseModel):
     epoch : int = Field(..., description="Epoch number")
-    value : str = Field(..., description="Calculated APR for that epoch")
+    apr : float = Field(..., description="Calculated APR for that epoch")
+
+class EpochBlock(BaseModel):
+    blocks : Blocks
+    epoch : int
 
 class Lifetime(BaseModel):
     reward_accumulated : int = Field(..., description="Lifetime reward accumulated by the validator", alias="reward-accumulated")
     blocks : Blocks = Field(..., description="Blocks Object") 
-    apr : str = Field(..., description="Approximate Return Rate")
-    epoch_apr : List[EpochAPR] = Field(..., description="List of APR per epoch", alias="epoch-apr")
+    apr : float = Field(..., description="Approximate Return Rate")
+    epoch_apr : Optional[List[EpochAPR]] = Field(None, description="List of APR per epoch", alias="epoch-apr")
+    epoch_blocks : Optional[List[EpochBlock]] = Field(None, alias="epoch-blocks")
 
+class ValidatorDelegation(BaseModel):
+    delegator_address : str = Field(..., description="Delegator wallet address", alias="delegator-address")
+    amount : int = Field(..., description="Amount delegated in atto")
+    reward : int = Field(..., description="Unclaimed rewards in atto")
+    undelegations : List[Union[str, Dict[str, Any]]] = Field(..., description="List of pending undelegations")
 
-class ValidatorInformation(BaseModel):
+class Validator(BaseModel):
     bls_public_keys : List[str] = Field(..., description="List of public BLS keys associated with the validator wallet address", alias="bls-public-keys")
-    last_epoch_in_committee : int = Field(..., description="Last epoch any key of the validator was elected", alias="last-epoch-in-committee")
-    min_self_delegation : int = Field(..., description="Ammount that validator must delegate to self in Atto", alias="min-self-delegation")
-    max_total_delegation : int = Field(..., description="Total amount that validator will accept delegation until in Atto", alias="max-total-delegation")
-    rate : str = Field(...,description="Current commission rate")
-    max_rate : str = Field(..., description="Max commission rate a validator can charge", alias="max-rate")
-    max_change_rate : str = Field(..., description="Maximum amount the commission rate can increase in one epoch", alias="max-change-rate")
-    update_height : int = Field(..., description="Last block validator editted their validator information", alias="update-height")
-    name : str = Field(..., description="Validator name, displayed on the Staking Dashboard")
-    identity : str = Field(..., description="Validator identity, must be unique")
-    website : str = Field(..., description="Validator website, displayed on the Staking Dashboard")
-    security_contract : str =Field(..., description="Method to contact the validator", alias="security-contract")
-    details : str = Field(..., description="Validator details, displayed on the Staking Dashboard")
     creation_height : int = Field(..., description="Block in which the validator was created", alias="creation-height")
     address : str = Field(..., description="Validator wallet address")
-    delegations : List[Delegation] = Field(..., description="List of Delegation Objects")
-    metrics : Metrics = Field(..., description="BLS key earning metrics for current epoch")
+    delegations : List[ValidatorDelegation] = Field(..., description="List of Delegation Objects")
+    details : str = Field(..., description="Validator details, displayed on the Staking Dashboard")
+    identity : str = Field(..., description="Validator identity, must be unique")
+    last_epoch_in_committee : int = Field(..., description="Last epoch any key of the validator was elected", alias="last-epoch-in-committee")
+    max_change_rate : str = Field(..., description="Maximum amount the commission rate can increase in one epoch", alias="max-change-rate")
+    max_rate : str = Field(..., description="Max commission rate a validator can charge", alias="max-rate")
+    min_self_delegation : int = Field(..., description="Ammount that validator must delegate to self in Atto", alias="min-self-delegation")
+    max_total_delegation : int = Field(..., description="Total amount that validator will accept delegation until in Atto", alias="max-total-delegation")
+    name : str = Field(..., description="Validator name, displayed on the Staking Dashboard")
+    rate : str = Field(...,description="Current commission rate")
+    security_contact : str = Field(..., description="Method to contact the validator", alias="security-contact")
+    update_height : int = Field(..., description="Last block validator editted their validator information", alias="update-height")
+    website : str = Field(..., description="Validator website, displayed on the Staking Dashboard")
+
+class CurrentEpochSigningPercent(BaseModel):
+    current_epoch_signed : int = Field(..., alias="current-epoch-signed")
+    current_epoch_signing_percentage : float = Field(..., alias="current-epoch-signing-percentage")
+    current_epoch_to_sign : int = Field(..., alias="current-epoch-to-sign")
+
+class CurrentEpochPerformance(BaseModel):
+    current_epoch_signing_percentage : CurrentEpochSigningPercent = Field(..., alias="current-epoch-performance")
+
+class ValidatorInformation(BaseModel):
+    validator : Validator = Field(..., description="Validator Object")
+    metrics : Optional[Metrics] = Field(None, description="BLS key earning metrics for current epoch")
     total_delegation : int = Field(..., description="Total amount delegated to validator", alias="total-delegation")
     currently_in_committee : bool = Field(..., description="If key is currently elected", alias="currently-in-committee")
     epos_status : str = Field(..., description="Currently elected, eligible to be elected next epoch, or not eligible to be elected next epoch", alias="epos-status")
-    epos_winning_stake : str = Field(..., description="Total effective stake of the validator", alias="epos-winning-stake")
-    booted_status : str = Field(..., description="Banned status", alias="booted-status")
+    epos_winning_stake : Optional[float] = Field(None, description="Total effective stake of the validator", alias="epos-winning-stake")
+    booted_status : Optional[str] = Field(None, description="Banned status", alias="booted-status")
     active_status : str = Field(..., description="Active or inactive", alias="active-status")
     lifetime : Lifetime = Field(..., description="Lifetime Object")
 
@@ -232,7 +253,7 @@ class EposSlotCandidates(BaseModel):
 
 class MedianRawStakeSnapshot(BaseModel):
     epos_median_stake : str = Field(..., description="Effective median stake", alias="epos-median-stake")
-    max_eternal_slots : int = Field(..., description="Number of available committee slots", alias="max-eternal-slots")
+    max_external_slots : int = Field(..., description="Number of available committee slots", alias="max-external-slots")
     epos_slot_winners : List[EposSlotWinners] = Field(..., description="Details for each slot winner", alias="epos-slot-winners")
     epos_slot_candidates : List[EposSlotCandidates] = Field(..., description="Details for each candidates", alias="epos-slot-candidates")
 
@@ -257,7 +278,7 @@ class CommitteeMember(BaseModel):
     earning_account : str = Field(..., description="Wallet address that rewards are being paid to", alias="earning-account")
     bls_public_key : str = Field(..., description="BLS public key", alias="bls-public-key")
     voting_power_unnormalized : str = Field(..., description="Voting power of key", alias="voting-power-unnormalized")
-    voting_power_percent : str = Field(..., description="Normalized voting power of key", alias="voting-power-\\%")
+    voting_power_percent : str = Field(..., description="Normalized voting power of key", alias="voting-power-%")
 
 class CommitteeShard(BaseModel):
     policy : str = Field(..., description="Current election policy")
@@ -364,7 +385,7 @@ class PendingStakingTransactionsRequest(EmptyRequest):
 
 class StakingTransaction(BaseModel):
     blockHash : str = Field(..., description="Block hash in which transaction was finalized")
-    blockNumber : int = Field(..., description="Block number in which transaction was finalized")
+    blockNumber : Optional[int] = Field(None, description="Block number in which transaction was finalized")
     from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
@@ -384,7 +405,7 @@ class PendingTransactionsRequest(EmptyRequest):
 
 class Transaction(BaseModel):
     blockHash : str = Field(..., description="Block hash")
-    blockNumber : int = Field(..., description="Block number")
+    blockNumber : Optional[int] = Field(None, description="Block number")
     from_ : str = Field(..., description="Sender wallet address", alias="from")
     timestamp : int = Field(..., description="Unix time at which transaction was finalized")
     gas : int = Field(..., description="Gas limit of transaction")
@@ -399,7 +420,7 @@ class Transaction(BaseModel):
     toShardID : int = Field(..., description="To shard")
 
 class TransactionListResponse(BaseResponse):
-    result : Optional[List[Transaction]] = Field(None, description="List of transactions")
+    result : Optional[Dict[str, List[Transaction]]] = Field(None, description="List of transactions")
 
 ## Staking
 
@@ -524,7 +545,7 @@ class GetCirculatingSupplyRequest(EmptyRequest):
     method : str = "hmyv2_getCirculatingSupply"
 
 class GetCirculatingSupplyResponse(BaseResponse):
-    result : Optional[int] = Field(None, description="Circulation supply of tokens in ONE")
+    result : Optional[float] = Field(None, description="Circulation supply of tokens in ONE")
 
 class GetEpochRequest(EmptyRequest):
     method : str = "hmyv2_getEpoch"
@@ -576,7 +597,7 @@ class GetTotalSupplyRequest(EmptyRequest):
     method : str = "hmyv2_getTotalSupply"
 
 class GetTotalSupplyResponse(BaseResponse):
-    result : Optional[int] = Field(None, description="Total number of pre-mined tokens")
+    result : Optional[float] = Field(None, description="Total number of pre-mined tokens")
 
 class EphochNumberParameters(BaseModel):
     epoch_number : Optional[int] = Field(None, description="Epoch number")
@@ -768,7 +789,7 @@ class Header(BaseModel):
     leader : str = Field(..., description="Wallet address of leader that proposed this block if prestaking, otherwise sha256 hash of leader's public bls key")
     viewID : int = Field(..., description="View ID of the block")
     epoch : int = Field(..., description="Epoch of the block")
-    timestamp : int = Field(..., description="Timestamp that the block was finalized")
+    timestamp : str = Field(..., description="Timestamp that the block was finalized")
     unixtime : int = Field(..., description="Timestamp that the block was finalized in Unix time")
     lastCommitSig : str = Field(..., description="Hex representation of aggregated signatures of the previous block")
     lastCommitBitmap : str = Field(..., description="Hex representation of the aggregated signature bitmap of the previous block")
@@ -839,7 +860,7 @@ class TransactionsHistoryParameters(BaseModel):
     obj : TransactionsHistoryObject
 
 class TransactionsHashListResponse(BaseResponse):
-    result : Optional[List[str]] = Field(None, description="List of transaction hashes")
+    result : Optional[Dict[str, List[str]]] = Field(None, description="List of transaction hashes")
 
 class GetStakingTransactionsHistoryRequest(BaseRequest):
     params : Tuple[TransactionsHistoryObject, ]

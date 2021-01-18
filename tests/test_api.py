@@ -15,8 +15,8 @@ def test_peer_count(API):
 def test_protocol_version(API):
     API.protocol_version()
 
-def test_current_bad_block(API):
-    API._current_bad_blocks()
+#def test_current_bad_block(API):
+#    API._current_bad_blocks()
 
 def test_current_gas_price(API):
     API.current_gas_price()
@@ -43,10 +43,10 @@ def test_current_epoch(API):
     API.current_epoch()
 
 def test_validators_by_epoch_withpubkeys(API):
-    API.validators_by_epoch(1610937017,1)
+    API.validators_by_epoch(5, True)
 
 def test_validators_by_epoch(API):
-    API.validators_by_epoch(1610937017,0)
+    API.validators_by_epoch(5)
 
 def test_current_utility_metrics(API):
     API.current_utility_metrics()
@@ -55,7 +55,7 @@ def test_staking_network_info(API):
     API.staking_network_info()
 
 def test_latest_super_comitees(API):
-    API.latest_super_committees()
+    API.latest_super_committes()
 
 def test_median_raw_stake_snapshot(API):
     API.median_raw_stake_snapshot()
@@ -72,38 +72,32 @@ def test_pending_transaction(API):
 def test_latest_chain_headers(API):
     API.latest_chain_headers()
 
-def test_block_header_withblocknumber(API):
-    API.block_header(block_number=8083562)
+def test_block_header_block_number(API):
+    API.block_header(block_number=5)
 
 def test_block_header(API):
     API.block_header()
 
-def test_get_block(API):
-    API.get_block()
-
-def test_get_block_withblocknumberandhash(API):
-    API.get_block(block_hash="0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269",block_number=8049136)
-
-def test_get_block_withblockhash(API):
+def test_get_block_block_hash(API):
     API.get_block(block_hash="0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
 
-def test_get_block_withblocknumber(API):
-     API.get_block("8049136")
+def test_get_block_block_number(API):
+     API.get_block(block_number=5)
 
 def test_get_block_signers(API):
     API.get_block_signers(8049136)
 
 def test_get_block_signers_withpubkeys(API):
-    API.get_block_signers(8049136, 1)
+    API.get_block_signers(8049136, True)
 
-def test_get_transaction_count_on_block_withblocknumber(API):
+def test_get_transaction_count_on_block_block_number(API):
     API.get_transaction_count_on_block(block_number=8049136)
 
-def test_get_transaction_count_on_block_withblockhash(API):
+def test_get_transaction_count_on_block_block_khash(API):
     API.get_transaction_count_on_block(block_hash="0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
 
-def test_get_blocks_from_range(API):
-    API.get_blocks_from_range(8049134,8049136)
+def test_get_blocks(API):
+    API.get_blocks(13, 14)
 
 def test_get_account_balance_withblocknumber(API):
     API.get_account_balance(address="one1wmudztmxynm38vkc3998fxkeymmczg6st7sf83" , block_number=8049136)
@@ -120,20 +114,20 @@ def test_get_account_staking_transaction_history(API):
 def test_get_account_transaction_count(API):
     API.get_account_transaction_count(address="one1wmudztmxynm38vkc3998fxkeymmczg6st7sf83", transaction_type="ALL")
 
-def test_get_account_history(API):
-    API.get_account_history(address="one1wmudztmxynm38vkc3998fxkeymmczg6st7sf83")
+def test_get_account_transaction_history(API):
+    API.get_account_transaction_history(address="one1wmudztmxynm38vkc3998fxkeymmczg6st7sf83")
 
 def test_current_transaction_error_sink(API):
     API.current_transaction_error_sink()
 
-def test_get_transaction_by_hash(API):
-    API.get_transaction_by_hash("0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
+def test_get_transaction(API):
+    API.get_transaction("0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
 
 def test_get_transaction_by_block_withblocknumber(API):
-    API.get_transation_by_block(transaction_index=81495, block_number=8049136)
+    API.get_transaction_by_block(transaction_index=0, block_number=55462)
 
 def test_get_transaction_by_block_withblockhash(API):
-    API.get_transation_by_block(transaction_index=81495, block_hash="0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
+    API.get_transaction_by_block(transaction_index=0, block_hash="0x2ea6a10e4c9680b59020ad7bab3b4d85df3d458aefb72630dc12019cc0c2c269")
 
 def test_current_staking_transaction_error_sink(API):
     API.current_staking_transaction_error_sink()

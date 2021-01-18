@@ -56,7 +56,7 @@ def getStakingTransactionsHistory(api_url : str, params : TransactionsHistoryPar
     data = format_api_data("hmyv2_getStakingTransactionsHistory", params)
     resp = post_request(api_url, data, session)
     
-    if data["params"][0]["txType"]:
+    if params.obj.fullTx:
         return StakingTransactionListResponse(**resp.json())
     return TransactionsHashListResponse(**resp.json())
 
@@ -78,7 +78,6 @@ def getTransactionsHistory(api_url : str, params : TransactionsHistoryParameters
     """
     data = format_api_data("hmyv2_getTransactionsHistory", params)
     resp = post_request(api_url, data, session)
-    
-    if data["params"][0]["txType"]:
+    if params.obj.fullTx:
         return TransactionListResponse(**resp.json())
     return TransactionsHashListResponse(**resp.json())

@@ -106,5 +106,5 @@ def get_validator_information(api_url : str, address : str, session : Optional[r
     -------
     result : ValidatorInfomration
     """
-    parmas = AddressParameters(address=address)
+    params = AddressParameters(address=address)
     return getValidatorInformation(api_url, params, session)

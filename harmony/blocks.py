@@ -55,7 +55,7 @@ def get_blocks_from_range(api_url : str, starting_block_number : int, ending_blo
     -------
     result : list[Block]
     """
-    list_opts = BlockConfig(withSigners=include_signer_addresses, fullTx=include_transactions, inclStaking=include_staking_transactions)
+    list_opts = BlocksListConfig(withSigners=include_signer_addresses, fullTx=include_transactions, inclStaking=include_staking_transactions)
     params = BlockListParams(start_block=starting_block_number, end_block=ending_block_number, blocks_config=list_opts)
     return getBlocks(api_url, params, session)
 
@@ -63,7 +63,7 @@ def get_block_by_number(api_url : str, block_number : int, include_full_transact
     """
     Get the block of the specified block number.
 
-    Parameters
+    ParametersBlocksListConfig
     ----------
     api_url : str
     block_number : int
@@ -104,8 +104,8 @@ def get_block_by_hash(api_url : str, block_hash : str, include_full_transaction_
     result : Block
     """
     block_opts = BlockConfig(fullTx=include_full_transaction_data, inclTx=include_regular_transactions, inclStaking=include_staking_transactions)
-    params = GetBlockByHashParameters(block_hash=block_hash, block_config=block_opts)
-    return getBlockByNumber(api_url, params, session)
+    params = GetBlockByHashParameters(hash=block_hash, block_config=block_opts)
+    return getBlockByHash(api_url, params, session)
 
 def _get_block_signers(api_url : str, starting_block_number : int, ending_block_number : int, include_signer_addresses : Optional[bool] = False, include_transactions : Optional[bool] = False, include_staking_transactions : Optional[bool] = False, session : Optional[requests.Session] = None) -> AddressListResponse:
     """
@@ -210,7 +210,7 @@ def get_block_transaction_count_by_hash(api_url : str, block_hash : str, session
     result : int
         The number of transactions on the block
     """
-    params = HashParameters(block_hash=block_hash)
+    params = HashParameters(hash=block_hash)
     return getBlockTransactionCountByHash(api_url, params, session)
 
 def get_block_header_by_number(api_url : str, block_number : int, session : Optional[requests.Session] = None) -> HeaderResponse:

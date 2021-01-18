@@ -2,6 +2,8 @@ from typing import List, Optional, Union
 
 import requests
 
+from pyrosetta.api import RosettaAPI
+
 from .models import (
     Block,
     CrossLink,
@@ -45,12 +47,14 @@ class HarmonyNodeError(Exception):
 
 class HarmonyAPI(object):
 
-    def __init__(self, api_url : str, session : Optional[requests.Session] = None) -> None:
+    def __init__(self, api_url : str, local_rosetta_url : Optional[str] = None,  session : Optional[requests.Session] = None) -> None:
         """
         Parameters
         ----------
         api_url : str
             The url where the node is located
+        rosetta_url : str, optional
+            The url to the rosetta api
         sessions : requests.Session, optional
             An already existing requests sesion. If none is passed
             a session will be created for this object.
@@ -59,7 +63,16 @@ class HarmonyAPI(object):
         if session is None:
             session = requests.Session()
         self._session = session
+        if local_rosetta_url:
+            self._rosetta_api = RosettaAPI(local_rosetta_url)
+        else:
+            self._rosetta_api = RosettaAPI(api_url)
 
+
+    @property
+    def rosetta(self):
+        return self._rosetta_api
+    
     @property
     def session(self) -> requests.Session:
         return self._session
@@ -407,7 +420,7 @@ class HarmonyAPI(object):
         if block_number is not None:
             resp = blk.get_block_by_number(self.url, block_number, include_full_transaction_data, include_regular_transactions, include_staking_transactions, self.session)
         else:
-            resp = blk.get_block_by_hash(self.url, block_number, include_full_transaction_data, include_regular_transactions, include_staking_transactions, self.session)
+            resp = blk.get_block_by_hash(self.url, block_hash, include_full_transaction_data, include_regular_transactions, include_staking_transactions, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
@@ -431,7 +444,7 @@ class HarmonyAPI(object):
         if as_pubkeys:
             resp = blk.get_block_signers_keys(self.url, block_number, self.session)
         else:
-            resp = blk.get_block_signers(self.url, self.session)
+            resp = blk.get_block_signers(self.url, block_number, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
@@ -470,7 +483,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_blocks_from_range(self, starting_block_number : int, ending_block_number : int, include_signer_addresses : Optional[bool] = False, include_transactions : Optional[bool] = False, include_staking_transactions : Optional[bool] = False, session : Optional[requests.Session] = None) -> List[Block]:
+    def get_blocks(self, starting_block_number : int, ending_block_number : int, include_signer_addresses : Optional[bool] = False, include_transactions : Optional[bool] = False, include_staking_transactions : Optional[bool] = False, session : Optional[requests.Session] = None) -> List[Block]:
         """
         Get the blocks between the starting and ending block number
 
@@ -496,7 +509,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_account_balance(self, wallet_address : str, block_number : Optional[int] = None) -> int:
+    def get_account_balance(self, address : str, block_number : Optional[int] = None) -> int:
         """
         Get the balance of an account.
 
@@ -513,7 +526,7 @@ class HarmonyAPI(object):
         if block_number is not None:
             resp = act.get_balance_by_block_number(self.url, address, block_number, self.session)
         else:
-            resp = act.get_account_balance(self.url, address, self.session)
+            resp = act.get_balance(self.url, address, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
@@ -584,7 +597,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_account_history(self, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, include_full_transaction_data : Optional[bool] = False, transaction_type : Optional[TransactionType] = "ALL", sort_order : Optional[SortOrder] = "ASC") -> Union[List[str], List[Transaction]]:
+    def get_account_transaction_history(self, address : str, page_index : Optional[int] = 0, page_size : Optional[int] = 1000, include_full_transaction_data : Optional[bool] = False, transaction_type : Optional[TransactionType] = "ALL", sort_order : Optional[SortOrder] = "ASC") -> Union[List[str], List[Transaction]]:
         """
         Get a history of the transactions on the account
         
@@ -625,7 +638,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_transaction_by_hash(self, trasaction_hash : str) -> Transaction:
+    def get_transaction(self, transaction_hash : str) -> Transaction:
         """
         Get the transaction by its hash.
 
@@ -708,7 +721,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def get_staking_transaction(self, trasaction_hash : str) -> StakingTransaction:
+    def get_staking_transaction(self, transaction_hash : str) -> StakingTransaction:
         """
         Get the transaction by its hash.
 
@@ -793,7 +806,7 @@ class HarmonyAPI(object):
         -------
         list[Delegation]
         """
-        if block_number is not None:
+        if block_number is None:
             resp = dlg.get_delegations_by_delegator(self.url, delegator_address, self.session)
         else:
             resp = dlg.get_delegations_by_delegator_by_block_number(self.url, delegator_address, block_number, self.session)
@@ -850,7 +863,7 @@ class HarmonyAPI(object):
         -------
         ValidatorInformation
         """
-        resp = val.get_all_validator_information(self.url, validator_address, self.session)
+        resp = val.get_validator_information(self.url, validator_address, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result

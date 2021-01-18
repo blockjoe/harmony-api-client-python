@@ -90,7 +90,7 @@ def pendingTransactions(api_url : str, session : Optional[requests.Session] = No
     """
     data = format_api_data("hmyv2_pendingTransactions", None)
     resp = post_request(api_url, data, session)
-    return StakingTransactionListResponse(**resp.json())
+    return TransactionListResponse(**resp.json())
 
 #Staking
 

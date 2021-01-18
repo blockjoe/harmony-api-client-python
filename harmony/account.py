@@ -158,6 +158,6 @@ def get_transactions_history(api_url : str, address : str, page_index : Optional
     -------
     result : list[str] or list[Transaction]
     """
-    obj = TransactionsHistoryObject(address=address, pageIndex=page_index, pageSize=page_size, fullTx=full_tx, txType=transaction_type, order=sort_order)
+    obj = TransactionsHistoryObject(address=address, pageIndex=page_index, pageSize=page_size, fullTx=include_full_transaction_data, txType=transaction_type, order=sort_order)
     params = TransactionsHistoryParameters(obj=obj)
     return getTransactionsHistory(api_url, params, session)

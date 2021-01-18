@@ -8,12 +8,7 @@ api = HarmonyAPI('https://rpc.s0.t.hmny.io/')
 
 app = typer.Typer()
 
-class StatusOption(str, Enum):
-    node = "node"
-    tx_pool = "tx_pool"
-    staking = "staking"
-    sharding = "sharding"
-    
+class CurrentObject(str, Enum):
     metadata = "metadata"
     peers = "peers"
     protocol = "protocol"
