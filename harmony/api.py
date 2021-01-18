@@ -92,7 +92,7 @@ class HarmonyAPI(object):
         resp = node.get_peer_count(self.url, self.session)
         if resp.error is not None:
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
-        return resp.result
+        return int(resp.result, 16)
 
     def protocol_version(self) -> int:
         """
@@ -268,7 +268,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def latest_super_committess(self) -> SuperCommittees:
+    def latest_super_committes(self) -> SuperCommittees:
         """
         Get information about the current and previously elected super committees
 
@@ -320,7 +320,7 @@ class HarmonyAPI(object):
             raise HarmonyNodeError("The Node responded with the following error.\nCode {}: {}".format(resp.error["code"], resp.error["message"]))
         return resp.result
 
-    def pending_transaction(self) -> List[Transaction]:
+    def pending_transactions(self) -> List[Transaction]:
         """
         Get the transactions pending in the transaction pool.
 
@@ -334,8 +334,7 @@ class HarmonyAPI(object):
         return resp.result
 
     def latest_chain_headers(self) -> LatestChainHeaders:
-        """    TransactionsHashListResponse if full_tx was True else TransactionListResponse
-
+        """
         Get the latest chain headers.
 
         Returns
@@ -809,7 +808,7 @@ class HarmonyAPI(object):
         list[Delegation]
         """
         resp = dlg.get_delegations_by_validator(self.url, validator_address, self.session)
-        return reps.result
+        return resp.result
 
     def get_all_validators(self) -> List[str]:
         """

@@ -17,9 +17,13 @@ setuptools.setup(
     install_requires=[
         'pydantic',
         'requests',
-        'rosetta-api-client-python @ git+https://github.com/blockjoe/rosetta-api-client-python#egg=rosetta-api-client-python'
+        'rosetta-api-client-python @ git+https://github.com/blockjoe/rosetta-api-client-python#egg=rosetta-api-client-python',
+        'typer[all]'
     ],
     extras_require = {
         'dev' : ['datamodel-code-generator', 'sphinx', 'sphinx-rtd-theme', 'm2r2', 'apispec', 'pytest']
+    },
+    entry_points = {
+        'console_scripts' : ['harmony-cli=harmony.cli:main']
     }
 )
