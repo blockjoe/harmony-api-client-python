@@ -33,7 +33,8 @@ release = '0.0.1'
 extensions = [
     "m2r2",
     "sphinx.ext.napoleon",
-    "sphinx_rtd_theme"
+    "sphinx_rtd_theme",
+    "sphinx.ext.viewcode"
 ]
 
 source_suffix = [".rst", ".md"]
@@ -54,6 +55,7 @@ exclude_patterns = []
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
+pygments_style = "native"
 html_theme = 'sphinx_rtd_theme'
 
 # Add any paths that contain custom static files (such as style sheets) here,

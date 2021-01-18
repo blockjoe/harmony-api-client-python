@@ -7,6 +7,7 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   harmony.endpoints
    harmony.models
    harmony.utils
 
@@ -29,10 +30,26 @@ harmony.api module
    :undoc-members:
    :show-inheritance:
 
+harmony.blockchain\_network module
+----------------------------------
+
+.. automodule:: harmony.blockchain_network
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 harmony.blocks module
 ---------------------
 
 .. automodule:: harmony.blocks
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+harmony.cli module
+------------------
+
+.. automodule:: harmony.cli
    :members:
    :undoc-members:
    :show-inheritance:
@@ -49,14 +66,6 @@ harmony.delegation module
 -------------------------
 
 .. automodule:: harmony.delegation
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-harmony.network module
-----------------------
-
-.. automodule:: harmony.network
    :members:
    :undoc-members:
    :show-inheritance:
@@ -81,6 +90,14 @@ harmony.staking module
 ----------------------
 
 .. automodule:: harmony.staking
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+harmony.staking\_network module
+-------------------------------
+
+.. automodule:: harmony.staking_network
    :members:
    :undoc-members:
    :show-inheritance:
