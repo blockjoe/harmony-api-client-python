@@ -1031,8 +1031,8 @@ class HarmonyAPI(object):
         """
         Get the value from a sotrage postition at a given address.
 
-        Paramters
-        ---------
+        Parameters
+        ----------
         address : str
             The address of the storage
         storage_location : str

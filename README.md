@@ -48,7 +48,7 @@ NodeMetadata(blskey=['0000000000000000000000000000000000000000000000000000000000
 
 ## TODO
 
-There's some housekeeping I'm going need to come back to in the near future.
+There's some housekeeping I'm going need to come back to in the near future. This is here as a reference point for any judging of what I came back to after "[submission](https://github.com/blockjoe/harmony-api-client-python/commit/ee17afc9473d2fd7be0f023660c22626528d184b)"
 
 - [] Get unit test coverage for Rosetta endpoints.
 - [] Clean up the Sphinx docs.

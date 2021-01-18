@@ -63,7 +63,7 @@ def get_block_by_number(api_url : str, block_number : int, include_full_transact
     """
     Get the block of the specified block number.
 
-    ParametersBlocksListConfig
+    Parameters
     ----------
     api_url : str
     block_number : int
